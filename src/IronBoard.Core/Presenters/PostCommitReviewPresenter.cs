@@ -45,9 +45,10 @@ namespace IronBoard.Core.Presenters
             {
                if (!string.IsNullOrEmpty(wi.Comment))
                {
-                  b.Append("--------- r");
-                  b.Append(wi.ItemId);
-                  b.AppendLine("-----------");
+                  //b.Append("--------- r");
+                  //b.Append(wi.ItemId);
+                  //b.Append("-----------");
+                  //b.AppendLine();
 
                   b.AppendLine(wi.Comment);
 
@@ -57,5 +58,27 @@ namespace IronBoard.Core.Presenters
          }
          return null;
       }
+
+      public string ToListString(WorkItem i)
+      {
+         return string.Format("{0}: {1}@{2}| {3}",
+                              i.ItemId, i.Author, i.Time, i.Comment);
+      }
+
+      public Tuple<int, int> GetRange(IEnumerable<WorkItem> items)
+      {
+         int min = int.MaxValue, max = 0;
+         if (items != null)
+         {
+            foreach (WorkItem wi in items)
+            {
+               int rev = int.Parse(wi.ItemId);
+               if (rev < min) min = rev;
+               if (rev > max) max = rev;
+            }
+         }
+         return min <= max ? new Tuple<int, int>(min - 1, max) : null;
+      }
+
    }
 }

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\DisplayItem.cs" />
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
