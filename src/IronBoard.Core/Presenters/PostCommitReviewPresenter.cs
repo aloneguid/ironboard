@@ -12,25 +12,31 @@ namespace IronBoard.Core.Presenters
 {
    class PostCommitReviewPresenter
    {
-      public DirectoryInfo LocalDirectory { get; set; }
+      private SvnClient _svn;
+      private SvnUriTarget _root;
+
+      public void Initialise(string workingCopyPath)
+      {
+         _svn = new SvnClient();
+         SvnInfoEventArgs args;
+         _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
+         _root = new SvnUriTarget(args.Uri);
+      }
 
       public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
       {
          var args = new SvnLogArgs {Limit = maxRevisions};
 
-         using (var client = new SvnClient())
-         {
-            Collection<SvnLogEventArgs> entries;
-            client.GetLog(LocalDirectory.FullName, args, out entries);
+         Collection<SvnLogEventArgs> entries;
+         _svn.GetLog(_root.Uri, args, out entries);
 
-            if(entries != null && entries.Count > 0)
-            {
-               return entries.Select(e => new WorkItem(
-                                             e.Revision.ToString(CultureInfo.InvariantCulture),
-                                             e.Author,
-                                             e.LogMessage,
-                                             e.Time));
-            }
+         if (entries != null && entries.Count > 0)
+         {
+            return entries.Select(e => new WorkItem(
+                                          e.Revision.ToString(CultureInfo.InvariantCulture),
+                                          e.Author,
+                                          e.LogMessage,
+                                          e.Time));
          }
 
          return null;
@@ -83,18 +89,15 @@ namespace IronBoard.Core.Presenters
       private string GetDiff(long fromRev, long toRev)
       {
          string diffText;
-         using (var client = new SvnClient())
+         using (var ms = new MemoryStream())
          {
-            using (var ms = new MemoryStream())
-            {
-               client.Diff(
-                  new SvnPathTarget(LocalDirectory.FullName),
-                  new SvnRevisionRange(fromRev, toRev),
-                  ms);
+            _svn.Diff(
+               _root,
+               new SvnRevisionRange(fromRev, toRev),
+               ms);
 
-               ms.Position = 0;
-               diffText = Encoding.UTF8.GetString(ms.ToArray());
-            }
+            ms.Position = 0;
+            diffText = Encoding.UTF8.GetString(ms.ToArray());
          }
 
          return diffText;
@@ -104,6 +107,12 @@ namespace IronBoard.Core.Presenters
          string summary, string description, string testing)
       {
          string diff = GetDiff(fromRev, toRev);
+      }
+
+      public void SaveDiff(long fromRev, long toRev, string targetFileName)
+      {
+         string diff = GetDiff(fromRev, toRev);
+         File.WriteAllText(targetFileName, diff, Encoding.UTF8);
       }
    }
 }

@@ -44,6 +44,7 @@
          this.splitter1 = new System.Windows.Forms.Splitter();
          this.panel2 = new System.Windows.Forms.Panel();
          this.IsDraft = new System.Windows.Forms.CheckBox();
+         this.SaveDiff = new System.Windows.Forms.Button();
          this.panel1.SuspendLayout();
          this.panel2.SuspendLayout();
          this.SuspendLayout();
@@ -129,7 +130,7 @@
          this.PostReview.Name = "PostReview";
          this.PostReview.Size = new System.Drawing.Size(95, 23);
          this.PostReview.TabIndex = 9;
-         this.PostReview.Text = "post review >>";
+         this.PostReview.Text = "post review...";
          this.PostReview.UseVisualStyleBackColor = true;
          this.PostReview.Click += new System.EventHandler(this.PostReview_Click);
          // 
@@ -208,6 +209,7 @@
          // panel2
          // 
          this.panel2.BackColor = System.Drawing.SystemColors.Control;
+         this.panel2.Controls.Add(this.SaveDiff);
          this.panel2.Controls.Add(this.IsDraft);
          this.panel2.Controls.Add(this.Summary);
          this.panel2.Controls.Add(this.label2);
@@ -235,6 +237,18 @@
          this.IsDraft.TabIndex = 11;
          this.IsDraft.Text = "draft";
          this.IsDraft.UseVisualStyleBackColor = true;
+         // 
+         // SaveDiff
+         // 
+         this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+         this.SaveDiff.Enabled = false;
+         this.SaveDiff.Location = new System.Drawing.Point(571, 331);
+         this.SaveDiff.Name = "SaveDiff";
+         this.SaveDiff.Size = new System.Drawing.Size(75, 23);
+         this.SaveDiff.TabIndex = 12;
+         this.SaveDiff.Text = "save diff";
+         this.SaveDiff.UseVisualStyleBackColor = true;
+         this.SaveDiff.Click += new System.EventHandler(this.SaveDiff_Click);
          // 
          // PostCommitReviewForm
          // 
@@ -273,5 +287,6 @@
       private System.Windows.Forms.Panel panel2;
       private System.Windows.Forms.CheckBox IsDraft;
       private System.Windows.Forms.Label CommandLine;
+      private System.Windows.Forms.Button SaveDiff;
    }
 }

@@ -17,7 +17,7 @@ namespace IronBoard.Core.WinForms
 
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
-         _presenter.LocalDirectory = new DirectoryInfo("c:\\devel\\pundit");
+         _presenter.Initialise("c:\\devel\\pundit");
          Shown += PostCommitReviewForm_Shown;
       }
 
@@ -121,11 +121,28 @@ namespace IronBoard.Core.WinForms
          {
             CommandLine.Text = null;
             PostReview.Enabled = false;
+            SaveDiff.Enabled = false;
          }
          else
          {
             CommandLine.Text = string.Format("r{0}:{1}", range.Item1, range.Item2);
             PostReview.Enabled = true;
+            SaveDiff.Enabled = true;
+         }
+      }
+
+      private void SaveDiff_Click(object sender, EventArgs e)
+      {
+         var range = _presenter.GetRange(SelectedWorkItems);
+         if (range != null)
+         {
+            var dlg = new SaveFileDialog();
+            dlg.FileName = "my.diff";
+            dlg.Filter = "DIFFs (*.diff)|*.diff";
+            if (DialogResult.OK == dlg.ShowDialog(this))
+            {
+               _presenter.SaveDiff(range.Item1, range.Item2, dlg.FileName);
+            }
          }
       }
    }
