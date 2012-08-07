@@ -18,6 +18,11 @@ namespace IronBoard.Core.WinForms
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
          _presenter.LocalDirectory = new DirectoryInfo("c:\\devel\\pundit");
+         Shown += PostCommitReviewForm_Shown;
+      }
+
+      void PostCommitReviewForm_Shown(object sender, EventArgs e)
+      {
          ListRevisions();
       }
 
@@ -25,7 +30,8 @@ namespace IronBoard.Core.WinForms
       {
          int maxRevisions = int.Parse((string) MaxRevisions.SelectedItem);
 
-         IEnumerable<WorkItem> history = _presenter.GetCommitedWorkItems(maxRevisions);
+         IEnumerable<WorkItem> history = _presenter.GetCommitedWorkItems(maxRevisions);;
+
          Revisions.Items.Clear();
          if (history != null)
          {
@@ -80,7 +86,12 @@ namespace IronBoard.Core.WinForms
 
       private void PostReview_Click(object sender, EventArgs e)
       {
-
+         var range = _presenter.GetRange(SelectedWorkItems);
+         if (range != null)
+         {
+            _presenter.PostReview(range.Item1, range.Item2,
+               Summary.Text, Description.Text, Testing.Text);
+         }
       }
 
       private void Refresh_Click(object sender, EventArgs e)

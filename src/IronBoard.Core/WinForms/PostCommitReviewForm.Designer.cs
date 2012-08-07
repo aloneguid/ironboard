@@ -162,6 +162,7 @@
          this.Revisions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+         this.Revisions.CheckOnClick = true;
          this.Revisions.FormattingEnabled = true;
          this.Revisions.IntegralHeight = false;
          this.Revisions.Location = new System.Drawing.Point(1, 26);

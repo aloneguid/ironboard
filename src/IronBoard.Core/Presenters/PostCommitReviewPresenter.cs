@@ -80,5 +80,30 @@ namespace IronBoard.Core.Presenters
          return min <= max ? new Tuple<int, int>(min - 1, max) : null;
       }
 
+      private string GetDiff(long fromRev, long toRev)
+      {
+         string diffText;
+         using (var client = new SvnClient())
+         {
+            using (var ms = new MemoryStream())
+            {
+               client.Diff(
+                  new SvnPathTarget(LocalDirectory.FullName),
+                  new SvnRevisionRange(fromRev, toRev),
+                  ms);
+
+               ms.Position = 0;
+               diffText = Encoding.UTF8.GetString(ms.ToArray());
+            }
+         }
+
+         return diffText;
+      }
+
+      public void PostReview(long fromRev, long toRev,
+         string summary, string description, string testing)
+      {
+         string diff = GetDiff(fromRev, toRev);
+      }
    }
 }
