@@ -17,7 +17,7 @@ namespace IronBoard.Core.WinForms
 
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
-         _presenter.Initialise("c:\\devel\\pundit");
+         _presenter.Initialise("c:\\devel\\ironboard");
          Shown += PostCommitReviewForm_Shown;
       }
 

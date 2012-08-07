@@ -28,6 +28,7 @@
       /// </summary>
       private void InitializeComponent()
       {
+         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PostCommitReviewForm));
          this.MaxRevisions = new System.Windows.Forms.ComboBox();
          this.label1 = new System.Windows.Forms.Label();
          this.label2 = new System.Windows.Forms.Label();
@@ -43,8 +44,9 @@
          this.CommandLine = new System.Windows.Forms.Label();
          this.splitter1 = new System.Windows.Forms.Splitter();
          this.panel2 = new System.Windows.Forms.Panel();
-         this.IsDraft = new System.Windows.Forms.CheckBox();
          this.SaveDiff = new System.Windows.Forms.Button();
+         this.IsDraft = new System.Windows.Forms.CheckBox();
+         this.statusStrip1 = new System.Windows.Forms.StatusStrip();
          this.panel1.SuspendLayout();
          this.panel2.SuspendLayout();
          this.SuspendLayout();
@@ -126,7 +128,7 @@
          // 
          this.PostReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.PostReview.Enabled = false;
-         this.PostReview.Location = new System.Drawing.Point(652, 330);
+         this.PostReview.Location = new System.Drawing.Point(652, 312);
          this.PostReview.Name = "PostReview";
          this.PostReview.Size = new System.Drawing.Size(95, 23);
          this.PostReview.TabIndex = 9;
@@ -209,6 +211,7 @@
          // panel2
          // 
          this.panel2.BackColor = System.Drawing.SystemColors.Control;
+         this.panel2.Controls.Add(this.statusStrip1);
          this.panel2.Controls.Add(this.SaveDiff);
          this.panel2.Controls.Add(this.IsDraft);
          this.panel2.Controls.Add(this.Summary);
@@ -224,6 +227,18 @@
          this.panel2.Size = new System.Drawing.Size(759, 359);
          this.panel2.TabIndex = 15;
          // 
+         // SaveDiff
+         // 
+         this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+         this.SaveDiff.Enabled = false;
+         this.SaveDiff.Location = new System.Drawing.Point(571, 313);
+         this.SaveDiff.Name = "SaveDiff";
+         this.SaveDiff.Size = new System.Drawing.Size(75, 23);
+         this.SaveDiff.TabIndex = 12;
+         this.SaveDiff.Text = "save diff";
+         this.SaveDiff.UseVisualStyleBackColor = true;
+         this.SaveDiff.Click += new System.EventHandler(this.SaveDiff_Click);
+         // 
          // IsDraft
          // 
          this.IsDraft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -238,17 +253,13 @@
          this.IsDraft.Text = "draft";
          this.IsDraft.UseVisualStyleBackColor = true;
          // 
-         // SaveDiff
+         // statusStrip1
          // 
-         this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-         this.SaveDiff.Enabled = false;
-         this.SaveDiff.Location = new System.Drawing.Point(571, 331);
-         this.SaveDiff.Name = "SaveDiff";
-         this.SaveDiff.Size = new System.Drawing.Size(75, 23);
-         this.SaveDiff.TabIndex = 12;
-         this.SaveDiff.Text = "save diff";
-         this.SaveDiff.UseVisualStyleBackColor = true;
-         this.SaveDiff.Click += new System.EventHandler(this.SaveDiff_Click);
+         this.statusStrip1.Location = new System.Drawing.Point(0, 337);
+         this.statusStrip1.Name = "statusStrip1";
+         this.statusStrip1.Size = new System.Drawing.Size(759, 22);
+         this.statusStrip1.TabIndex = 13;
+         this.statusStrip1.Text = "statusStrip1";
          // 
          // PostCommitReviewForm
          // 
@@ -258,7 +269,7 @@
          this.Controls.Add(this.panel2);
          this.Controls.Add(this.splitter1);
          this.Controls.Add(this.panel1);
-         this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+         this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.Name = "PostCommitReviewForm";
          this.Text = "Post-Commit Review";
          this.panel1.ResumeLayout(false);
@@ -288,5 +299,6 @@
       private System.Windows.Forms.CheckBox IsDraft;
       private System.Windows.Forms.Label CommandLine;
       private System.Windows.Forms.Button SaveDiff;
+      private System.Windows.Forms.StatusStrip statusStrip1;
    }
 }
