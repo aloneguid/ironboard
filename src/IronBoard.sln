@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.RBWebApi", "IronB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Standalone", "IronBoard.Standalone\IronBoard.Standalone.csproj", "{01F2020A-71A9-4E15-95C8-9C1153FF54FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Vsix", "IronBoard.Vsix\IronBoard.Vsix.csproj", "{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{01F2020A-71A9-4E15-95C8-9C1153FF54FF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{01F2020A-71A9-4E15-95C8-9C1153FF54FF}.Release|x86.ActiveCfg = Release|x86
 		{01F2020A-71A9-4E15-95C8-9C1153FF54FF}.Release|x86.Build.0 = Release|x86
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,9 +44,9 @@
          this.CommandLine = new System.Windows.Forms.Label();
          this.splitter1 = new System.Windows.Forms.Splitter();
          this.panel2 = new System.Windows.Forms.Panel();
+         this.statusStrip1 = new System.Windows.Forms.StatusStrip();
          this.SaveDiff = new System.Windows.Forms.Button();
          this.IsDraft = new System.Windows.Forms.CheckBox();
-         this.statusStrip1 = new System.Windows.Forms.StatusStrip();
          this.panel1.SuspendLayout();
          this.panel2.SuspendLayout();
          this.SuspendLayout();
@@ -227,11 +227,19 @@
          this.panel2.Size = new System.Drawing.Size(759, 359);
          this.panel2.TabIndex = 15;
          // 
+         // statusStrip1
+         // 
+         this.statusStrip1.Location = new System.Drawing.Point(0, 337);
+         this.statusStrip1.Name = "statusStrip1";
+         this.statusStrip1.Size = new System.Drawing.Size(759, 22);
+         this.statusStrip1.TabIndex = 13;
+         this.statusStrip1.Text = "statusStrip1";
+         // 
          // SaveDiff
          // 
          this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.SaveDiff.Enabled = false;
-         this.SaveDiff.Location = new System.Drawing.Point(571, 313);
+         this.SaveDiff.Location = new System.Drawing.Point(571, 312);
          this.SaveDiff.Name = "SaveDiff";
          this.SaveDiff.Size = new System.Drawing.Size(75, 23);
          this.SaveDiff.TabIndex = 12;
@@ -252,14 +260,6 @@
          this.IsDraft.TabIndex = 11;
          this.IsDraft.Text = "draft";
          this.IsDraft.UseVisualStyleBackColor = true;
-         // 
-         // statusStrip1
-         // 
-         this.statusStrip1.Location = new System.Drawing.Point(0, 337);
-         this.statusStrip1.Name = "statusStrip1";
-         this.statusStrip1.Size = new System.Drawing.Size(759, 22);
-         this.statusStrip1.TabIndex = 13;
-         this.statusStrip1.Text = "statusStrip1";
          // 
          // PostCommitReviewForm
          // 
