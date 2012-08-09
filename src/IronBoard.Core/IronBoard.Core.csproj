@@ -80,6 +80,12 @@
   <ItemGroup>
     <None Include="key.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IronBoard.RBWebApi\IronBoard.RBWebApi.csproj">
+      <Project>{259CDD9D-ECF7-48C1-9C6C-0E403F9DEB9E}</Project>
+      <Name>IronBoard.RBWebApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
