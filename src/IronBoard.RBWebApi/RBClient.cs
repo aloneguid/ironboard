@@ -31,6 +31,17 @@ namespace IronBoard.RBWebApi
          return request;
       }
 
+      private RestRequest CreateRequest(Uri uri, Method method)
+      {
+         if (uri.IsAbsoluteUri)
+         {
+            string resource = uri.ToString().Substring(_client.BaseUrl.Length);
+            return CreateRequest(resource, method);
+         }
+
+         return CreateRequest(uri.ToString(), method);
+      }
+
       public IEnumerable<Repository> GetRepositories()
       {
          var result = new List<Repository>();
@@ -65,6 +76,31 @@ namespace IronBoard.RBWebApi
          _cookie = cookie.Value;
       }
 
+      private void ParseReview(string response, Review review, string entityTag, bool parseData)
+      {
+         JObject jo = JObject.Parse(response);
+         JObject review_request = jo[entityTag] as JObject;
+         review.Id = review_request.Value<long>("id");
+         if (parseData)
+         {
+            review.Subject = review_request.Value<string>("summary");
+            review.Description = review_request.Value<string>("description");
+            review.TestingDone = review_request.Value<string>("testing_done");
+         }
+
+         JObject links = review_request["links"] as JObject;
+         if(review.Links == null) review.Links = new ReviewLinks();
+
+         JObject diffs = links["diffs"] as JObject;
+         review.Links.Diffs = new Uri(diffs.Value<string>("href"));
+
+         JObject update = links["update"] as JObject;
+         review.Links.Update = new Uri(update.Value<string>("href"));
+
+         JObject draft = links["draft"] as JObject;
+         review.Links.Draft = new Uri(draft.Value<string>("href"));
+      }
+
       /// <summary>
       /// Posts review to RB server
       /// </summary>
@@ -74,9 +110,26 @@ namespace IronBoard.RBWebApi
          var request = CreateRequest("review-requests/", Method.POST);
          request.AddParameter("repository", review.Repository.Path);
          var response = _client.Execute(request) as RestResponse;
+         ParseReview(response.Content, review, "review_request", false);
 
          //I couldn't post extra fields during initial review creation, they have to be sent as an update
-         
+         Update(review);
+      }
+
+      public void Update(Review review)
+      {
+         var request = CreateRequest(review.Links.Draft, Method.PUT);
+         if (review.Subject != null) request.AddParameter("summary", review.Subject);
+         if (review.Description != null) request.AddParameter("description", review.Description);
+         if (review.TestingDone != null) request.AddParameter("testing_done", review.TestingDone);
+         var response = _client.Execute(request) as RestResponse;
+      }
+
+      public void AttachDiff(Review review, string diffText)
+      {
+         var request = CreateRequest(review.Links.Diffs, Method.POST);
+         request.AddFile("path", Encoding.UTF8.GetBytes(diffText), "diff");
+         var response = _client.Execute(request) as RestResponse;
       }
    }
 }

@@ -27,12 +27,7 @@ namespace IronBoard.Core.Presenters
          _root = new SvnUriTarget(args.Uri);
          _rb = new RBClient(workingCopyPath);
 
-         var repos =_rb.GetRepositories();
          _rb.Authenticate(new NetworkCredential("igavryliuk", "M1m3c45t"));
-         var review = new Review();
-         review.Repository = repos.First();
-         review.Subject = "generated at " + DateTime.Now.ToString();
-         _rb.Post(review);
       }
 
       public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }
@@ -120,6 +115,10 @@ namespace IronBoard.Core.Presenters
       public void PostReview(long fromRev, long toRev, Review review)
       {
          string diff = GetDiff(fromRev, toRev);
+
+         review.Repository = _rb.GetRepositories().First();
+         _rb.Post(review);
+         _rb.AttachDiff(review, diff);
       }
 
       public void SaveDiff(long fromRev, long toRev, string targetFileName)
