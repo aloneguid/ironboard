@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IronBoard.RBWebApi
+namespace IronBoard.RBWebApi.Model
 {
-   public class Class1
+   public class Repository
    {
    }
 }
