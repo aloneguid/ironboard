@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using IronBoard.RBWebApi.Application;
 using IronBoard.RBWebApi.Model;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace IronBoard.RBWebApi
@@ -22,14 +23,23 @@ namespace IronBoard.RBWebApi
 
       public IEnumerable<Repository> GetRepositories()
       {
+         var result = new List<Repository>();
          var request = new RestRequest("repositories");
          request.Method = Method.GET;
          RestResponse response = _client.Execute(request) as RestResponse;
          if(response != null)
          {
-                        
+            JObject jo = JObject.Parse(response.Content);
+            JArray repos = jo["repositories"] as JArray;
+            foreach(JObject r in repos)
+            {
+               result.Add(new Repository(
+                  r.Value<string>("id"),
+                  r.Value<string>("tool"),
+                  r.Value<string>("path")));
+            }
          }
-         return null;
+         return result;
       }
    }
 }

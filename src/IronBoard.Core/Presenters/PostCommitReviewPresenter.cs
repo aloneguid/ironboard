@@ -25,6 +25,8 @@ namespace IronBoard.Core.Presenters
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
          _rb = new RBClient(workingCopyPath);
+
+         _rb.GetRepositories();
       }
 
       public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }
