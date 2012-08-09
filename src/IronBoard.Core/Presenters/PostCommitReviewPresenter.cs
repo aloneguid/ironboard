@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using IronBoard.Core.Model;
 using IronBoard.RBWebApi;
+using IronBoard.RBWebApi.Model;
 using SharpSvn;
 
 namespace IronBoard.Core.Presenters
@@ -23,6 +24,8 @@ namespace IronBoard.Core.Presenters
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
       }
+
+      public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }
 
       public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
       {
@@ -104,8 +107,7 @@ namespace IronBoard.Core.Presenters
          return diffText;
       }
 
-      public void PostReview(long fromRev, long toRev,
-         string summary, string description, string testing)
+      public void PostReview(long fromRev, long toRev, Review review)
       {
          string diff = GetDiff(fromRev, toRev);
       }

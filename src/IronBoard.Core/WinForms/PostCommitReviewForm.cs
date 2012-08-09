@@ -4,12 +4,14 @@ using System.IO;
 using System.Windows.Forms;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.WinForms
 {
    public partial class PostCommitReviewForm : Form
    {
       private readonly PostCommitReviewPresenter _presenter = new PostCommitReviewPresenter();
+      private Review _review = new Review();
 
       public PostCommitReviewForm()
       {
@@ -17,7 +19,9 @@ namespace IronBoard.Core.WinForms
 
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
-         _presenter.Initialise("c:\\devel\\ironboard");
+         _presenter.Initialise("c:\\dev\\ironboard");
+         SvnUri.Text = _presenter.SvnRepositoryUri;
+         Progress.Text = "Idle";
          Shown += PostCommitReviewForm_Shown;
       }
 
@@ -78,7 +82,8 @@ namespace IronBoard.Core.WinForms
          string txt = _presenter.ProduceDescription(selection);
          if (txt != null)
          {
-            Description.Text = txt;
+            _review.Description = txt;
+            Review.Display(_review);
          }
 
          Validate();
@@ -89,8 +94,8 @@ namespace IronBoard.Core.WinForms
          var range = _presenter.GetRange(SelectedWorkItems);
          if (range != null)
          {
-            _presenter.PostReview(range.Item1, range.Item2,
-               Summary.Text, Description.Text, Testing.Text);
+            Review.Fill(_review);
+            _presenter.PostReview(range.Item1, range.Item2, _review);
          }
       }
 
