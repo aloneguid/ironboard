@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using IronBoard.Core.Model;
 using IronBoard.RBWebApi;
@@ -26,7 +27,12 @@ namespace IronBoard.Core.Presenters
          _root = new SvnUriTarget(args.Uri);
          _rb = new RBClient(workingCopyPath);
 
-         _rb.GetRepositories();
+         var repos =_rb.GetRepositories();
+         _rb.Authenticate(new NetworkCredential("igavryliuk", "M1m3c45t"));
+         var review = new Review();
+         review.Repository = repos.First();
+         review.Subject = "generated at " + DateTime.Now.ToString();
+         _rb.Post(review);
       }
 
       public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }
