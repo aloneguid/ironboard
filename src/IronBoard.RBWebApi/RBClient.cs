@@ -10,23 +10,25 @@ namespace IronBoard.RBWebApi
 {
    public class RBClient
    {
-      private readonly Uri _webApiBaseUri;
-      private RestClient _client;
-      private ReviewBoardRc _config;
+      private readonly RestClient _client;
+      private readonly ReviewBoardRc _config;
 
-      public RBClient(Uri webApiBaseUri, string projectRootFolder)
+      public RBClient(string projectRootFolder)
       {
-         if (webApiBaseUri == null) throw new ArgumentNullException("webApiBaseUri");
-         _webApiBaseUri = webApiBaseUri;
-         _client = new RestClient(new Uri(webApiBaseUri, "api").ToString());
          _config = new ReviewBoardRc(projectRootFolder);
+         if(_config.Uri == null) throw new ArgumentException("config file doesn't contain ReviewBoard server url");
+         _client = new RestClient(new Uri(_config.Uri, "api").ToString());
       }
 
       public IEnumerable<Repository> GetRepositories()
       {
          var request = new RestRequest("repositories");
          request.Method = Method.GET;
-
+         RestResponse response = _client.Execute(request) as RestResponse;
+         if(response != null)
+         {
+                        
+         }
          return null;
       }
    }

@@ -16,6 +16,7 @@ namespace IronBoard.Core.Presenters
    {
       private SvnClient _svn;
       private SvnUriTarget _root;
+      private RBClient _rb;
 
       public void Initialise(string workingCopyPath)
       {
@@ -23,6 +24,7 @@ namespace IronBoard.Core.Presenters
          SvnInfoEventArgs args;
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
+         _rb = new RBClient(workingCopyPath);
       }
 
       public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }

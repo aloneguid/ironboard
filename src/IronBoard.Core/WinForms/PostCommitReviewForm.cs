@@ -86,7 +86,7 @@ namespace IronBoard.Core.WinForms
             Review.Display(_review);
          }
 
-         Validate();
+         ValidateCanPost();
       }
 
       private void PostReview_Click(object sender, EventArgs e)
@@ -117,7 +117,7 @@ namespace IronBoard.Core.WinForms
          UpdateRevisionsChanged();
       }
 
-      private void Validate()
+      private void ValidateCanPost()
       {
          var workItems = SelectedWorkItems;
          Tuple<int, int> range = _presenter.GetRange(workItems);
