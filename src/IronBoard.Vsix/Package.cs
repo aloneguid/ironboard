@@ -28,7 +28,7 @@ namespace IronBoard.Vsix
    // This attribute is needed to let the shell know that this package exposes some menus.
    [ProvideMenuResource("Menus.ctmenu", 1)]
    [Guid(GuidList.guidIronBoard_VsixPkgString)]
-   public sealed class IronBoard_VsixPackage : Package
+   public sealed class Package : Microsoft.VisualStudio.Shell.Package
    {
       /// <summary>
       /// Default constructor of the package.
@@ -37,7 +37,7 @@ namespace IronBoard.Vsix
       /// not sited yet inside Visual Studio environment. The place to do all the other 
       /// initialization is the Initialize method.
       /// </summary>
-      public IronBoard_VsixPackage()
+      public Package()
       {
          Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
       }
