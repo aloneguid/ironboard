@@ -18,7 +18,7 @@ namespace IronBoard.RBWebApi.Application
          if (rootFolder == null) throw new ArgumentNullException("rootFolder");
          if(!Directory.Exists(rootFolder)) throw new DirectoryNotFoundException("rootFolder");
          _configPath = Path.Combine(rootFolder, ".reviewboardrc");
-         if (!File.Exists(_configPath)) throw new FileNotFoundException("config file not found", _configPath);
+         if (!File.Exists(_configPath)) throw new FileNotFoundException("config file not found at " + _configPath, _configPath);
          ReadConfiguration();
       }
 

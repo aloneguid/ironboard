@@ -14,13 +14,13 @@ namespace IronBoard.Core.WinForms
       private readonly PostCommitReviewPresenter _presenter = new PostCommitReviewPresenter();
       private Review _review = new Review();
 
-      public PostCommitReviewForm()
+      public PostCommitReviewForm(string solutionPath)
       {
          InitializeComponent();
 
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
-         _presenter.Initialise("c:\\dev\\msw");
+         _presenter.Initialise(solutionPath);
          SvnUri.Text = _presenter.SvnRepositoryUri;
          Progress.Text = "Idle";
          Shown += PostCommitReviewForm_Shown;

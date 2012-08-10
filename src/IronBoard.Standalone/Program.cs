@@ -16,7 +16,7 @@ namespace IronBoard.Standalone
       {
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
-         Application.Run(new PostCommitReviewForm());
+         Application.Run(new PostCommitReviewForm("c:\\dev\\ironboard"));
       }
    }
 }

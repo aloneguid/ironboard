@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
+using System.Windows.Forms;
 using IronBoard.Core.WinForms;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
@@ -28,7 +30,7 @@ namespace IronBoard.Vsix
    // This attribute is needed to let the shell know that this package exposes some menus.
    [ProvideMenuResource("Menus.ctmenu", 1)]
    [Guid(GuidList.guidIronBoard_VsixPkgString)]
-   public sealed class Package : Microsoft.VisualStudio.Shell.Package
+   public partial class Package : Microsoft.VisualStudio.Shell.Package
    {
       /// <summary>
       /// Default constructor of the package.
@@ -41,8 +43,6 @@ namespace IronBoard.Vsix
       {
          Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
       }
-
-
 
       /////////////////////////////////////////////////////////////////////////////
       // Overriden Package Implementation
@@ -79,25 +79,23 @@ namespace IronBoard.Vsix
       /// </summary>
       private void MenuItemCallback(object sender, EventArgs e)
       {
-         new PostCommitReviewForm().ShowDialog();
-
-         // Show a Message Box to prove we were here
-         /*IVsUIShell uiShell = (IVsUIShell) GetService(typeof (SVsUIShell));
-         Guid clsid = Guid.Empty;
-         int result;
-         Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
-            0,
-            ref clsid,
-            "IronBoard.Vsix",
-            string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.ToString()),
-            string.Empty,
-            0,
-            OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
-            OLEMSGICON.OLEMSGICON_INFO,
-            0, // false
-            out result));*/
+         DirectoryInfo di = SolutionDirectory;
+         if (di != null)
+         {
+            try
+            {
+               new PostCommitReviewForm(di.FullName).ShowDialog();
+            }
+            catch(Exception ex)
+            {
+               MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace,
+                               "IronBoard Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+         }
+         else
+         {
+            MessageBox.Show("Please open a solution first");
+         }
       }
-
    }
 }
