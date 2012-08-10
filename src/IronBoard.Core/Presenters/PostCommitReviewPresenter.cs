@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace IronBoard.Core.Presenters
          SvnInfoEventArgs args;
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
-         _rb = new RBClient(workingCopyPath);
+         _rb = new RBClient(args.Uri.ToString(), workingCopyPath);
 
          _rb.Authenticate(new NetworkCredential("igavryliuk", "M1m3c45t"));
       }
@@ -125,6 +126,14 @@ namespace IronBoard.Core.Presenters
       {
          string diff = GetDiff(fromRev, toRev);
          File.WriteAllText(targetFileName, diff, Encoding.UTF8);
+      }
+
+      public void OpenInBrowser(Review r)
+      {
+         Process p = new Process();
+         p.StartInfo.UseShellExecute = true;
+         p.StartInfo.FileName = string.Format("{0}/r/{1}", _rb.ServerUri, r.Id);
+         p.Start();
       }
    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using IronBoard.Core.Model;
@@ -19,7 +20,7 @@ namespace IronBoard.Core.WinForms
 
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
-         _presenter.Initialise("c:\\dev\\ironboard");
+         _presenter.Initialise("c:\\dev\\msw");
          SvnUri.Text = _presenter.SvnRepositoryUri;
          Progress.Text = "Idle";
          Shown += PostCommitReviewForm_Shown;
@@ -96,6 +97,9 @@ namespace IronBoard.Core.WinForms
          {
             Review.Fill(_review);
             _presenter.PostReview(range.Item1, range.Item2, _review);
+            _presenter.OpenInBrowser(_review);
+
+
          }
       }
 

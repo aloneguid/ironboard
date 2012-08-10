@@ -12,6 +12,8 @@ namespace IronBoard.RBWebApi.Model
       public Uri Update { get; set; }
 
       public Uri Draft { get; set; }
+
+      public Uri Self { get; set; }
    }
 
    public class Review
