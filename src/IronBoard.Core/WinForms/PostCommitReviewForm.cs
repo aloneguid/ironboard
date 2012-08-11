@@ -125,10 +125,27 @@ namespace IronBoard.Core.WinForms
          if (range != null)
          {
             Review.Fill(_review);
-            _presenter.PostReview(range.Item1, range.Item2, _review);
-            _presenter.OpenInBrowser(_review);
 
+            ProgressForm<Review>.Execute(this,
+                                         "posting review...",
+                                         () =>
+                                            {
+                                               _presenter.PostReview(range.Item1, range.Item2, _review);
+                                               return _review;
+                                            },
+                                         RenderPostReview);
+         }
+      }
 
+      private void RenderPostReview(Review r, Exception ex)
+      {
+         if(ex != null)
+         {
+            Messages.ShowError(ex);
+         }
+         else
+         {
+            _presenter.OpenInBrowser(_review);            
          }
       }
 
@@ -179,7 +196,14 @@ namespace IronBoard.Core.WinForms
             dlg.Filter = "DIFFs (*.diff)|*.diff";
             if (DialogResult.OK == dlg.ShowDialog(this))
             {
-               _presenter.SaveDiff(range.Item1, range.Item2, dlg.FileName);
+               ProgressForm<object>.Execute(this, "saving diff...",
+                  () =>
+                  {
+                     _presenter.SaveDiff(range.Item1, range.Item2, dlg.FileName);
+                     return null;
+                  }, null);
+
+               
             }
          }
       }

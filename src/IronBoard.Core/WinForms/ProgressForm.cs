@@ -47,7 +47,7 @@ namespace IronBoard.Core.WinForms
                   {
                      _parent.Enabled = true;
                      Close();
-                     _callbackAction(result, _threadError);
+                     if(_callbackAction != null) _callbackAction(result, _threadError);
                   });
 
             }, TaskCreationOptions.LongRunning);
@@ -67,7 +67,6 @@ namespace IronBoard.Core.WinForms
       {
          if (parent == null) throw new ArgumentNullException("parent");
          if (workAction == null) throw new ArgumentNullException("workAction");
-         if (callbackAction == null) throw new ArgumentNullException("callbackAction");
 
          var me = new ProgressForm<T>(parent, message, workAction, callbackAction);
          me.ShowDialog(parent);
