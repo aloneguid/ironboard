@@ -52,7 +52,6 @@
          // MaxRevisions
          // 
          this.MaxRevisions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-         this.MaxRevisions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.MaxRevisions.FormattingEnabled = true;
          this.MaxRevisions.Items.AddRange(new object[] {
             "10",
@@ -78,7 +77,6 @@
          // 
          this.PostReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.PostReview.Enabled = false;
-         this.PostReview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.PostReview.Location = new System.Drawing.Point(652, 310);
          this.PostReview.Name = "PostReview";
          this.PostReview.Size = new System.Drawing.Size(95, 23);
@@ -89,7 +87,6 @@
          // 
          // Refresh
          // 
-         this.Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.Refresh.Location = new System.Drawing.Point(202, 1);
          this.Refresh.Name = "Refresh";
          this.Refresh.Size = new System.Drawing.Size(56, 23);
@@ -103,7 +100,6 @@
          this.Revisions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                      | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
-         this.Revisions.BorderStyle = System.Windows.Forms.BorderStyle.None;
          this.Revisions.CheckOnClick = true;
          this.Revisions.FormattingEnabled = true;
          this.Revisions.IntegralHeight = false;
@@ -210,7 +206,6 @@
          // 
          this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.SaveDiff.Enabled = false;
-         this.SaveDiff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.SaveDiff.Location = new System.Drawing.Point(571, 310);
          this.SaveDiff.Name = "SaveDiff";
          this.SaveDiff.Size = new System.Drawing.Size(75, 23);
