@@ -80,6 +80,7 @@
     <Compile Include="WinForms\ReviewEntityControl.Designer.cs">
       <DependentUpon>ReviewEntityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\UiScheduler.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Strings.resx">

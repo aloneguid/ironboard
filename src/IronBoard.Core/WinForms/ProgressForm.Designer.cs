@@ -1,6 +1,6 @@
 ﻿namespace IronBoard.Core.WinForms
 {
-   partial class ProgressForm
+   partial class ProgressForm<T>
    {
       /// <summary>
       /// Required designer variable.
@@ -60,6 +60,7 @@
          this.Controls.Add(this.panel1);
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
          this.Name = "ProgressForm";
+         this.ShowInTaskbar = false;
          this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          this.Text = "ProgressForm";
          this.panel1.ResumeLayout(false);

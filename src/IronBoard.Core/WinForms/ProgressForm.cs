@@ -10,39 +10,67 @@ using System.Windows.Forms;
 
 namespace IronBoard.Core.WinForms
 {
-   public partial class ProgressForm : Form
+   public partial class ProgressForm<T> : Form
    {
+      private readonly Control _parent;
       private readonly string _message;
-      private readonly Action _action;
+      private readonly Func<T> _workAction;
+      private readonly Action<T, Exception> _callbackAction;
+      private Exception _threadError;
+      private T _result;
 
       public ProgressForm()
       {
          InitializeComponent();
 
-         this.Shown += ProgressForm_Shown;
+         this.Shown += ProgressFormShown;
       }
 
-      void ProgressForm_Shown(object sender, EventArgs e)
+      void ProgressFormShown(object sender, EventArgs e)
       {
-         Message.Text = _message;
+         Message.Text = _message ?? "wait...";
 
-         var t = Task.Factory.StartNew(_action);
+         var t = Task.Factory.StartNew(() =>
+            {
+               T result;
+               try
+               {
+                  result = _workAction();
+               }
+               catch(Exception ex)
+               {
+                  result = default(T);
+                  _threadError = ex;
+               }
 
-         t.Wait();
+               UiScheduler.UiExecute(() =>
+                  {
+                     _parent.Enabled = true;
+                     Close();
+                     _callbackAction(result, _threadError);
+                  });
 
-         Close();
+            }, TaskCreationOptions.LongRunning);
       }
 
-      private ProgressForm(string message, Action action) : this()
+      private ProgressForm(Control parent, string message,
+         Func<T> workAction, Action<T, Exception> callbackAction) : this()
       {
+         _parent = parent;
          _message = message;
-         _action = action;
+         _workAction = workAction;
+         _callbackAction = callbackAction;
       }
 
-      public static void Execute<T>(Control parent, string message)
+      public static void Execute(Control parent, string message,
+         Func<T> workAction, Action<T, Exception> callbackAction)
       {
-         //var me = new ProgressForm(message, action);
-         //me.ShowDialog(parent);
+         if (parent == null) throw new ArgumentNullException("parent");
+         if (workAction == null) throw new ArgumentNullException("workAction");
+         if (callbackAction == null) throw new ArgumentNullException("callbackAction");
+
+         var me = new ProgressForm<T>(parent, message, workAction, callbackAction);
+         me.ShowDialog(parent);
       }
    }
 }

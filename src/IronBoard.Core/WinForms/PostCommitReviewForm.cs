@@ -18,6 +18,8 @@ namespace IronBoard.Core.WinForms
       {
          InitializeComponent();
 
+         UiScheduler.InitializeUiContext();
+
          MaxRevisions.SelectedIndex = 0;
          CommandLine.Text = string.Empty;
          _presenter.Initialise(solutionPath);
@@ -35,10 +37,22 @@ namespace IronBoard.Core.WinForms
       {
          int maxRevisions = int.Parse((string) MaxRevisions.SelectedItem);
 
-         IEnumerable<WorkItem> history = _presenter.GetCommitedWorkItems(maxRevisions);;
+         ProgressForm<IEnumerable<WorkItem>>.Execute(
+            this,
+            string.Format("fetching last {0} revisions...", maxRevisions),
+            () => _presenter.GetCommitedWorkItems(maxRevisions),
+            RenderRevisions);
+      }
 
+      private void RenderRevisions(IEnumerable<WorkItem> history, Exception ex)
+      {
          Revisions.Items.Clear();
-         if (history != null)
+
+         if(ex != null)
+         {
+            Messages.ShowError(ex);
+         }
+         else if (history != null)
          {
             foreach (WorkItem wi in history)
             {
@@ -46,6 +60,8 @@ namespace IronBoard.Core.WinForms
                   new DisplayItem<WorkItem>(_presenter.ToListString(wi), wi));
             }
          }
+
+         UpdateRevisionsChanged();
       }
 
       private List<WorkItem> SelectedWorkItems
@@ -55,6 +71,8 @@ namespace IronBoard.Core.WinForms
             //this can only work on continuos selection
             var result = new List<WorkItem>();
             bool started = false;
+            bool broken = false;
+            bool warn = false;
             for (int i = 0; i < Revisions.Items.Count; i++)
             {
                var di = Revisions.Items[i] as DisplayItem<WorkItem>;
@@ -63,15 +81,26 @@ namespace IronBoard.Core.WinForms
                   bool isChecked = Revisions.GetItemChecked(i);
                   if(!isChecked)
                   {
-                     if (started) break;
+                     if (started) broken = true;
                   }
                   else
                   {
-                     result.Add(di.Data);
-                     started = true;
+                     if (!broken)
+                     {
+                        result.Add(di.Data);
+                        started = true;
+                     }
+                     else
+                     {
+                        warn = true;
+                        break;
+                     }
                   }
                }
             }
+
+            RevisionsWarning.Visible = warn;
+
             return result;
          }
       }

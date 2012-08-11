@@ -12,5 +12,12 @@ namespace IronBoard.Core
       {
          MessageBox.Show(message, Strings.Message_Title_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
+
+      public static void ShowError(Exception ex)
+      {
+         ShowError(ex.Message +
+                   Environment.NewLine + Environment.NewLine +
+                   ex.StackTrace);
+      }
    }
 }

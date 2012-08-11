@@ -35,14 +35,15 @@
          this.Refresh = new System.Windows.Forms.Button();
          this.Revisions = new System.Windows.Forms.CheckedListBox();
          this.panel1 = new System.Windows.Forms.Panel();
+         this.RevisionsWarning = new System.Windows.Forms.Label();
          this.CommandLine = new System.Windows.Forms.Label();
          this.splitter1 = new System.Windows.Forms.Splitter();
          this.panel2 = new System.Windows.Forms.Panel();
+         this.Review = new IronBoard.Core.WinForms.ReviewEntityControl();
          this.Status = new System.Windows.Forms.StatusStrip();
-         this.SaveDiff = new System.Windows.Forms.Button();
          this.SvnUri = new System.Windows.Forms.ToolStripStatusLabel();
          this.Progress = new System.Windows.Forms.ToolStripStatusLabel();
-         this.Review = new IronBoard.Core.WinForms.ReviewEntityControl();
+         this.SaveDiff = new System.Windows.Forms.Button();
          this.panel1.SuspendLayout();
          this.panel2.SuspendLayout();
          this.Status.SuspendLayout();
@@ -77,6 +78,7 @@
          // 
          this.PostReview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
          this.PostReview.Enabled = false;
+         this.PostReview.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.PostReview.Location = new System.Drawing.Point(652, 310);
          this.PostReview.Name = "PostReview";
          this.PostReview.Size = new System.Drawing.Size(95, 23);
@@ -87,6 +89,7 @@
          // 
          // Refresh
          // 
+         this.Refresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
          this.Refresh.Location = new System.Drawing.Point(202, 1);
          this.Refresh.Name = "Refresh";
          this.Refresh.Size = new System.Drawing.Size(56, 23);
@@ -100,12 +103,13 @@
          this.Revisions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                      | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
+         this.Revisions.BorderStyle = System.Windows.Forms.BorderStyle.None;
          this.Revisions.CheckOnClick = true;
          this.Revisions.FormattingEnabled = true;
          this.Revisions.IntegralHeight = false;
          this.Revisions.Location = new System.Drawing.Point(1, 26);
          this.Revisions.Name = "Revisions";
-         this.Revisions.Size = new System.Drawing.Size(751, 109);
+         this.Revisions.Size = new System.Drawing.Size(751, 112);
          this.Revisions.TabIndex = 12;
          this.Revisions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.Revisions_ItemCheck);
          this.Revisions.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Revisions_MouseUp);
@@ -113,6 +117,7 @@
          // panel1
          // 
          this.panel1.BackColor = System.Drawing.SystemColors.Control;
+         this.panel1.Controls.Add(this.RevisionsWarning);
          this.panel1.Controls.Add(this.CommandLine);
          this.panel1.Controls.Add(this.label1);
          this.panel1.Controls.Add(this.Revisions);
@@ -123,6 +128,18 @@
          this.panel1.Name = "panel1";
          this.panel1.Size = new System.Drawing.Size(759, 144);
          this.panel1.TabIndex = 13;
+         // 
+         // RevisionsWarning
+         // 
+         this.RevisionsWarning.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+         this.RevisionsWarning.AutoSize = true;
+         this.RevisionsWarning.ForeColor = System.Drawing.Color.Red;
+         this.RevisionsWarning.Location = new System.Drawing.Point(576, 6);
+         this.RevisionsWarning.Name = "RevisionsWarning";
+         this.RevisionsWarning.Size = new System.Drawing.Size(176, 13);
+         this.RevisionsWarning.TabIndex = 14;
+         this.RevisionsWarning.Text = "* some revisions will not be included";
+         this.RevisionsWarning.Visible = false;
          // 
          // CommandLine
          // 
@@ -156,6 +173,16 @@
          this.panel2.Size = new System.Drawing.Size(759, 359);
          this.panel2.TabIndex = 15;
          // 
+         // Review
+         // 
+         this.Review.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.Review.Location = new System.Drawing.Point(-2, 4);
+         this.Review.Name = "Review";
+         this.Review.Size = new System.Drawing.Size(758, 302);
+         this.Review.TabIndex = 14;
+         // 
          // Status
          // 
          this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -166,18 +193,6 @@
          this.Status.Size = new System.Drawing.Size(759, 22);
          this.Status.TabIndex = 13;
          this.Status.Text = "statusStrip1";
-         // 
-         // SaveDiff
-         // 
-         this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-         this.SaveDiff.Enabled = false;
-         this.SaveDiff.Location = new System.Drawing.Point(571, 310);
-         this.SaveDiff.Name = "SaveDiff";
-         this.SaveDiff.Size = new System.Drawing.Size(75, 23);
-         this.SaveDiff.TabIndex = 12;
-         this.SaveDiff.Text = "save diff";
-         this.SaveDiff.UseVisualStyleBackColor = true;
-         this.SaveDiff.Click += new System.EventHandler(this.SaveDiff_Click);
          // 
          // SvnUri
          // 
@@ -191,15 +206,18 @@
          this.Progress.Size = new System.Drawing.Size(19, 17);
          this.Progress.Text = "...";
          // 
-         // Review
+         // SaveDiff
          // 
-         this.Review.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.Review.Location = new System.Drawing.Point(-2, 4);
-         this.Review.Name = "Review";
-         this.Review.Size = new System.Drawing.Size(758, 302);
-         this.Review.TabIndex = 14;
+         this.SaveDiff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+         this.SaveDiff.Enabled = false;
+         this.SaveDiff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+         this.SaveDiff.Location = new System.Drawing.Point(571, 310);
+         this.SaveDiff.Name = "SaveDiff";
+         this.SaveDiff.Size = new System.Drawing.Size(75, 23);
+         this.SaveDiff.TabIndex = 12;
+         this.SaveDiff.Text = "save diff";
+         this.SaveDiff.UseVisualStyleBackColor = true;
+         this.SaveDiff.Click += new System.EventHandler(this.SaveDiff_Click);
          // 
          // PostCommitReviewForm
          // 
@@ -238,5 +256,6 @@
       private ReviewEntityControl Review;
       private System.Windows.Forms.ToolStripStatusLabel SvnUri;
       private System.Windows.Forms.ToolStripStatusLabel Progress;
+      private System.Windows.Forms.Label RevisionsWarning;
    }
 }
