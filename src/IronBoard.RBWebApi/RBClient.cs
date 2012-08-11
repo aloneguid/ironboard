@@ -50,12 +50,20 @@ namespace IronBoard.RBWebApi
          return CreateRequest(uri.ToString(), method);
       }
 
+      private RestResponse Execute(RestRequest request, int expectedCode)
+      {
+         RestResponse response = _client.Execute(request) as RestResponse;
+         if((int)response.StatusCode != expectedCode) throw new InvalidOperationException(
+            response.StatusCode.ToString() + ": " + response.StatusDescription);
+         return response;
+      }
+
       public IEnumerable<Repository> GetRepositories()
       {
          var result = new List<Repository>();
          var request = new RestRequest("repositories/");
          request.Method = Method.GET;
-         RestResponse response = _client.Execute(request) as RestResponse;
+         RestResponse response = Execute(request, 200);
          if(response != null)
          {
             JObject jo = JObject.Parse(response.Content);
@@ -126,7 +134,7 @@ namespace IronBoard.RBWebApi
       {
          var request = CreateRequest("review-requests/", Method.POST);
          request.AddParameter("repository", review.Repository.Path);
-         var response = _client.Execute(request) as RestResponse;
+         var response = Execute(request, 201);
          ParseReview(response.Content, review, "review_request", false);
 
          //I couldn't post extra fields during initial review creation, they have to be sent as an update
@@ -139,7 +147,7 @@ namespace IronBoard.RBWebApi
          if (review.Subject != null) request.AddParameter("summary", review.Subject);
          if (review.Description != null) request.AddParameter("description", review.Description);
          if (review.TestingDone != null) request.AddParameter("testing_done", review.TestingDone);
-         var response = _client.Execute(request) as RestResponse;
+         Execute(request, 200);
       }
 
       public void AttachDiff(Review review, string diffText)
@@ -155,7 +163,7 @@ namespace IronBoard.RBWebApi
          request.AddFile("basedir", Encoding.UTF8.GetBytes(diffBaseDir), null);
          request.AddFile("path", Encoding.UTF8.GetBytes(diffText), "diff");
 
-         var response = _client.Execute(request) as RestResponse;
+         Execute(request, 201);
       }
    }
 }
