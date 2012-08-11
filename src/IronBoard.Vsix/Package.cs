@@ -5,7 +5,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
+using IronBoard.Core;
 using IronBoard.Core.WinForms;
+using IronBoard.RBWebApi;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 
@@ -82,19 +84,28 @@ namespace IronBoard.Vsix
          DirectoryInfo di = SolutionDirectory;
          if (di != null)
          {
-            try
+            string configFolder = RBUtils.FindConfigFolder(di.FullName);
+            if (configFolder == null)
             {
-               new PostCommitReviewForm(di.FullName).ShowDialog();
+               Messages.ShowError("config file not found");
             }
-            catch(Exception ex)
+            else
             {
-               MessageBox.Show(ex.Message + Environment.NewLine + ex.StackTrace,
-                               "IronBoard Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               try
+               {
+                  new PostCommitReviewForm(configFolder).ShowDialog();
+               }
+               catch (Exception ex)
+               {
+                  Messages.ShowError(ex.Message +
+                                     Environment.NewLine + Environment.NewLine +
+                                     ex.StackTrace);
+               }
             }
          }
          else
          {
-            MessageBox.Show("Please open a solution first");
+            Messages.ShowError("Open a solution first");
          }
       }
    }
