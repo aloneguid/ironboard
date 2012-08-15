@@ -74,6 +74,12 @@
     <Compile Include="WinForms\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\RBAuthForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\RBAuthForm.Designer.cs">
+      <DependentUpon>RBAuthForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\ReviewEntityControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\RBAuthForm.resx">
+      <DependentUpon>RBAuthForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ReviewEntityControl.resx">
       <DependentUpon>ReviewEntityControl.cs</DependentUpon>

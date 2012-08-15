@@ -16,10 +16,8 @@ namespace IronBoard.RBWebApi
       private readonly RestClient _client;
       private readonly ReviewBoardRc _config;
       private readonly string _svnRepositoryPath;
-      private string _cookie;
 
-
-      public RBClient(string svnRepositoryPath, string projectRootFolder)
+      public RBClient(string svnRepositoryPath, string projectRootFolder, string authCookie)
       {
          if (svnRepositoryPath == null) throw new ArgumentNullException("svnRepositoryPath");
          if (projectRootFolder == null) throw new ArgumentNullException("projectRootFolder");
@@ -28,14 +26,18 @@ namespace IronBoard.RBWebApi
          _config = new ReviewBoardRc(projectRootFolder);
          if(_config.Uri == null) throw new ArgumentException("config file doesn't contain ReviewBoard server url");
          _client = new RestClient(new Uri(_config.Uri, "api").ToString());
+         AuthCookie = authCookie;
       }
 
       public Uri ServerUri { get { return _config.Uri; } }
 
+      public string AuthCookie { get; private set; }
+
       private RestRequest CreateRequest(string resource, Method method)
       {
+         if(AuthCookie == null) throw new AuthenticationException("authentication required");
          var request = new RestRequest(resource) {Method = method};
-         if(_cookie != null) request.AddCookie("rbsessionid", _cookie);
+         if(AuthCookie != null) request.AddCookie("rbsessionid", AuthCookie);
          return request;
       }
 
@@ -55,6 +57,8 @@ namespace IronBoard.RBWebApi
          RestResponse response = _client.Execute(request) as RestResponse;
          if((int)response.StatusCode != expectedCode) throw new InvalidOperationException(
             response.StatusCode.ToString() + ": " + response.StatusDescription);
+         if(response.StatusCode == HttpStatusCode.Unauthorized)
+            throw new AuthenticationException("not authenticated");
          return response;
       }
 
@@ -82,6 +86,7 @@ namespace IronBoard.RBWebApi
 
       public void Authenticate(NetworkCredential creds)
       {
+         if (creds == null || creds.UserName == null || creds.Password == null) throw new ArgumentNullException("creds");
          var request = CreateRequest("repositories/", Method.GET);
          string auth = creds.UserName + ":" + creds.Password;
          auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(auth));
@@ -89,7 +94,7 @@ namespace IronBoard.RBWebApi
          var response = _client.Execute(request);
          var cookie = response.Cookies.FirstOrDefault(c => c.Name == "rbsessionid");
          if(cookie == null) throw new AuthenticationException("invalid username or password");
-         _cookie = cookie.Value;
+         AuthCookie = cookie.Value;
       }
 
       private Uri ParseLink(JObject links, string linkName)
