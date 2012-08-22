@@ -5,18 +5,21 @@ using System.IO;
 using System.Windows.Forms;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
+using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.WinForms
 {
-   public partial class PostCommitReviewForm : Form
+   public partial class PostCommitReviewForm : Form, IPostCommitReviewView
    {
-      private readonly PostCommitReviewPresenter _presenter = new PostCommitReviewPresenter();
-      private Review _review = new Review();
+      private readonly PostCommitReviewPresenter _presenter;
+      private readonly Review _review = new Review();
 
       public PostCommitReviewForm(string solutionPath)
       {
          InitializeComponent();
+
+         _presenter = new PostCommitReviewPresenter(this);
 
          UiScheduler.InitializeUiContext();
 
@@ -206,6 +209,11 @@ namespace IronBoard.Core.WinForms
                
             }
          }
+      }
+
+      public ILoginPasswordView CreateLoginPasswordView()
+      {
+         return new RBAuthForm(this);
       }
    }
 }

@@ -4,36 +4,46 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using IronBoard.Core.Views;
 using IronBoard.RBWebApi;
 
 namespace IronBoard.Core.WinForms
 {
-   public partial class RBAuthForm : Form
+   public partial class RBAuthForm : Form, ILoginPasswordView
    {
-      private readonly RBClient _api;
+      private readonly IWin32Window _owner;
 
       public RBAuthForm()
       {
          InitializeComponent();
       }
 
-      public RBAuthForm(RBClient api) : this()
+      public RBAuthForm(IWin32Window owner) : this()
       {
-         if (api == null) throw new ArgumentNullException("api");
+         _owner = owner;
+      }
 
-         _api = api;
+      public NetworkCredential Credential
+      {
+         get
+         {
+            return new NetworkCredential(Login.Text, Password.Text);
+         }
       }
 
       private void Authenticate_Click(object sender, EventArgs e)
       {
-         
+         DialogResult = DialogResult.OK;
+         Close();
       }
 
       private void Cancel_Click(object sender, EventArgs e)
       {
-         //
+         DialogResult = DialogResult.Cancel;
+         Close();
       }
 
       private void Login_TextChanged(object sender, EventArgs e)
@@ -49,6 +59,16 @@ namespace IronBoard.Core.WinForms
       private void ValidateButtons()
       {
          Authenticate.Enabled = Login.Text.Length > 0 && Password.Text.Length > 0;
+      }
+
+      public NetworkCredential CollectCredential()
+      {
+         if(DialogResult.OK == ShowDialog(_owner))
+         {
+            return Credential;
+         }
+
+         return null;
       }
    }
 }

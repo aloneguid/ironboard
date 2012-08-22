@@ -61,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
     <Compile Include="WinForms\PostCommitReviewForm.cs">
       <SubType>Form</SubType>

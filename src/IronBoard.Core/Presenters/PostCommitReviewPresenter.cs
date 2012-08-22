@@ -8,6 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using IronBoard.Core.Model;
+using IronBoard.Core.Views;
+using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
 using IronBoard.RBWebApi.Model;
 using SharpSvn;
@@ -16,9 +18,16 @@ namespace IronBoard.Core.Presenters
 {
    class PostCommitReviewPresenter
    {
+      private readonly IPostCommitReviewView _view;
       private SvnClient _svn;
       private SvnUriTarget _root;
       private RBClient _rb;
+
+      public PostCommitReviewPresenter(IPostCommitReviewView view)
+      {
+         if (view == null) throw new ArgumentNullException("view");
+         _view = view;
+      }
 
       public void Initialise(string workingCopyPath)
       {
@@ -27,6 +36,24 @@ namespace IronBoard.Core.Presenters
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
          _rb = new RBClient(args.Uri.ToString(), workingCopyPath, null);
+         _rb.AuthenticationRequired += OnAuthenticationRequired;
+      }
+
+      void OnAuthenticationRequired(NetworkCredential cred)
+      {
+         NetworkCredential newCred = null;
+
+         UiScheduler.UiExecute(() =>
+            {
+               ILoginPasswordView view = _view.CreateLoginPasswordView();
+               newCred = view.CollectCredential();
+            }, true);
+
+         if(newCred != null)
+         {
+            cred.UserName = newCred.UserName;
+            cred.Password = newCred.Password;
+         }
       }
 
       public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }

@@ -17,6 +17,8 @@ namespace IronBoard.RBWebApi
       private readonly ReviewBoardRc _config;
       private readonly string _svnRepositoryPath;
 
+      public event Action<NetworkCredential> AuthenticationRequired;
+
       public RBClient(string svnRepositoryPath, string projectRootFolder, string authCookie)
       {
          if (svnRepositoryPath == null) throw new ArgumentNullException("svnRepositoryPath");
@@ -35,7 +37,6 @@ namespace IronBoard.RBWebApi
 
       private RestRequest CreateRequest(string resource, Method method)
       {
-         if(AuthCookie == null) throw new AuthenticationException("authentication required");
          var request = new RestRequest(resource) {Method = method};
          if(AuthCookie != null) request.AddCookie("rbsessionid", AuthCookie);
          return request;
@@ -54,11 +55,23 @@ namespace IronBoard.RBWebApi
 
       private RestResponse Execute(RestRequest request, int expectedCode)
       {
-         RestResponse response = _client.Execute(request) as RestResponse;
-         if((int)response.StatusCode != expectedCode) throw new InvalidOperationException(
-            response.StatusCode.ToString() + ": " + response.StatusDescription);
-         if(response.StatusCode == HttpStatusCode.Unauthorized)
-            throw new AuthenticationException("not authenticated");
+         var response = _client.Execute(request) as RestResponse;
+         while (response.StatusCode == HttpStatusCode.Unauthorized)
+         {
+            var cred = new NetworkCredential();
+            if (AuthenticationRequired != null) AuthenticationRequired(cred);
+            if(string.IsNullOrEmpty(cred.UserName) || string.IsNullOrEmpty(cred.Password))
+            {
+               throw new AuthenticationException("username and password required");
+            }
+            SignRequest(request, cred);
+            response = _client.Execute(request) as RestResponse;
+            PickUpCookie(response);
+         }
+
+         if ((int)response.StatusCode != expectedCode)
+            throw new InvalidOperationException(response.StatusCode.ToString() + ": " + response.StatusDescription);
+
          return response;
       }
 
@@ -84,17 +97,27 @@ namespace IronBoard.RBWebApi
          return result;
       }
 
-      public void Authenticate(NetworkCredential creds)
+      private void SignRequest(RestRequest request, NetworkCredential creds)
       {
          if (creds == null || creds.UserName == null || creds.Password == null) throw new ArgumentNullException("creds");
-         var request = CreateRequest("repositories/", Method.GET);
          string auth = creds.UserName + ":" + creds.Password;
          auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(auth));
          request.AddHeader(HttpRequestHeader.Authorization.ToString(), auth);
-         var response = _client.Execute(request);
+      }
+
+      private void PickUpCookie(IRestResponse response)
+      {
          var cookie = response.Cookies.FirstOrDefault(c => c.Name == "rbsessionid");
-         if(cookie == null) throw new AuthenticationException("invalid username or password");
+         if (cookie == null) throw new AuthenticationException("invalid username or password");
          AuthCookie = cookie.Value;
+      }
+
+      public void Authenticate(NetworkCredential creds)
+      {
+         var request = CreateRequest("repositories/", Method.GET);
+         SignRequest(request, creds);
+         var response = _client.Execute(request);
+         PickUpCookie(response);
       }
 
       private Uri ParseLink(JObject links, string linkName)
