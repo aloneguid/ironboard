@@ -62,6 +62,7 @@
          this.Login.Size = new System.Drawing.Size(274, 20);
          this.Login.TabIndex = 2;
          this.Login.TextChanged += new System.EventHandler(this.Login_TextChanged);
+         this.Login.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextKeyUp);
          // 
          // Password
          // 
@@ -72,6 +73,7 @@
          this.Password.TabIndex = 3;
          this.Password.UseSystemPasswordChar = true;
          this.Password.TextChanged += new System.EventHandler(this.Password_TextChanged);
+         this.Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextKeyUp);
          // 
          // Authenticate
          // 

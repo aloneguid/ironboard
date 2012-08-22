@@ -70,5 +70,13 @@ namespace IronBoard.Core.WinForms
 
          return null;
       }
+
+      private void TextKeyUp(object sender, KeyEventArgs e)
+      {
+         if(e.KeyCode == Keys.Return && Authenticate.Enabled)
+         {
+            Authenticate_Click(this, null);
+         }
+      }
    }
 }
