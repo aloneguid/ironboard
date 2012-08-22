@@ -15,11 +15,14 @@ namespace IronBoard.Core.WinForms
       private readonly PostCommitReviewPresenter _presenter;
       private readonly Review _review = new Review();
 
-      public PostCommitReviewForm(string solutionPath)
+      public event Action<string> AuthCookieChanged;
+
+      public PostCommitReviewForm(string solutionPath, string authCookie)
       {
          InitializeComponent();
 
-         _presenter = new PostCommitReviewPresenter(this);
+         _presenter = new PostCommitReviewPresenter(this, authCookie);
+         _presenter.AuthCookieChanged += PresenterAuthCookieChanged;
 
          UiScheduler.InitializeUiContext();
 
@@ -29,11 +32,22 @@ namespace IronBoard.Core.WinForms
          SvnUri.Text = _presenter.SvnRepositoryUri;
          Progress.Text = "Idle";
          Shown += PostCommitReviewForm_Shown;
+         Closed += PostCommitReviewForm_Closed;
+      }
+
+      void PresenterAuthCookieChanged(string cookie)
+      {
+         if (AuthCookieChanged != null) AuthCookieChanged(cookie);
       }
 
       void PostCommitReviewForm_Shown(object sender, EventArgs e)
       {
          ListRevisions();
+      }
+
+      void PostCommitReviewForm_Closed(object sender, EventArgs e)
+      {
+         _presenter.AuthCookieChanged -= PresenterAuthCookieChanged;
       }
 
       private void ListRevisions()

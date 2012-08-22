@@ -16,8 +16,10 @@ namespace IronBoard.RBWebApi
       private readonly RestClient _client;
       private readonly ReviewBoardRc _config;
       private readonly string _svnRepositoryPath;
+      private string _authCookie;
 
       public event Action<NetworkCredential> AuthenticationRequired;
+      public event Action<string> AuthCookieChanged;
 
       public RBClient(string svnRepositoryPath, string projectRootFolder, string authCookie)
       {
@@ -33,7 +35,18 @@ namespace IronBoard.RBWebApi
 
       public Uri ServerUri { get { return _config.Uri; } }
 
-      public string AuthCookie { get; private set; }
+      public string AuthCookie
+      {
+         get { return _authCookie; }
+         set
+         {
+            if(value != _authCookie)
+            {
+               _authCookie = value;
+               if (AuthCookieChanged != null) AuthCookieChanged(value);
+            }
+         }
+      }
 
       private RestRequest CreateRequest(string resource, Method method)
       {

@@ -22,11 +22,15 @@ namespace IronBoard.Core.Presenters
       private SvnClient _svn;
       private SvnUriTarget _root;
       private RBClient _rb;
+      private readonly string _oldCookie;
 
-      public PostCommitReviewPresenter(IPostCommitReviewView view)
+      public event Action<string> AuthCookieChanged;
+
+      public PostCommitReviewPresenter(IPostCommitReviewView view, string authCookie)
       {
          if (view == null) throw new ArgumentNullException("view");
          _view = view;
+         _oldCookie = authCookie;
       }
 
       public void Initialise(string workingCopyPath)
@@ -35,8 +39,14 @@ namespace IronBoard.Core.Presenters
          SvnInfoEventArgs args;
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
-         _rb = new RBClient(args.Uri.ToString(), workingCopyPath, null);
+         _rb = new RBClient(args.Uri.ToString(), workingCopyPath, _oldCookie);
          _rb.AuthenticationRequired += OnAuthenticationRequired;
+         _rb.AuthCookieChanged += OnAuthCookieChanged;
+      }
+
+      void OnAuthCookieChanged(string cookie)
+      {
+         if (AuthCookieChanged != null) AuthCookieChanged(cookie);
       }
 
       void OnAuthenticationRequired(NetworkCredential cred)

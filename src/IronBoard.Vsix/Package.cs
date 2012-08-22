@@ -70,6 +70,8 @@ namespace IronBoard.Vsix
             MenuCommand menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
             mcs.AddCommand(menuItem);
          }
+
+         _settingsStore = GetWritableSettingsStore(SettingsRoot);
       }
 
       #endregion
@@ -93,7 +95,16 @@ namespace IronBoard.Vsix
             {
                try
                {
-                  new PostCommitReviewForm(configFolder).ShowDialog();
+                  var form = new PostCommitReviewForm(configFolder, ReadOption("AuthCookie"));
+                  form.AuthCookieChanged += form_AuthCookieChanged;
+                  try
+                  {
+                     form.ShowDialog();
+                  }
+                  finally
+                  {
+                     form.AuthCookieChanged -= form_AuthCookieChanged;
+                  }
                }
                catch (Exception ex)
                {
@@ -107,6 +118,11 @@ namespace IronBoard.Vsix
          {
             Messages.ShowError("Open a solution first");
          }
+      }
+
+      void form_AuthCookieChanged(string cookie)
+      {
+         SaveOption("AuthCookie", cookie);
       }
    }
 }

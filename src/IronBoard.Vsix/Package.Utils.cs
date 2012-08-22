@@ -1,10 +1,15 @@
 ﻿using System.IO;
+using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Shell.Settings;
 
 namespace IronBoard.Vsix
 {
    public partial class Package
    {
+      private const string SettingsRoot = "IronBoard\\Common";
+      private static WritableSettingsStore _settingsStore;
+
       private DirectoryInfo GetPropAsDir(__VSPROPID prop)
       {
          IVsSolution solution = GetService(typeof(SVsSolution)) as IVsSolution;
@@ -29,6 +34,30 @@ namespace IronBoard.Vsix
       private DirectoryInfo SolutionDirectory
       {
          get { return GetPropAsDir(__VSPROPID.VSPROPID_SolutionDirectory); }
+      }
+
+      private WritableSettingsStore GetWritableSettingsStore(string settingsRoot)
+      {
+         SettingsManager settingsManager = new ShellSettingsManager(this);
+         WritableSettingsStore userSettingsStore = settingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
+         if (!userSettingsStore.CollectionExists(settingsRoot))
+         {
+            userSettingsStore.CreateCollection(settingsRoot);
+         }
+         return userSettingsStore;
+      }
+
+      public void SaveOption(string key, string value)
+      {
+         _settingsStore.SetString(SettingsRoot, key, value);
+      }
+
+      public string ReadOption(string key)
+      {
+         if (_settingsStore.PropertyExists(SettingsRoot, key))
+            return _settingsStore.GetString(SettingsRoot, key);
+
+         return null;
       }
    }
 }
