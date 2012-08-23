@@ -23,6 +23,8 @@ namespace IronBoard.Core.Presenters
       private SvnUriTarget _root;
       private RBClient _rb;
       private readonly string _oldCookie;
+      private List<User> _users;
+      private List<UserGroup> _groups; 
 
       public event Action<string> AuthCookieChanged;
 
@@ -169,6 +171,28 @@ namespace IronBoard.Core.Presenters
          p.StartInfo.UseShellExecute = true;
          p.StartInfo.FileName = string.Format("{0}/r/{1}", _rb.ServerUri, r.Id);
          p.Start();
+      }
+
+      public IEnumerable<User> Users
+      {
+         get { return _users ?? (_users = new List<User>(_rb.GetUsers())); }
+      }
+
+      public IEnumerable<UserGroup> Groups
+      {
+         get { return _groups ?? (_groups = new List<UserGroup>(_rb.GetGroups())); }
+      }
+
+      public IEnumerable<User> AsUsers(IEnumerable<string> usernames)
+      {
+         var users = Users.Where(u => usernames.Any(un => un == u.Username));
+         return new List<User>(users);
+      }
+
+      public IEnumerable<UserGroup> AsGroups(IEnumerable<string> groupNames)
+      {
+         var groups = Groups.Where(g => groupNames.Any(gn => gn == g.Name));
+         return new List<UserGroup>(groups);
       }
    }
 }

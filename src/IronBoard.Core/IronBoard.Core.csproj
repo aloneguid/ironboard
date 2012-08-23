@@ -63,6 +63,18 @@
     </Compile>
     <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
+    <Compile Include="WinForms\PeopleEntitySelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinForms\PeopleEntitySelector.Designer.cs">
+      <DependentUpon>PeopleEntitySelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\PeopleEntitySelectorListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\PeopleEntitySelectorListForm.Designer.cs">
+      <DependentUpon>PeopleEntitySelectorListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\PostCommitReviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +105,12 @@
     <EmbeddedResource Include="Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\PeopleEntitySelector.resx">
+      <DependentUpon>PeopleEntitySelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\PeopleEntitySelectorListForm.resx">
+      <DependentUpon>PeopleEntitySelectorListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\PostCommitReviewForm.resx">
       <DependentUpon>PostCommitReviewForm.cs</DependentUpon>

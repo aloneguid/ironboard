@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.WinForms
@@ -8,6 +10,12 @@ namespace IronBoard.Core.WinForms
       public ReviewEntityControl()
       {
          InitializeComponent();
+      }
+
+      public void SetData(IEnumerable<User> users, IEnumerable<UserGroup> groups)
+      {
+         Users.SetAllElements("select users", users.Select(u => u.Username));
+         Groups.SetAllElements("select groups", groups.Select(g => g.Name));
       }
 
       public void Fill(Review review)

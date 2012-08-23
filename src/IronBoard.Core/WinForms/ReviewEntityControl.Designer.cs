@@ -35,6 +35,10 @@
          this.Description = new System.Windows.Forms.TextBox();
          this.label4 = new System.Windows.Forms.Label();
          this.Testing = new System.Windows.Forms.TextBox();
+         this.label1 = new System.Windows.Forms.Label();
+         this.label5 = new System.Windows.Forms.Label();
+         this.Groups = new IronBoard.Core.WinForms.PeopleEntitySelector();
+         this.Users = new IronBoard.Core.WinForms.PeopleEntitySelector();
          this.SuspendLayout();
          // 
          // IsDraft
@@ -44,7 +48,7 @@
          this.IsDraft.Checked = true;
          this.IsDraft.CheckState = System.Windows.Forms.CheckState.Checked;
          this.IsDraft.Enabled = false;
-         this.IsDraft.Location = new System.Drawing.Point(6, 320);
+         this.IsDraft.Location = new System.Drawing.Point(6, 355);
          this.IsDraft.Name = "IsDraft";
          this.IsDraft.Size = new System.Drawing.Size(47, 17);
          this.IsDraft.TabIndex = 18;
@@ -58,7 +62,7 @@
          this.Summary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.Summary.Location = new System.Drawing.Point(61, 5);
          this.Summary.Name = "Summary";
-         this.Summary.Size = new System.Drawing.Size(410, 20);
+         this.Summary.Size = new System.Drawing.Size(434, 20);
          this.Summary.TabIndex = 13;
          // 
          // label2
@@ -87,14 +91,14 @@
          this.Description.Location = new System.Drawing.Point(4, 48);
          this.Description.Multiline = true;
          this.Description.Name = "Description";
-         this.Description.Size = new System.Drawing.Size(467, 200);
+         this.Description.Size = new System.Drawing.Size(491, 186);
          this.Description.TabIndex = 15;
          // 
          // label4
          // 
          this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.label4.AutoSize = true;
-         this.label4.Location = new System.Drawing.Point(4, 252);
+         this.label4.Location = new System.Drawing.Point(4, 287);
          this.label4.Name = "label4";
          this.label4.Size = new System.Drawing.Size(41, 13);
          this.label4.TabIndex = 16;
@@ -104,16 +108,58 @@
          // 
          this.Testing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
-         this.Testing.Location = new System.Drawing.Point(4, 268);
+         this.Testing.Location = new System.Drawing.Point(4, 303);
          this.Testing.Multiline = true;
          this.Testing.Name = "Testing";
-         this.Testing.Size = new System.Drawing.Size(467, 52);
+         this.Testing.Size = new System.Drawing.Size(491, 52);
          this.Testing.TabIndex = 19;
+         // 
+         // label1
+         // 
+         this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+         this.label1.AutoSize = true;
+         this.label1.Location = new System.Drawing.Point(7, 240);
+         this.label1.Name = "label1";
+         this.label1.Size = new System.Drawing.Size(35, 13);
+         this.label1.TabIndex = 21;
+         this.label1.Text = "users:";
+         // 
+         // label5
+         // 
+         this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+         this.label5.AutoSize = true;
+         this.label5.Location = new System.Drawing.Point(6, 263);
+         this.label5.Name = "label5";
+         this.label5.Size = new System.Drawing.Size(42, 13);
+         this.label5.TabIndex = 22;
+         this.label5.Text = "groups:";
+         // 
+         // Groups
+         // 
+         this.Groups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.Groups.Location = new System.Drawing.Point(48, 258);
+         this.Groups.Name = "Groups";
+         this.Groups.Size = new System.Drawing.Size(314, 28);
+         this.Groups.TabIndex = 23;
+         // 
+         // Users
+         // 
+         this.Users.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.Users.Location = new System.Drawing.Point(48, 234);
+         this.Users.Name = "Users";
+         this.Users.Size = new System.Drawing.Size(314, 28);
+         this.Users.TabIndex = 20;
          // 
          // ReviewEntityControl
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.Controls.Add(this.Groups);
+         this.Controls.Add(this.label5);
+         this.Controls.Add(this.label1);
+         this.Controls.Add(this.Users);
          this.Controls.Add(this.Testing);
          this.Controls.Add(this.IsDraft);
          this.Controls.Add(this.Summary);
@@ -122,7 +168,7 @@
          this.Controls.Add(this.Description);
          this.Controls.Add(this.label4);
          this.Name = "ReviewEntityControl";
-         this.Size = new System.Drawing.Size(474, 340);
+         this.Size = new System.Drawing.Size(498, 375);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -137,5 +183,9 @@
       private System.Windows.Forms.TextBox Description;
       private System.Windows.Forms.Label label4;
       private System.Windows.Forms.TextBox Testing;
+      private PeopleEntitySelector Users;
+      private System.Windows.Forms.Label label1;
+      private System.Windows.Forms.Label label5;
+      private PeopleEntitySelector Groups;
    }
 }

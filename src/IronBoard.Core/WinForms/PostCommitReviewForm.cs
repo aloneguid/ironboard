@@ -54,14 +54,23 @@ namespace IronBoard.Core.WinForms
       {
          int maxRevisions = int.Parse((string) MaxRevisions.SelectedItem);
 
-         ProgressForm<IEnumerable<WorkItem>>.Execute(
+         ProgressForm<Tuple<IEnumerable<WorkItem>, IEnumerable<User>, IEnumerable<UserGroup>>>.Execute(
             this,
-            string.Format("fetching last {0} revisions...", maxRevisions),
-            () => _presenter.GetCommitedWorkItems(maxRevisions),
+            string.Format("preparing..."),
+            () =>
+               {
+                  IEnumerable<WorkItem> history = _presenter.GetCommitedWorkItems(maxRevisions);
+                  IEnumerable<User> users = _presenter.Users;
+                  IEnumerable<UserGroup> groups = _presenter.Groups;
+                  return new Tuple<IEnumerable<WorkItem>, IEnumerable<User>, IEnumerable<UserGroup>>(
+                     history, users, groups);
+               },
             RenderRevisions);
       }
 
-      private void RenderRevisions(IEnumerable<WorkItem> history, Exception ex)
+      private void RenderRevisions(
+         Tuple<IEnumerable<WorkItem>, IEnumerable<User>, IEnumerable<UserGroup>> data,
+         Exception ex)
       {
          Revisions.Items.Clear();
 
@@ -69,13 +78,17 @@ namespace IronBoard.Core.WinForms
          {
             Messages.ShowError(ex);
          }
-         else if (history != null)
+         else
          {
-            foreach (WorkItem wi in history)
+            if (data.Item1 != null)
             {
-               Revisions.Items.Add(
-                  new DisplayItem<WorkItem>(_presenter.ToListString(wi), wi));
+               foreach (WorkItem wi in data.Item1)
+               {
+                  Revisions.Items.Add(
+                     new DisplayItem<WorkItem>(_presenter.ToListString(wi), wi));
+               }
             }
+            if(data.Item2 != null || data.Item3 != null) Review.SetData(data.Item2, data.Item3);
          }
 
          UpdateRevisionsChanged();
