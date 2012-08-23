@@ -34,5 +34,12 @@ namespace IronBoard.Test.Integration
          IEnumerable<UserGroup> groups = _client.GetGroups();
          Assert.Greater(groups.Count(), 0);
       }
+
+      [Test]
+      public void GetUsersTest()
+      {
+         IEnumerable<User> users = _client.GetUsers();
+         Assert.Greater(users.Count(), 0);
+      }
    }
 }

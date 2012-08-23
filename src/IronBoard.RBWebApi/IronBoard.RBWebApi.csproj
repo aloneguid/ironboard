@@ -55,6 +55,7 @@
     <Compile Include="Application\ReviewBoardRc.cs" />
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\Review.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserGroup.cs" />
     <Compile Include="RBClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

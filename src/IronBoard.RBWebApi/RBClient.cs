@@ -116,11 +116,11 @@ namespace IronBoard.RBWebApi
          var response = Execute(request, 200);
          if (response != null)
          {
-            var result = new List<UserGroup>();
             JObject jo = JObject.Parse(response.Content);
             var groups = jo["groups"] as JArray;
             if(groups != null)
             {
+               var result = new List<UserGroup>();
                foreach(JObject g in groups)
                {
                   result.Add(new UserGroup(
@@ -136,6 +136,33 @@ namespace IronBoard.RBWebApi
             }
          }
 
+         return null;
+      }
+
+      public IEnumerable<User> GetUsers()
+      {
+         var response = Execute(CreateRequest("users/", Method.GET), 200);
+         if(response != null)
+         {
+            JObject jo = JObject.Parse(response.Content);
+            var users = jo["users"] as JArray;
+            if(users != null)
+            {
+               var result = new List<User>();
+               foreach(JObject u in users)
+               {
+                  result.Add(new User(
+                     u.Value<long>("id"),
+                     u.Value<string>("username"),
+                     u.Value<string>("first_name"),
+                     u.Value<string>("last_name"),
+                     u.Value<string>("fullname"),
+                     u.Value<string>("email"),
+                     u.Value<string>("url")));
+               }
+               return result;
+            }
+         }
          return null;
       }
 
