@@ -110,6 +110,35 @@ namespace IronBoard.RBWebApi
          return result;
       }
 
+      public IEnumerable<UserGroup> GetGroups()
+      {
+         var request = CreateRequest("groups/", Method.GET);
+         var response = Execute(request, 200);
+         if (response != null)
+         {
+            var result = new List<UserGroup>();
+            JObject jo = JObject.Parse(response.Content);
+            var groups = jo["groups"] as JArray;
+            if(groups != null)
+            {
+               foreach(JObject g in groups)
+               {
+                  result.Add(new UserGroup(
+                     g.Value<long>("id"),
+                     g.Value<string>("name"),
+                     g.Value<string>("display_name"),
+                     g.Value<string>("uri"),
+                     g.Value<bool>("visible"),
+                     g.Value<bool>("invite_only"),
+                     g.Value<string>("mailing_list")));
+               }
+               return result;
+            }
+         }
+
+         return null;
+      }
+
       private void SignRequest(RestRequest request, NetworkCredential creds)
       {
          if (creds == null || creds.UserName == null || creds.Password == null) throw new ArgumentNullException("creds");
