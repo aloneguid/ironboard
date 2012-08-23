@@ -41,5 +41,24 @@ namespace IronBoard.Test.Integration
          IEnumerable<User> users = _client.GetUsers();
          Assert.Greater(users.Count(), 0);
       }
+
+      [Test]
+      public void PostReviewToGroupsAndPeopleTest()
+      {
+         var review = new Review();
+         review.Repository = _client.GetRepositories().First();
+         review.Subject = "integration test";
+         review.TestingDone = "integration " + DateTime.Now.ToString();
+
+         User u1 = _client.GetUsers().First(u => u.Username == "cfullerton");
+         User u2 = _client.GetUsers().First(u => u.Username == "iknight");
+         UserGroup g1 = _client.GetGroups().First(g => g.Name == "mso4-all");
+         
+         review.TargetUsers.Add(u1);
+         review.TargetUsers.Add(u2);
+         review.TargetGroups.Add(g1);
+
+         _client.Post(review);
+      }
    }
 }

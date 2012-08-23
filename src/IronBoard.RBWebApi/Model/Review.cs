@@ -18,6 +18,9 @@ namespace IronBoard.RBWebApi.Model
 
    public class Review
    {
+      private readonly List<User> _targetPeople = new List<User>(); 
+      private readonly List<UserGroup> _targetGroups = new List<UserGroup>(); 
+
       public Review()
       {
          
@@ -36,5 +39,9 @@ namespace IronBoard.RBWebApi.Model
       public bool IsDraft { get; set; }
 
       public ReviewLinks Links { get; set; }
+
+      public ICollection<User> TargetUsers { get { return _targetPeople;  } }
+
+      public ICollection<UserGroup> TargetGroups { get { return _targetGroups; } } 
    }
 }
