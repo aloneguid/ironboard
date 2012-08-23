@@ -76,6 +76,7 @@
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
          this.Name = "PeopleEntitySelectorListForm";
          this.ShowInTaskbar = false;
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          this.Text = "select";
          this.ResumeLayout(false);
 

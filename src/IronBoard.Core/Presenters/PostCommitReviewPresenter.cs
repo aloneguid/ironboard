@@ -16,11 +16,12 @@ using SharpSvn;
 
 namespace IronBoard.Core.Presenters
 {
-   class PostCommitReviewPresenter
+   public class PostCommitReviewPresenter
    {
       private readonly IPostCommitReviewView _view;
       private SvnClient _svn;
       private SvnUriTarget _root;
+      private string _relativeRoot;
       private RBClient _rb;
       private readonly string _oldCookie;
       private List<User> _users;
@@ -41,6 +42,9 @@ namespace IronBoard.Core.Presenters
          SvnInfoEventArgs args;
          _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
          _root = new SvnUriTarget(args.Uri);
+         string root = args.Uri.ToString();
+         string repoRoot = args.RepositoryRoot.ToString();
+         _relativeRoot = root.Substring(repoRoot.Length - 1);
          _rb = new RBClient(args.Uri.ToString(), workingCopyPath, _oldCookie);
          _rb.AuthenticationRequired += OnAuthenticationRequired;
          _rb.AuthCookieChanged += OnAuthCookieChanged;
@@ -156,7 +160,7 @@ namespace IronBoard.Core.Presenters
 
          review.Repository = _rb.GetRepositories().First();
          _rb.Post(review);
-         _rb.AttachDiff(review, diff);
+         _rb.AttachDiff(review, _relativeRoot, diff);
       }
 
       public void SaveDiff(long fromRev, long toRev, string targetFileName)

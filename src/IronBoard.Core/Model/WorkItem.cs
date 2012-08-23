@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IronBoard.Core.Model
 {
-   class WorkItem
+   public class WorkItem
    {
       public WorkItem(string itemId, string author, string comment, DateTime time)
       {

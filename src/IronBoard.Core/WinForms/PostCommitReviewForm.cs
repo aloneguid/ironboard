@@ -154,7 +154,7 @@ namespace IronBoard.Core.WinForms
          var range = _presenter.GetRange(SelectedWorkItems);
          if (range != null)
          {
-            Review.Fill(_review);
+            Review.Fill(_review, _presenter);
 
             ProgressForm<Review>.Execute(this,
                                          "posting review...",

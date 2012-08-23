@@ -110,6 +110,7 @@
          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.Name = "RBAuthForm";
+         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
          this.Text = "ReviewBoard Authentication";
          this.ResumeLayout(false);
          this.PerformLayout();

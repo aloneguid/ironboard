@@ -257,17 +257,13 @@ namespace IronBoard.RBWebApi
          Execute(request, 200);
       }
 
-      public void AttachDiff(Review review, string diffText)
+      public void AttachDiff(Review review, string repoRoot, string diffText)
       {
          if (review == null) throw new ArgumentNullException("review");
          if (diffText == null) throw new ArgumentNullException("diffText");
 
-         string diffBaseDir = _svnRepositoryPath.Substring(review.Repository.Path.Length);
-         if (!diffBaseDir.StartsWith("/")) diffBaseDir = "/" + diffBaseDir;
-         if (diffBaseDir.EndsWith("/")) diffBaseDir = diffBaseDir.Substring(0, diffBaseDir.Length - 1);
-
          var request = CreateRequest(review.Links.Diffs, Method.POST);
-         request.AddFile("basedir", Encoding.UTF8.GetBytes(diffBaseDir), null);
+         request.AddFile("basedir", Encoding.UTF8.GetBytes(repoRoot), null);
          request.AddFile("path", Encoding.UTF8.GetBytes(diffText), "diff");
 
          Execute(request, 201);

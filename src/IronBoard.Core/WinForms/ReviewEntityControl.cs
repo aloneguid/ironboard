@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using IronBoard.Core.Presenters;
 using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.WinForms
@@ -18,7 +19,7 @@ namespace IronBoard.Core.WinForms
          Groups.SetAllElements("select groups", groups.Select(g => g.Name));
       }
 
-      public void Fill(Review review)
+      public void Fill(Review review, PostCommitReviewPresenter presenter)
       {
          if(review != null)
          {
@@ -26,6 +27,16 @@ namespace IronBoard.Core.WinForms
             review.Description = Description.Text;
             review.TestingDone = Testing.Text;
             review.IsDraft = IsDraft.Checked;
+            review.TargetUsers.Clear();
+            review.TargetGroups.Clear();
+            foreach (User u in presenter.AsUsers(Users.SelectedElements))
+            {
+               review.TargetUsers.Add(u);
+            }
+            foreach(UserGroup g in presenter.AsGroups(Groups.SelectedElements))
+            {
+               review.TargetGroups.Add(g);
+            }
          }
       }
 
