@@ -42,10 +42,11 @@
          this.Review = new IronBoard.Core.WinForms.ReviewEntityControl();
          this.Status = new System.Windows.Forms.StatusStrip();
          this.SvnUri = new System.Windows.Forms.ToolStripStatusLabel();
+         this.SvnUser = new System.Windows.Forms.ToolStripStatusLabel();
          this.Progress = new System.Windows.Forms.ToolStripStatusLabel();
          this.SaveDiff = new System.Windows.Forms.Button();
-         this.OnlyMyCommits = new System.Windows.Forms.CheckBox();
-         this.SvnUser = new System.Windows.Forms.ToolStripStatusLabel();
+         this.label2 = new System.Windows.Forms.Label();
+         this.AuthorFilter = new System.Windows.Forms.TextBox();
          this.panel1.SuspendLayout();
          this.panel2.SuspendLayout();
          this.Status.SuspendLayout();
@@ -115,7 +116,8 @@
          // panel1
          // 
          this.panel1.BackColor = System.Drawing.SystemColors.Control;
-         this.panel1.Controls.Add(this.OnlyMyCommits);
+         this.panel1.Controls.Add(this.AuthorFilter);
+         this.panel1.Controls.Add(this.label2);
          this.panel1.Controls.Add(this.RevisionsWarning);
          this.panel1.Controls.Add(this.CommandLine);
          this.panel1.Controls.Add(this.label1);
@@ -143,7 +145,7 @@
          // CommandLine
          // 
          this.CommandLine.AutoSize = true;
-         this.CommandLine.Location = new System.Drawing.Point(367, 6);
+         this.CommandLine.Location = new System.Drawing.Point(432, 6);
          this.CommandLine.Name = "CommandLine";
          this.CommandLine.Size = new System.Drawing.Size(30, 13);
          this.CommandLine.TabIndex = 13;
@@ -200,6 +202,12 @@
          this.SvnUri.Size = new System.Drawing.Size(36, 17);
          this.SvnUri.Text = "svn://";
          // 
+         // SvnUser
+         // 
+         this.SvnUser.Name = "SvnUser";
+         this.SvnUser.Size = new System.Drawing.Size(19, 17);
+         this.SvnUser.Text = "...";
+         // 
          // Progress
          // 
          this.Progress.Name = "Progress";
@@ -218,23 +226,21 @@
          this.SaveDiff.UseVisualStyleBackColor = true;
          this.SaveDiff.Click += new System.EventHandler(this.SaveDiff_Click);
          // 
-         // OnlyMyCommits
+         // label2
          // 
-         this.OnlyMyCommits.AutoSize = true;
-         this.OnlyMyCommits.Checked = true;
-         this.OnlyMyCommits.CheckState = System.Windows.Forms.CheckState.Checked;
-         this.OnlyMyCommits.Location = new System.Drawing.Point(263, 5);
-         this.OnlyMyCommits.Name = "OnlyMyCommits";
-         this.OnlyMyCommits.Size = new System.Drawing.Size(102, 17);
-         this.OnlyMyCommits.TabIndex = 15;
-         this.OnlyMyCommits.Text = "only my commits";
-         this.OnlyMyCommits.UseVisualStyleBackColor = true;
+         this.label2.AutoSize = true;
+         this.label2.Location = new System.Drawing.Point(265, 6);
+         this.label2.Name = "label2";
+         this.label2.Size = new System.Drawing.Size(62, 13);
+         this.label2.TabIndex = 15;
+         this.label2.Text = "author filter:";
          // 
-         // SvnUser
+         // AuthorFilter
          // 
-         this.SvnUser.Name = "SvnUser";
-         this.SvnUser.Size = new System.Drawing.Size(19, 17);
-         this.SvnUser.Text = "...";
+         this.AuthorFilter.Location = new System.Drawing.Point(326, 3);
+         this.AuthorFilter.Name = "AuthorFilter";
+         this.AuthorFilter.Size = new System.Drawing.Size(100, 20);
+         this.AuthorFilter.TabIndex = 16;
          // 
          // PostCommitReviewForm
          // 
@@ -274,7 +280,8 @@
       private System.Windows.Forms.ToolStripStatusLabel SvnUri;
       private System.Windows.Forms.ToolStripStatusLabel Progress;
       private System.Windows.Forms.Label RevisionsWarning;
-      private System.Windows.Forms.CheckBox OnlyMyCommits;
       private System.Windows.Forms.ToolStripStatusLabel SvnUser;
+      private System.Windows.Forms.TextBox AuthorFilter;
+      private System.Windows.Forms.Label label2;
    }
 }
