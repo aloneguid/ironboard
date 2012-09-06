@@ -51,12 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\SvnRepository.cs" />
     <Compile Include="Extensions\TrivialUnreliablePersistenceExtensions.cs" />
+    <Compile Include="IBApplication.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Model\CoreSettings.cs" />
     <Compile Include="Model\DisplayItem.cs" />
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
+    <Compile Include="Presenters\WorkItemRangeSelectorPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -65,6 +68,7 @@
     </Compile>
     <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
+    <Compile Include="Views\IWorkItemRangeSelectorView.cs" />
     <Compile Include="WinForms\PeopleEntitySelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -102,6 +106,12 @@
       <DependentUpon>ReviewEntityControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForms\UiScheduler.cs" />
+    <Compile Include="WinForms\WorkItemRangeSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinForms\WorkItemRangeSelector.Designer.cs">
+      <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Strings.resx">
@@ -125,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ReviewEntityControl.resx">
       <DependentUpon>ReviewEntityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\WorkItemRangeSelector.resx">
+      <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

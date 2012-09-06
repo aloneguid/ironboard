@@ -5,6 +5,7 @@ using System.Text;
 
 namespace IronBoard.Core.Model
 {
+   [Serializable]
    public class WorkItem
    {
       public WorkItem(string itemId, string author, string comment, DateTime time)

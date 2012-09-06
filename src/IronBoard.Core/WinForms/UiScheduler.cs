@@ -61,5 +61,17 @@ namespace IronBoard.Core.WinForms
             }
          }
       }
+
+      public static T UiExecute<T>(Func<T> fn)
+      {
+         if(fn != null && _scheduler != null)
+         {
+            T result = default(T);
+            UiExecute(() => { result = fn(); }, true);
+            return result;
+         }
+
+         return default(T);
+      }
    }
 }

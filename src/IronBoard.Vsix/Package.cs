@@ -4,11 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
-using System.Windows.Forms;
 using IronBoard.Core;
 using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
-using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 
 namespace IronBoard.Vsix
@@ -72,6 +70,7 @@ namespace IronBoard.Vsix
          }
 
          _settingsStore = GetWritableSettingsStore(SettingsRoot);
+         IBApplication.AuthCookieChanged += form_AuthCookieChanged;
       }
 
       #endregion
@@ -96,15 +95,7 @@ namespace IronBoard.Vsix
                try
                {
                   var form = new PostCommitReviewForm(configFolder, ReadOption("AuthCookie"));
-                  form.AuthCookieChanged += form_AuthCookieChanged;
-                  try
-                  {
-                     form.ShowDialog();
-                  }
-                  finally
-                  {
-                     form.AuthCookieChanged -= form_AuthCookieChanged;
-                  }
+                  form.ShowDialog();
                }
                catch (Exception ex)
                {

@@ -1,33 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
+using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
-using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
 using IronBoard.RBWebApi.Model;
-using SharpSvn;
 
 namespace IronBoard.Core.Presenters
 {
    public class PostCommitReviewPresenter
    {
       private readonly IPostCommitReviewView _view;
-      private SvnClient _svn;
-      private SvnUriTarget _root;
-      private string _relativeRoot;
       private RBClient _rb;
       private readonly string _oldCookie;
       private List<User> _users;
-      private List<UserGroup> _groups; 
-
-      public event Action<string> AuthCookieChanged;
+      private List<UserGroup> _groups;
+      private SvnRepository _svn;
 
       public PostCommitReviewPresenter(IPostCommitReviewView view, string authCookie)
       {
@@ -38,59 +30,16 @@ namespace IronBoard.Core.Presenters
 
       public void Initialise(string workingCopyPath)
       {
-         _svn = new SvnClient();
-         SvnInfoEventArgs args;
-         _svn.GetInfo(new SvnPathTarget(workingCopyPath), out args);
-         _root = new SvnUriTarget(args.Uri);
-         string root = args.Uri.ToString();
-         string repoRoot = args.RepositoryRoot.ToString();
-         _relativeRoot = root.Substring(repoRoot.Length - 1);
-         _rb = new RBClient(args.Uri.ToString(), workingCopyPath, _oldCookie);
-         _rb.AuthenticationRequired += OnAuthenticationRequired;
-         _rb.AuthCookieChanged += OnAuthCookieChanged;
+         _svn = new SvnRepository(workingCopyPath);
+         IBApplication.Initialise(_svn.RepositoryUri.ToString(), workingCopyPath, _view.CreateLoginPasswordView(), _oldCookie);
+         _rb = IBApplication.RBClient;
       }
 
-      void OnAuthCookieChanged(string cookie)
-      {
-         if (AuthCookieChanged != null) AuthCookieChanged(cookie);
-      }
-
-      void OnAuthenticationRequired(NetworkCredential cred)
-      {
-         NetworkCredential newCred = null;
-
-         UiScheduler.UiExecute(() =>
-            {
-               ILoginPasswordView view = _view.CreateLoginPasswordView();
-               newCred = view.CollectCredential();
-            }, true);
-
-         if(newCred != null)
-         {
-            cred.UserName = newCred.UserName;
-            cred.Password = newCred.Password;
-         }
-      }
-
-      public string SvnRepositoryUri { get { return _root.Uri.ToString(); } }
+      public string SvnRepositoryUri { get { return _svn.RepositoryUri.ToString(); } }
 
       public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
       {
-         var args = new SvnLogArgs {Limit = maxRevisions};
-
-         Collection<SvnLogEventArgs> entries;
-         _svn.GetLog(_root.Uri, args, out entries);
-
-         if (entries != null && entries.Count > 0)
-         {
-            return entries.Select(e => new WorkItem(
-                                          e.Revision.ToString(CultureInfo.InvariantCulture),
-                                          e.Author,
-                                          e.LogMessage,
-                                          e.Time));
-         }
-
-         return null;
+         return _svn.GetCommitedWorkItems(maxRevisions);
       }
 
       public string ProduceDescription(IEnumerable<WorkItem> selectedItems)
@@ -116,12 +65,6 @@ namespace IronBoard.Core.Presenters
          return null;
       }
 
-      public string ToListString(WorkItem i)
-      {
-         return string.Format("{0}: {1}@{2}| {3}",
-                              i.ItemId, i.Author, i.Time, i.Comment);
-      }
-
       public Tuple<int, int> GetRange(IEnumerable<WorkItem> items)
       {
          int min = int.MaxValue, max = 0;
@@ -137,35 +80,25 @@ namespace IronBoard.Core.Presenters
          return min <= max ? new Tuple<int, int>(min - 1, max) : null;
       }
 
-      private string GetDiff(long fromRev, long toRev)
+      public string GetCommandLine(Tuple<int, int> range)
       {
-         string diffText;
-         using (var ms = new MemoryStream())
-         {
-            _svn.Diff(
-               _root,
-               new SvnRevisionRange(fromRev, toRev),
-               ms);
-
-            ms.Position = 0;
-            diffText = Encoding.UTF8.GetString(ms.ToArray());
-         }
-
-         return diffText;
+         return range == null
+                   ? string.Empty
+                   : string.Format("post-review --revision-range={0}:{1}", range.Item1, range.Item2);
       }
 
       public void PostReview(long fromRev, long toRev, Review review)
       {
-         string diff = GetDiff(fromRev, toRev);
+         string diff = _svn.GetDiff(fromRev, toRev);
 
          review.Repository = _rb.GetRepositories().First();
          _rb.Post(review);
-         _rb.AttachDiff(review, _relativeRoot, diff);
+         _rb.AttachDiff(review, _svn.RelativeRoot, diff);
       }
 
       public void SaveDiff(long fromRev, long toRev, string targetFileName)
       {
-         string diff = GetDiff(fromRev, toRev);
+         string diff = _svn.GetDiff(fromRev, toRev);
          File.WriteAllText(targetFileName, diff, Encoding.UTF8);
       }
 
