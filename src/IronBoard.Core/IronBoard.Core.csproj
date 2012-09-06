@@ -105,6 +105,12 @@
     <Compile Include="WinForms\ReviewEntityControl.Designer.cs">
       <DependentUpon>ReviewEntityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\ReviewRequests.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinForms\ReviewRequests.Designer.cs">
+      <DependentUpon>ReviewRequests.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\UiScheduler.cs" />
     <Compile Include="WinForms\WorkItemRangeSelector.cs">
       <SubType>UserControl</SubType>
@@ -135,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ReviewEntityControl.resx">
       <DependentUpon>ReviewEntityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\ReviewRequests.resx">
+      <DependentUpon>ReviewRequests.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\WorkItemRangeSelector.resx">
       <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
