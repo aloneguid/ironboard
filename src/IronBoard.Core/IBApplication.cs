@@ -1,34 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
+using IronBoard.Core.Application;
+using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
 
 namespace IronBoard.Core
 {
-   public static class IBApplication
+   public static class IbApplication
    {
-      private static ILoginPasswordView _loginView;
-
       public static RBClient RBClient { get; private set; }
 
-      public static event Action<string> AuthCookieChanged;
+      public static SvnRepository SvnRepository { get; private set; }
 
-      public static void Initialise(string svnRepositoryPath, string workingCopyPath, ILoginPasswordView loginView, string oldCookie)
+      public static CoreSettings Settings { get; private set; }
+
+      public static event Action<CoreSettings> SettingsChanged;
+
+      public static ILoginPasswordView LoginView { get; set; }
+
+      public static void Initialise(string solutionPath, CoreSettings settings)
       {
-         if (loginView == null) throw new ArgumentNullException("loginView");
-         _loginView = loginView;
-         RBClient = new RBClient(svnRepositoryPath, workingCopyPath, oldCookie);
+         if (solutionPath == null) throw new ArgumentNullException("solutionPath");
+         if (settings == null) throw new ArgumentNullException("settings");
+
+         Settings = settings;
+         SvnRepository = new SvnRepository(solutionPath);
+         RBClient = new RBClient(SvnRepository.RepositoryUri.ToString(), solutionPath, settings.AuthCookie);
          RBClient.AuthenticationRequired += OnAuthenticationRequired;
          RBClient.AuthCookieChanged += OnAuthCookieChanged;
       }
 
       static void OnAuthCookieChanged(string cookie)
       {
-         if (AuthCookieChanged != null) AuthCookieChanged(cookie);
+         Settings.AuthCookie = cookie;
+         ThrowSettingsChanged();
       }
 
       static void OnAuthenticationRequired(NetworkCredential cred)
@@ -37,13 +44,21 @@ namespace IronBoard.Core
 
          UiScheduler.UiExecute(() =>
          {
-            newCred = _loginView.CollectCredential();
+            newCred = LoginView.CollectCredential();
          }, true);
 
          if (newCred != null)
          {
             cred.UserName = newCred.UserName;
             cred.Password = newCred.Password;
+         }
+      }
+
+      static void ThrowSettingsChanged()
+      {
+         if(SettingsChanged != null)
+         {
+            SettingsChanged(Settings);
          }
       }
    }

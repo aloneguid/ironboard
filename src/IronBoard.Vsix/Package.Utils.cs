@@ -8,6 +8,7 @@ namespace IronBoard.Vsix
    public partial class Package
    {
       private const string SettingsRoot = "IronBoard\\Common";
+      private const string SettingsKey = "CoreSettings";
       private static WritableSettingsStore _settingsStore;
 
       private DirectoryInfo GetPropAsDir(__VSPROPID prop)

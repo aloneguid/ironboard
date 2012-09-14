@@ -15,24 +15,19 @@ namespace IronBoard.Core.Presenters
    public class PostCommitReviewPresenter
    {
       private readonly IPostCommitReviewView _view;
-      private RBClient _rb;
-      private readonly string _oldCookie;
+      private readonly RBClient _rb;
       private List<User> _users;
       private List<UserGroup> _groups;
-      private SvnRepository _svn;
+      private readonly SvnRepository _svn;
 
-      public PostCommitReviewPresenter(IPostCommitReviewView view, string authCookie)
+      public PostCommitReviewPresenter(IPostCommitReviewView view)
       {
          if (view == null) throw new ArgumentNullException("view");
          _view = view;
-         _oldCookie = authCookie;
-      }
 
-      public void Initialise(string workingCopyPath)
-      {
-         _svn = new SvnRepository(workingCopyPath);
-         IBApplication.Initialise(_svn.RepositoryUri.ToString(), workingCopyPath, _view.CreateLoginPasswordView(), _oldCookie);
-         _rb = IBApplication.RBClient;
+         if (IbApplication.LoginView == null) IbApplication.LoginView = _view.CreateLoginPasswordView();
+         _rb = IbApplication.RBClient;
+         _svn = IbApplication.SvnRepository;
       }
 
       public string SvnRepositoryUri { get { return _svn.RepositoryUri.ToString(); } }

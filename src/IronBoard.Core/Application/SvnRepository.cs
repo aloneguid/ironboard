@@ -10,7 +10,7 @@ using SharpSvn;
 
 namespace IronBoard.Core.Application
 {
-   class SvnRepository
+   public class SvnRepository
    {
       private readonly string _workingCopyPath;
       private SvnClient _svn;

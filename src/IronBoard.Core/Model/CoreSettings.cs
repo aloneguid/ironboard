@@ -7,9 +7,7 @@ namespace IronBoard.Core.Model
 {
    public class CoreSettings
    {
-      public string UserName { get; set; }
-
-      public string Password { get; set; }
+      public string AuthCookie { get; set; }
 
       public int MaxRevisions { get; set; }
 

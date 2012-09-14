@@ -10,35 +10,25 @@ namespace IronBoard.Core.WinForms
 {
    public partial class PostCommitReviewForm : Form, IPostCommitReviewView
    {
-      private readonly string _solutionPath;
-      private readonly string _authCookie;
       private PostCommitReviewPresenter _presenter;
       private readonly Review _review = new Review();
 
       public PostCommitReviewForm()
       {
          InitializeComponent();
-      }
-
-      public PostCommitReviewForm(string solutionPath, string authCookie) : this()
-      {
-         _solutionPath = solutionPath;
-         _authCookie = authCookie;
-
          Shown += PostCommitReviewForm_Shown;
       }
 
-      private void InitialiseData(string solutionPath, string authCookie)
+      private void InitialiseData()
       {
          if (!DesignMode)
          {
-            _presenter = new PostCommitReviewPresenter(this, authCookie);
+            _presenter = new PostCommitReviewPresenter(this);
 
             UiScheduler.InitializeUiContext();
 
-            _presenter.Initialise(solutionPath);
             SvnUri.Text = _presenter.SvnRepositoryUri;
-            Progress.Text = "Idle";
+            Progress.Text = "hi :)";
             WorkItems.SelectedWorkItemsChanged += WorkItems_SelectedWorkItemsChanged;
             WorkItems.WorkItemsInvalidated += WorkItems_WorkItemsInvalidated;
          }
@@ -63,7 +53,7 @@ namespace IronBoard.Core.WinForms
 
       void PostCommitReviewForm_Shown(object sender, EventArgs e)
       {
-         InitialiseData(_solutionPath, _authCookie);
+         InitialiseData();
 
          ListRevisions();
       }

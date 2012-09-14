@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using IronBoard.Core;
+using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
 using IronBoard.Standalone.Forms;
 
@@ -17,8 +19,11 @@ namespace IronBoard.Standalone
       {
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
-         //Application.Run(new PostCommitReviewForm("c:\\dev\\msw", null));
-         Application.Run(new ReviewRequestsForm());
+
+         IbApplication.Initialise("c:\\dev\\msw", new CoreSettings());
+
+         Application.Run(new PostCommitReviewForm());
+         //Application.Run(new ReviewRequestsForm());
       }
    }
 }

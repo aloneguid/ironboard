@@ -5,6 +5,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using IronBoard.Core;
+using IronBoard.Core.Application;
+using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
 using Microsoft.VisualStudio.Shell;
@@ -70,7 +72,18 @@ namespace IronBoard.Vsix
          }
 
          _settingsStore = GetWritableSettingsStore(SettingsRoot);
-         IBApplication.AuthCookieChanged += form_AuthCookieChanged;
+         InitialiseIbApp();
+      }
+
+      private void InitialiseIbApp()
+      {
+         string settingsString = ReadOption(SettingsKey);
+         CoreSettings settings = settingsString == null
+                                    ? null
+                                    : settingsString.TrivialDeserialize<CoreSettings>();
+         if(settings == null) settings = new CoreSettings();
+
+         IbApplication.Initialise(SolutionDirectory.FullName, settings);
       }
 
       #endregion
@@ -94,7 +107,7 @@ namespace IronBoard.Vsix
             {
                try
                {
-                  var form = new PostCommitReviewForm(configFolder, ReadOption("AuthCookie"));
+                  var form = new PostCommitReviewForm();
                   form.ShowDialog();
                }
                catch (Exception ex)
@@ -111,9 +124,9 @@ namespace IronBoard.Vsix
          }
       }
 
-      void form_AuthCookieChanged(string cookie)
+      void IbSettingsChanged(CoreSettings settings)
       {
-         SaveOption("AuthCookie", cookie);
+         SaveOption(SettingsKey, settings.TrivialSerialize());
       }
    }
 }

@@ -68,7 +68,8 @@
          // 
          // WorkItems
          // 
-         this.WorkItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+         this.WorkItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
          this.WorkItems.Location = new System.Drawing.Point(1, 2);
          this.WorkItems.Name = "WorkItems";
