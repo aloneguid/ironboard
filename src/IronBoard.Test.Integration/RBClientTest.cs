@@ -50,8 +50,8 @@ namespace IronBoard.Test.Integration
          review.Subject = "integration test";
          review.TestingDone = "integration " + DateTime.Now.ToString();
 
-         User u1 = _client.GetUsers().First(u => u.Username == "cfullerton");
-         User u2 = _client.GetUsers().First(u => u.Username == "iknight");
+         User u1 = _client.GetUsers().First(u => u.InternalName == "cfullerton");
+         User u2 = _client.GetUsers().First(u => u.InternalName == "iknight");
          UserGroup g1 = _client.GetGroups().First(g => g.Name == "mso4-all");
          
          review.TargetUsers.Add(u1);

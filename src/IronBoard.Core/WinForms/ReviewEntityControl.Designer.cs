@@ -37,8 +37,8 @@
          this.Testing = new System.Windows.Forms.TextBox();
          this.label1 = new System.Windows.Forms.Label();
          this.label5 = new System.Windows.Forms.Label();
-         this.Groups = new IronBoard.Core.WinForms.PeopleEntitySelector();
-         this.Users = new IronBoard.Core.WinForms.PeopleEntitySelector();
+         this.Groups = new IronBoard.Core.WinForms.ReviewerSelector();
+         this.Users = new IronBoard.Core.WinForms.ReviewerSelector();
          this.SuspendLayout();
          // 
          // IsDraft
@@ -183,9 +183,9 @@
       private System.Windows.Forms.TextBox Description;
       private System.Windows.Forms.Label label4;
       private System.Windows.Forms.TextBox Testing;
-      private PeopleEntitySelector Users;
+      private ReviewerSelector Users;
       private System.Windows.Forms.Label label1;
       private System.Windows.Forms.Label label5;
-      private PeopleEntitySelector Groups;
+      private ReviewerSelector Groups;
    }
 }

@@ -246,7 +246,7 @@ namespace IronBoard.RBWebApi
          if (review.TestingDone != null) request.AddParameter("testing_done", review.TestingDone);
          if (review.TargetUsers.Count > 0)
          {
-            string s = string.Join(",", review.TargetUsers.Select(u => u.Username));
+            string s = string.Join(",", review.TargetUsers.Select(u => u.InternalName));
             request.AddParameter("target_people", s);
          }
          if (review.TargetGroups.Count > 0)

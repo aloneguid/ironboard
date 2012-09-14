@@ -5,33 +5,27 @@ using System.Text;
 
 namespace IronBoard.RBWebApi.Model
 {
-   public class User
+   public class User : Reviewer
    {
-      public User()
+      public User() : base(null, null)
       {
          
       }
 
-      public User(long id, string userName, string firstName, string lastName, string fullName, string email, string url)
+      public User(long id, string userName, string firstName, string lastName, string fullName, string email, string url) : base(userName, fullName)
       {
          this.Id = id;
-         this.Username = userName;
          this.FirstName = firstName;
          this.LastName = lastName;
-         this.FullName = fullName;
          this.Email = email;
          this.Url = url;
       }
 
       public long Id { get; set; }
 
-      public string Username { get; set; }
-
       public string FirstName { get; set; }
 
       public string LastName { get; set; }
-
-      public string FullName { get; set; }
 
       public string Email { get; set; }
 

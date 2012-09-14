@@ -117,7 +117,7 @@ namespace IronBoard.Core.Presenters
 
       public IEnumerable<User> AsUsers(IEnumerable<string> usernames)
       {
-         var users = Users.Where(u => usernames.Any(un => un == u.Username));
+         var users = Users.Where(u => usernames.Any(un => un == u.InternalName));
          return new List<User>(users);
       }
 

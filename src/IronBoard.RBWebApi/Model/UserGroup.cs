@@ -5,18 +5,16 @@ using System.Text;
 
 namespace IronBoard.RBWebApi.Model
 {
-   public class UserGroup
+   public class UserGroup : Reviewer
    {
-      public UserGroup()
+      public UserGroup() : base(null, null)
       {
          
       }
 
-      public UserGroup(long id, string name, string displayName, string uri, bool isVisible, bool inviteOnly, string mailingList)
+      public UserGroup(long id, string name, string displayName, string uri, bool isVisible, bool inviteOnly, string mailingList) : base(name, displayName)
       {
          this.Id = id;
-         this.Name = name;
-         this.DisplayName = displayName;
          this.Uri = uri;
          this.IsVisible = isVisible;
          this.InviteOnly = inviteOnly;
@@ -24,10 +22,6 @@ namespace IronBoard.RBWebApi.Model
       }
 
       public long Id { get; set; }
-
-      public string Name { get; set; }
-
-      public string DisplayName { get; set; }
 
       public string Uri { get; set; }
 

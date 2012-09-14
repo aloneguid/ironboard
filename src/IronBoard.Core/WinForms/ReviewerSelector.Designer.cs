@@ -1,6 +1,6 @@
 ﻿namespace IronBoard.Core.WinForms
 {
-   partial class PeopleEntitySelector
+   partial class ReviewerSelector
    {
       /// <summary> 
       /// Required designer variable.

@@ -69,11 +69,11 @@
     <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
     <Compile Include="Views\IWorkItemRangeSelectorView.cs" />
-    <Compile Include="WinForms\PeopleEntitySelector.cs">
+    <Compile Include="WinForms\ReviewerSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WinForms\PeopleEntitySelector.Designer.cs">
-      <DependentUpon>PeopleEntitySelector.cs</DependentUpon>
+    <Compile Include="WinForms\ReviewerSelector.Designer.cs">
+      <DependentUpon>ReviewerSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForms\PeopleEntitySelectorListForm.cs">
       <SubType>Form</SubType>
@@ -124,8 +124,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\PeopleEntitySelector.resx">
-      <DependentUpon>PeopleEntitySelector.cs</DependentUpon>
+    <EmbeddedResource Include="WinForms\ReviewerSelector.resx">
+      <DependentUpon>ReviewerSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\PeopleEntitySelectorListForm.resx">
       <DependentUpon>PeopleEntitySelectorListForm.cs</DependentUpon>

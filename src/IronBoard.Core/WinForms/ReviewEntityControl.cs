@@ -15,8 +15,8 @@ namespace IronBoard.Core.WinForms
 
       public void SetData(IEnumerable<User> users, IEnumerable<UserGroup> groups)
       {
-         Users.SetAllElements("select users", users.Select(u => u.Username));
-         Groups.SetAllElements("select groups", groups.Select(g => g.Name));
+         Users.SetAllElements("select users", users);
+         Groups.SetAllElements("select groups", groups);
       }
 
       public void Fill(Review review, PostCommitReviewPresenter presenter)
@@ -29,11 +29,11 @@ namespace IronBoard.Core.WinForms
             review.IsDraft = IsDraft.Checked;
             review.TargetUsers.Clear();
             review.TargetGroups.Clear();
-            foreach (User u in presenter.AsUsers(Users.SelectedElements))
+            foreach (User u in Users.SelectedElements)
             {
                review.TargetUsers.Add(u);
             }
-            foreach(UserGroup g in presenter.AsGroups(Groups.SelectedElements))
+            foreach(UserGroup g in Groups.SelectedElements)
             {
                review.TargetGroups.Add(g);
             }

@@ -6,24 +6,25 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.WinForms
 {
-   public partial class PeopleEntitySelector : UserControl
+   public partial class ReviewerSelector : UserControl
    {
       private PeopleEntitySelectorListForm _form;
 
-      public PeopleEntitySelector()
+      public ReviewerSelector()
       {
          InitializeComponent();
       }
 
-      public void SetAllElements(string selectorTitle, IEnumerable<string> all)
+      public void SetAllElements(string selectorTitle, IEnumerable<Reviewer> all)
       {
          _form = new PeopleEntitySelectorListForm(selectorTitle, all);
       }
 
-      public IEnumerable<string> SelectedElements
+      public IEnumerable<Reviewer> SelectedElements
       {
          get { return _form == null ? null : _form.SelectedElements; }
       }
@@ -37,7 +38,7 @@ namespace IronBoard.Core.WinForms
          }
          else
          {
-            string s = string.Join(",", _form.SelectedElements);
+            string s = string.Join(";", _form.SelectedElements);
             ToolTip.SetToolTip(SelectionText, s);
             SelectionText.Text = s;
          }
