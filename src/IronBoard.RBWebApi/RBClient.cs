@@ -213,6 +213,7 @@ namespace IronBoard.RBWebApi
             review.Subject = review_request.Value<string>("summary");
             review.Description = review_request.Value<string>("description");
             review.TestingDone = review_request.Value<string>("testing_done");
+            review.BugsClosed = review_request.Value<string>("bugs_closed");
          }
 
          JObject links = review_request["links"] as JObject;
@@ -244,6 +245,8 @@ namespace IronBoard.RBWebApi
          if (review.Subject != null) request.AddParameter("summary", review.Subject);
          if (review.Description != null) request.AddParameter("description", review.Description);
          if (review.TestingDone != null) request.AddParameter("testing_done", review.TestingDone);
+         if (review.BugsClosed != null) request.AddParameter("bugs_closed", review.BugsClosed);
+
          if (review.TargetUsers.Count > 0)
          {
             string s = string.Join(",", review.TargetUsers.Select(u => u.InternalName));

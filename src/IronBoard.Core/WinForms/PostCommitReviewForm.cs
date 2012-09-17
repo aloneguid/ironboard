@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
@@ -12,6 +14,7 @@ namespace IronBoard.Core.WinForms
    {
       private PostCommitReviewPresenter _presenter;
       private readonly Review _review = new Review();
+      private const string MsoRegularExpressionTag = "mso.\\d+";
 
       public PostCommitReviewForm()
       {
@@ -45,10 +48,26 @@ namespace IronBoard.Core.WinForms
          if (txt != null)
          {
             _review.Description = txt;
+            _review.BugsClosed = ParseBugNumbers(txt);
             Review.Display(_review);
          }
 
          ValidateCanPost();
+      }
+
+      private string ParseBugNumbers(string text)
+      {
+         var bugList = new StringBuilder();
+         MatchCollection matchCollection = Regex.Matches(text, MsoRegularExpressionTag, RegexOptions.IgnoreCase);
+         if (matchCollection.Count > 0)
+         {
+            foreach (Match match in matchCollection)
+            {
+               bugList.Append(match.Value);
+               bugList.Append(" ");
+            }
+         }
+         return bugList.ToString().TrimEnd();
       }
 
       void PostCommitReviewForm_Shown(object sender, EventArgs e)

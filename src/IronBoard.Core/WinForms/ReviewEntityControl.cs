@@ -27,6 +27,7 @@ namespace IronBoard.Core.WinForms
             review.Description = Description.Text;
             review.TestingDone = Testing.Text;
             review.IsDraft = IsDraft.Checked;
+            review.BugsClosed = Bugs.Text;
             review.TargetUsers.Clear();
             review.TargetGroups.Clear();
             foreach (User u in Users.SelectedElements)
@@ -47,6 +48,7 @@ namespace IronBoard.Core.WinForms
             Summary.Text = review.Subject ?? string.Empty;
             Description.Text = review.Description ?? string.Empty;
             Testing.Text = review.TestingDone ?? string.Empty;
+            Bugs.Text = review.BugsClosed ?? string.Empty;
             IsDraft.Checked = review.IsDraft;
          }
       }

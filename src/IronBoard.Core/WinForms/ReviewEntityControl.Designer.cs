@@ -37,6 +37,8 @@
          this.Testing = new System.Windows.Forms.TextBox();
          this.label1 = new System.Windows.Forms.Label();
          this.label5 = new System.Windows.Forms.Label();
+         this.label6 = new System.Windows.Forms.Label();
+         this.Bugs = new System.Windows.Forms.TextBox();
          this.Groups = new IronBoard.Core.WinForms.ReviewerSelector();
          this.Users = new IronBoard.Core.WinForms.ReviewerSelector();
          this.SuspendLayout();
@@ -48,7 +50,7 @@
          this.IsDraft.Checked = true;
          this.IsDraft.CheckState = System.Windows.Forms.CheckState.Checked;
          this.IsDraft.Enabled = false;
-         this.IsDraft.Location = new System.Drawing.Point(6, 354);
+         this.IsDraft.Location = new System.Drawing.Point(6, 372);
          this.IsDraft.Name = "IsDraft";
          this.IsDraft.Size = new System.Drawing.Size(47, 17);
          this.IsDraft.TabIndex = 18;
@@ -57,8 +59,8 @@
          // 
          // Summary
          // 
-         this.Summary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.Summary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.Summary.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
          this.Summary.Location = new System.Drawing.Point(61, 5);
          this.Summary.Name = "Summary";
@@ -85,20 +87,20 @@
          // 
          // Description
          // 
-         this.Description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.Description.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.Description.Location = new System.Drawing.Point(4, 48);
          this.Description.Multiline = true;
          this.Description.Name = "Description";
-         this.Description.Size = new System.Drawing.Size(643, 185);
+         this.Description.Size = new System.Drawing.Size(643, 174);
          this.Description.TabIndex = 15;
          // 
          // label4
          // 
          this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.label4.AutoSize = true;
-         this.label4.Location = new System.Drawing.Point(4, 286);
+         this.label4.Location = new System.Drawing.Point(4, 304);
          this.label4.Name = "label4";
          this.label4.Size = new System.Drawing.Size(41, 13);
          this.label4.TabIndex = 16;
@@ -106,9 +108,9 @@
          // 
          // Testing
          // 
-         this.Testing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.Testing.Location = new System.Drawing.Point(4, 302);
+         this.Testing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+         this.Testing.Location = new System.Drawing.Point(4, 320);
          this.Testing.Multiline = true;
          this.Testing.Name = "Testing";
          this.Testing.Size = new System.Drawing.Size(643, 52);
@@ -118,7 +120,7 @@
          // 
          this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.label1.AutoSize = true;
-         this.label1.Location = new System.Drawing.Point(5, 239);
+         this.label1.Location = new System.Drawing.Point(5, 257);
          this.label1.Name = "label1";
          this.label1.Size = new System.Drawing.Size(35, 13);
          this.label1.TabIndex = 21;
@@ -128,26 +130,46 @@
          // 
          this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
          this.label5.AutoSize = true;
-         this.label5.Location = new System.Drawing.Point(4, 262);
+         this.label5.Location = new System.Drawing.Point(4, 280);
          this.label5.Name = "label5";
          this.label5.Size = new System.Drawing.Size(42, 13);
          this.label5.TabIndex = 22;
          this.label5.Text = "groups:";
          // 
+         // label6
+         // 
+         this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+         this.label6.AutoSize = true;
+         this.label6.Location = new System.Drawing.Point(3, 234);
+         this.label6.Name = "label6";
+         this.label6.Size = new System.Drawing.Size(36, 13);
+         this.label6.TabIndex = 24;
+         this.label6.Text = " bugs:";
+         // 
+         // Bugs
+         // 
+         this.Bugs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+         this.Bugs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+         this.Bugs.Location = new System.Drawing.Point(51, 231);
+         this.Bugs.Name = "Bugs";
+         this.Bugs.Size = new System.Drawing.Size(328, 20);
+         this.Bugs.TabIndex = 25;
+         // 
          // Groups
          // 
-         this.Groups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.Groups.Location = new System.Drawing.Point(48, 256);
+         this.Groups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+         this.Groups.Location = new System.Drawing.Point(48, 274);
          this.Groups.Name = "Groups";
          this.Groups.Size = new System.Drawing.Size(371, 28);
          this.Groups.TabIndex = 23;
          // 
          // Users
          // 
-         this.Users.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
-         this.Users.Location = new System.Drawing.Point(48, 233);
+         this.Users.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+         this.Users.Location = new System.Drawing.Point(48, 251);
          this.Users.Name = "Users";
          this.Users.Size = new System.Drawing.Size(371, 28);
          this.Users.TabIndex = 20;
@@ -156,6 +178,8 @@
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.Controls.Add(this.Bugs);
+         this.Controls.Add(this.label6);
          this.Controls.Add(this.Groups);
          this.Controls.Add(this.label5);
          this.Controls.Add(this.label1);
@@ -168,7 +192,7 @@
          this.Controls.Add(this.Description);
          this.Controls.Add(this.label4);
          this.Name = "ReviewEntityControl";
-         this.Size = new System.Drawing.Size(650, 374);
+         this.Size = new System.Drawing.Size(650, 392);
          this.ResumeLayout(false);
          this.PerformLayout();
 
@@ -187,5 +211,7 @@
       private System.Windows.Forms.Label label1;
       private System.Windows.Forms.Label label5;
       private ReviewerSelector Groups;
+      private System.Windows.Forms.Label label6;
+      private System.Windows.Forms.TextBox Bugs;
    }
 }

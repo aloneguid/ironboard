@@ -68,9 +68,9 @@
          // 
          // WorkItems
          // 
-         this.WorkItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.WorkItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.WorkItems.Location = new System.Drawing.Point(1, 2);
          this.WorkItems.Name = "WorkItems";
          this.WorkItems.Size = new System.Drawing.Size(758, 136);
@@ -101,9 +101,9 @@
          // 
          // Review
          // 
-         this.Review.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                     | System.Windows.Forms.AnchorStyles.Left)
-                     | System.Windows.Forms.AnchorStyles.Right)));
+         this.Review.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
          this.Review.Location = new System.Drawing.Point(-2, 4);
          this.Review.Name = "Review";
          this.Review.Size = new System.Drawing.Size(758, 305);
@@ -124,20 +124,20 @@
          // SvnUri
          // 
          this.SvnUri.Name = "SvnUri";
-         this.SvnUri.Size = new System.Drawing.Size(36, 17);
+         this.SvnUri.Size = new System.Drawing.Size(38, 17);
          this.SvnUri.Text = "svn://";
          // 
          // CommandLine
          // 
          this.CommandLine.BorderStyle = System.Windows.Forms.Border3DStyle.Bump;
          this.CommandLine.Name = "CommandLine";
-         this.CommandLine.Size = new System.Drawing.Size(19, 17);
+         this.CommandLine.Size = new System.Drawing.Size(16, 17);
          this.CommandLine.Text = "...";
          // 
          // Progress
          // 
          this.Progress.Name = "Progress";
-         this.Progress.Size = new System.Drawing.Size(19, 17);
+         this.Progress.Size = new System.Drawing.Size(16, 17);
          this.Progress.Text = "...";
          // 
          // PostCommitReviewForm

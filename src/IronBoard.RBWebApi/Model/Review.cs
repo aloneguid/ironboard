@@ -36,6 +36,8 @@ namespace IronBoard.RBWebApi.Model
 
       public string TestingDone { get; set; }
 
+      public string BugsClosed { get; set; }
+
       public bool IsDraft { get; set; }
 
       public ReviewLinks Links { get; set; }
