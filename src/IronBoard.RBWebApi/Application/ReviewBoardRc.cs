@@ -33,7 +33,7 @@ namespace IronBoard.RBWebApi.Application
                if(idx != -1)
                {
                   string key = s.Substring(0, idx).Trim();
-                  string val = s.Substring(idx + 1).Trim().Trim('\'');
+                  string val = s.Substring(idx + 1).Trim().Trim('\'').Trim('\"');
                   switch (key)
                   {
                      case KeyReviewBoardUrl:
