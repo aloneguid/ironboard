@@ -17,6 +17,7 @@ namespace IronBoard.RBWebApi
       private readonly ReviewBoardRc _config;
       private readonly string _svnRepositoryPath;
       private string _authCookie;
+      private static Dictionary<string, User> _userNameToUser; 
 
       public event Action<NetworkCredential> AuthenticationRequired;
       public event Action<string> AuthCookieChanged;
@@ -166,6 +167,23 @@ namespace IronBoard.RBWebApi
          return null;
       }
 
+      private void ValidateCaches()
+      {
+         if(_userNameToUser == null)
+         {
+            IEnumerable<User> allUsers = GetUsers();
+            if(allUsers != null)
+            {
+               _userNameToUser = new Dictionary<string, User>();
+               var aul = allUsers.ToList();
+               foreach(User u in aul)
+               {
+                  _userNameToUser[u.InternalName] = u;
+               }
+            }
+         }
+      }
+
       private void SignRequest(RestRequest request, NetworkCredential creds)
       {
          if (creds == null || creds.UserName == null || creds.Password == null) throw new ArgumentNullException("creds");
@@ -206,22 +224,36 @@ namespace IronBoard.RBWebApi
       private void ParseReview(string response, Review review, string entityTag, bool parseData)
       {
          JObject jo = JObject.Parse(response);
-         JObject review_request = jo[entityTag] as JObject;
-         review.Id = review_request.Value<long>("id");
+         if (entityTag != null) jo = jo[entityTag] as JObject;
+         review.Id = jo.Value<long>("id");
          if (parseData)
          {
-            review.Subject = review_request.Value<string>("summary");
-            review.Description = review_request.Value<string>("description");
-            review.TestingDone = review_request.Value<string>("testing_done");
-            review.BugsClosed = review_request.Value<string>("bugs_closed");
+            review.Subject = jo.Value<string>("summary");
+            review.Description = jo.Value<string>("description");
+            review.TestingDone = jo.Value<string>("testing_done");
+            //review.BugsClosed = jo.Value<string>("bugs_closed"); //this is not a string but an array (TODO)
          }
 
-         JObject links = review_request["links"] as JObject;
-         if(review.Links == null) review.Links = new ReviewLinks();
-         review.Links.Diffs = ParseLink(links, "diffs");
-         review.Links.Update = ParseLink(links, "update");
-         review.Links.Draft = ParseLink(links, "draft");
-         review.Links.Self = ParseLink(links, "self");
+         var links = jo["links"] as JObject;
+         if (links != null)
+         {
+            if (review.Links == null) review.Links = new ReviewLinks();
+            review.Links.Diffs = ParseLink(links, "diffs");
+            review.Links.Update = ParseLink(links, "update");
+            review.Links.Draft = ParseLink(links, "draft");
+            review.Links.Self = ParseLink(links, "self");
+
+            var linkSubmitter = links["submitter"] as JObject;
+            if(linkSubmitter != null)
+            {
+               string userName = linkSubmitter.Value<string>("title");
+               if(userName != null)
+               {
+                  ValidateCaches();
+                  if (_userNameToUser.ContainsKey(userName)) review.Submitter = _userNameToUser[userName];
+               }
+            }
+         }
       }
 
       /// <summary>
@@ -270,6 +302,53 @@ namespace IronBoard.RBWebApi
          request.AddFile("path", Encoding.UTF8.GetBytes(diffText), "diff");
 
          Execute(request, 201);
+      }
+
+      private IEnumerable<Review> ParseReviews(string json, out string nextResource)
+      {
+         nextResource = null;
+         var reviews = new List<Review>();
+         JObject jo = JObject.Parse(json);
+
+         //parse requests
+         var all = jo["review_requests"] as JArray;
+         if (all != null)
+         {
+            foreach (JObject rr in all)
+            {
+               var r = new Review();
+               ParseReview(rr.ToString(), r, null, true);
+               reviews.Add(r);
+            }
+         }
+
+         JObject links = jo["links"] as JObject;
+         if(links != null)
+         {
+            //get next page
+            Uri next = ParseLink(links, "next");
+            if(next != null)
+            {
+               nextResource = next.ToString();
+            }
+         }
+
+         return reviews;
+      }
+
+      public IEnumerable<Review> GetPersonalRequests()
+      {
+         string resource = "review-requests/?max-results=1000";
+         var r = new List<Review>();
+         while (resource != null)
+         {
+            var request = CreateRequest(resource, Method.GET);
+            var response = Execute(request, 200);
+            IEnumerable<Review> batch = ParseReviews(response.Content, out resource);
+            if(batch != null) r.AddRange(batch);
+            resource = null;
+         }
+         return r;
       }
    }
 }

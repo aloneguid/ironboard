@@ -14,7 +14,7 @@ namespace IronBoard.Core.WinForms
    {
       private PostCommitReviewPresenter _presenter;
       private readonly Review _review = new Review();
-      private const string MsoRegularExpressionTag = "mso.\\d+";
+      private const string JiraRegularExpressionTag = ".{1-5}.\\d+";
 
       public PostCommitReviewForm()
       {
@@ -58,7 +58,7 @@ namespace IronBoard.Core.WinForms
       private string ParseBugNumbers(string text)
       {
          var bugList = new StringBuilder();
-         MatchCollection matchCollection = Regex.Matches(text, MsoRegularExpressionTag, RegexOptions.IgnoreCase);
+         MatchCollection matchCollection = Regex.Matches(text, JiraRegularExpressionTag, RegexOptions.IgnoreCase);
          if (matchCollection.Count > 0)
          {
             foreach (Match match in matchCollection)

@@ -42,6 +42,8 @@ namespace IronBoard.RBWebApi.Model
 
       public ReviewLinks Links { get; set; }
 
+      public User Submitter { get; set; } 
+
       public ICollection<User> TargetUsers { get { return _targetPeople;  } }
 
       public ICollection<UserGroup> TargetGroups { get { return _targetGroups; } } 

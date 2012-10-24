@@ -22,8 +22,8 @@ namespace IronBoard.Standalone
 
          IbApplication.Initialise("c:\\dev\\msw", new CoreSettings());
 
-         Application.Run(new PostCommitReviewForm());
-         //Application.Run(new ReviewRequestsForm());
+         //Application.Run(new PostCommitReviewForm());
+         Application.Run(new ReviewRequestsForm());
       }
    }
 }

@@ -60,5 +60,12 @@ namespace IronBoard.Test.Integration
 
          _client.Post(review);
       }
+
+      [Test]
+      public void GetMyReviewsTest()
+      {
+         IEnumerable<Review> reviews = _client.GetPersonalRequests();
+         reviews = null;
+      }
    }
 }
