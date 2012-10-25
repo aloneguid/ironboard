@@ -30,14 +30,16 @@
       {
          this.components = new System.ComponentModel.Container();
          this.Requests = new System.Windows.Forms.DataGridView();
+         this.RequestsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+         this.updateWithNewCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+         this.ReloadReviews = new System.Windows.Forms.Button();
          this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-         this.Added = new System.Windows.Forms.DataGridViewTextBoxColumn();
+         this.Submitter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+         this.LastUpdated = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.Groups = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.People = new System.Windows.Forms.DataGridViewTextBoxColumn();
          this.Summary = new System.Windows.Forms.DataGridViewTextBoxColumn();
-         this.RequestsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-         this.updateWithNewCommitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
          ((System.ComponentModel.ISupportInitialize)(this.Requests)).BeginInit();
          this.RequestsMenu.SuspendLayout();
          this.SuspendLayout();
@@ -50,7 +52,8 @@
          this.Requests.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
          this.Requests.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
-            this.Added,
+            this.Submitter,
+            this.LastUpdated,
             this.Status,
             this.Groups,
             this.People,
@@ -65,6 +68,29 @@
          this.Requests.Size = new System.Drawing.Size(952, 211);
          this.Requests.TabIndex = 0;
          // 
+         // RequestsMenu
+         // 
+         this.RequestsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateWithNewCommitToolStripMenuItem});
+         this.RequestsMenu.Name = "RequestsMenu";
+         this.RequestsMenu.Size = new System.Drawing.Size(202, 26);
+         // 
+         // updateWithNewCommitToolStripMenuItem
+         // 
+         this.updateWithNewCommitToolStripMenuItem.Name = "updateWithNewCommitToolStripMenuItem";
+         this.updateWithNewCommitToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+         this.updateWithNewCommitToolStripMenuItem.Text = "update with new commit";
+         // 
+         // ReloadReviews
+         // 
+         this.ReloadReviews.Location = new System.Drawing.Point(4, 4);
+         this.ReloadReviews.Name = "ReloadReviews";
+         this.ReloadReviews.Size = new System.Drawing.Size(75, 23);
+         this.ReloadReviews.TabIndex = 1;
+         this.ReloadReviews.Text = "&refresh";
+         this.ReloadReviews.UseVisualStyleBackColor = true;
+         this.ReloadReviews.Click += new System.EventHandler(this.ReloadReviews_Click);
+         // 
          // id
          // 
          this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -73,13 +99,19 @@
          this.id.ReadOnly = true;
          this.id.Width = 39;
          // 
-         // Added
+         // Submitter
          // 
-         this.Added.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-         this.Added.HeaderText = "added";
-         this.Added.Name = "Added";
-         this.Added.ReadOnly = true;
-         this.Added.Width = 62;
+         this.Submitter.HeaderText = "submitter";
+         this.Submitter.Name = "Submitter";
+         this.Submitter.ReadOnly = true;
+         // 
+         // LastUpdated
+         // 
+         this.LastUpdated.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+         this.LastUpdated.HeaderText = "updated";
+         this.LastUpdated.Name = "LastUpdated";
+         this.LastUpdated.ReadOnly = true;
+         this.LastUpdated.Width = 71;
          // 
          // Status
          // 
@@ -112,23 +144,11 @@
          this.Summary.Name = "Summary";
          this.Summary.ReadOnly = true;
          // 
-         // RequestsMenu
-         // 
-         this.RequestsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateWithNewCommitToolStripMenuItem});
-         this.RequestsMenu.Name = "RequestsMenu";
-         this.RequestsMenu.Size = new System.Drawing.Size(202, 26);
-         // 
-         // updateWithNewCommitToolStripMenuItem
-         // 
-         this.updateWithNewCommitToolStripMenuItem.Name = "updateWithNewCommitToolStripMenuItem";
-         this.updateWithNewCommitToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-         this.updateWithNewCommitToolStripMenuItem.Text = "update with new commit";
-         // 
          // ReviewRequests
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.Controls.Add(this.ReloadReviews);
          this.Controls.Add(this.Requests);
          this.Name = "ReviewRequests";
          this.Size = new System.Drawing.Size(958, 244);
@@ -141,13 +161,15 @@
       #endregion
 
       private System.Windows.Forms.DataGridView Requests;
+      private System.Windows.Forms.ContextMenuStrip RequestsMenu;
+      private System.Windows.Forms.ToolStripMenuItem updateWithNewCommitToolStripMenuItem;
+      private System.Windows.Forms.Button ReloadReviews;
       private System.Windows.Forms.DataGridViewTextBoxColumn id;
-      private System.Windows.Forms.DataGridViewTextBoxColumn Added;
+      private System.Windows.Forms.DataGridViewTextBoxColumn Submitter;
+      private System.Windows.Forms.DataGridViewTextBoxColumn LastUpdated;
       private System.Windows.Forms.DataGridViewTextBoxColumn Status;
       private System.Windows.Forms.DataGridViewTextBoxColumn Groups;
       private System.Windows.Forms.DataGridViewTextBoxColumn People;
       private System.Windows.Forms.DataGridViewTextBoxColumn Summary;
-      private System.Windows.Forms.ContextMenuStrip RequestsMenu;
-      private System.Windows.Forms.ToolStripMenuItem updateWithNewCommitToolStripMenuItem;
    }
 }

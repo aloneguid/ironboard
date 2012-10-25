@@ -17,7 +17,8 @@ namespace IronBoard.RBWebApi
       private readonly ReviewBoardRc _config;
       private readonly string _svnRepositoryPath;
       private string _authCookie;
-      private static Dictionary<string, User> _userNameToUser; 
+      private static Dictionary<string, User> _userNameToUser;
+      private static Dictionary<string, UserGroup> _groupNameToGroup; 
 
       public event Action<NetworkCredential> AuthenticationRequired;
       public event Action<string> AuthCookieChanged;
@@ -84,7 +85,14 @@ namespace IronBoard.RBWebApi
          }
 
          if ((int)response.StatusCode != expectedCode)
-            throw new InvalidOperationException(response.StatusCode.ToString() + ": " + response.StatusDescription);
+         {
+            string msg = string.Format("code: {0}\r\ndescription: {1}\r\nresponse:{2}\r\n",
+                                       response.StatusCode,
+                                       response.StatusDescription,
+                                       response.Content);
+
+            throw new InvalidOperationException(msg);
+         }
 
          return response;
       }
@@ -182,6 +190,20 @@ namespace IronBoard.RBWebApi
                }
             }
          }
+
+         if(_groupNameToGroup == null)
+         {
+            IEnumerable<UserGroup> allGroups = GetGroups();
+            if(allGroups != null)
+            {
+               _groupNameToGroup = new Dictionary<string, UserGroup>();
+               var agl = allGroups.ToList();
+               foreach(UserGroup g in agl)
+               {
+                  _groupNameToGroup[g.InternalName] = g;
+               }
+            }
+         }
       }
 
       private void SignRequest(RestRequest request, NetworkCredential creds)
@@ -228,10 +250,41 @@ namespace IronBoard.RBWebApi
          review.Id = jo.Value<long>("id");
          if (parseData)
          {
+            ValidateCaches();
             review.Subject = jo.Value<string>("summary");
             review.Description = jo.Value<string>("description");
             review.TestingDone = jo.Value<string>("testing_done");
             //review.BugsClosed = jo.Value<string>("bugs_closed"); //this is not a string but an array (TODO)
+            review.LastUpdated = jo.Value<DateTime>("last_updated");
+            review.Status = jo.Value<string>("status");
+
+            //target groups
+            JArray jgroups = jo["target_groups"] as JArray;
+            if(jgroups != null)
+            {
+               foreach(JObject jg in jgroups)
+               {
+                  string title = jg.Value<string>("title");
+                  if(title != null && _groupNameToGroup.ContainsKey(title))
+                  {
+                     review.TargetGroups.Add(_groupNameToGroup[title]);
+                  }
+               }
+            }
+
+            //target users
+            JArray jusers = jo["target_people"] as JArray;
+            if(jusers != null)
+            {
+               foreach (JObject juser in jusers)
+               {
+                  string title = juser.Value<string>("title");
+                  if(title != null && _userNameToUser.ContainsKey(title))
+                  {
+                     review.TargetUsers.Add(_userNameToUser[title]);
+                  }
+               }
+            }
          }
 
          var links = jo["links"] as JObject;

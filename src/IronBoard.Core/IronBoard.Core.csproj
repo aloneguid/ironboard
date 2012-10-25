@@ -59,6 +59,7 @@
     <Compile Include="Model\DisplayItem.cs" />
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
+    <Compile Include="Presenters\ReviewRequestsPresenter.cs" />
     <Compile Include="Presenters\WorkItemRangeSelectorPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings.Designer.cs">
@@ -68,7 +69,14 @@
     </Compile>
     <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
+    <Compile Include="Views\IReviewRequestsView.cs" />
     <Compile Include="Views\IWorkItemRangeSelectorView.cs" />
+    <Compile Include="WinForms\FakeInitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\FakeInitForm.Designer.cs">
+      <DependentUpon>FakeInitForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\ReviewerSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>

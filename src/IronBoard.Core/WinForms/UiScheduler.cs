@@ -12,7 +12,19 @@ namespace IronBoard.Core.WinForms
 
       public static void InitializeUiContext()
       {
-         _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+         try
+         {
+            _scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+         }
+         catch(InvalidOperationException ex)
+         {
+            System.Windows.Forms.Application.Run(new FakeInitForm());
+
+            if(_scheduler == null)
+            {
+               throw new InvalidOperationException("fallback init failed too", ex);
+            }
+         }
       }
 
       private static void ExecuteOld()

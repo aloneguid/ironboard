@@ -28,8 +28,6 @@ namespace IronBoard.Core.WinForms
          {
             _presenter = new PostCommitReviewPresenter(this);
 
-            UiScheduler.InitializeUiContext();
-
             SvnUri.Text = _presenter.SvnRepositoryUri;
             Progress.Text = "hi :)";
             WorkItems.SelectedWorkItemsChanged += WorkItems_SelectedWorkItemsChanged;

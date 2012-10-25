@@ -46,6 +46,10 @@ namespace IronBoard.RBWebApi.Model
 
       public ICollection<User> TargetUsers { get { return _targetPeople;  } }
 
-      public ICollection<UserGroup> TargetGroups { get { return _targetGroups; } } 
+      public ICollection<UserGroup> TargetGroups { get { return _targetGroups; } }
+
+      public DateTime LastUpdated { get; set; }
+
+      public string Status { get; set; }
    }
 }

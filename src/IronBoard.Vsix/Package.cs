@@ -84,6 +84,7 @@ namespace IronBoard.Vsix
          if(settings == null) settings = new CoreSettings();
 
          IbApplication.Initialise(SolutionDirectory.FullName, settings);
+         IbApplication.SettingsChanged += IbSettingsChanged;
       }
 
       #endregion

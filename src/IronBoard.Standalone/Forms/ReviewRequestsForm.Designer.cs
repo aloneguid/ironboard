@@ -33,9 +33,12 @@
          // 
          // reviewRequests1
          // 
+         this.reviewRequests1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
          this.reviewRequests1.Location = new System.Drawing.Point(4, 3);
          this.reviewRequests1.Name = "reviewRequests1";
-         this.reviewRequests1.Size = new System.Drawing.Size(843, 176);
+         this.reviewRequests1.Size = new System.Drawing.Size(843, 350);
          this.reviewRequests1.TabIndex = 0;
          // 
          // ReviewRequestsForm

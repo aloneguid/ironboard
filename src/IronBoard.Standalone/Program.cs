@@ -20,7 +20,9 @@ namespace IronBoard.Standalone
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
 
+         UiScheduler.InitializeUiContext();
          IbApplication.Initialise("c:\\dev\\msw", new CoreSettings());
+         IbApplication.LoginView = new RBAuthForm(null);
 
          //Application.Run(new PostCommitReviewForm());
          Application.Run(new ReviewRequestsForm());
