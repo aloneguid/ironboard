@@ -9,7 +9,9 @@ using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
+using IronBoard.Vsix.Windows;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace IronBoard.Vsix
 {
@@ -31,8 +33,10 @@ namespace IronBoard.Vsix
    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
    // This attribute is needed to let the shell know that this package exposes some menus.
    [ProvideMenuResource("Menus.ctmenu", 1)]
+   [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
    [Guid(GuidList.guidIronBoard_VsixPkgString)]
-   public partial class Package : Microsoft.VisualStudio.Shell.Package
+   [ProvideToolWindow(typeof(IronToolWindow))]
+   public partial class Package : Microsoft.VisualStudio.Shell.Package, IVsSolutionEvents
    {
       /// <summary>
       /// Default constructor of the package.
@@ -43,11 +47,7 @@ namespace IronBoard.Vsix
       /// </summary>
       public Package()
       {
-         Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
       }
-
-      /////////////////////////////////////////////////////////////////////////////
-      // Overriden Package Implementation
 
       #region Package Members
 
@@ -57,7 +57,6 @@ namespace IronBoard.Vsix
       /// </summary>
       protected override void Initialize()
       {
-         Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
          base.Initialize();
 
          // Add our command handlers for menu (commands must exist in the .vsct file)
@@ -73,18 +72,45 @@ namespace IronBoard.Vsix
 
          _settingsStore = GetWritableSettingsStore(SettingsRoot);
          InitialiseIbApp();
+         InitializeShell();
       }
 
       private void InitialiseIbApp()
+      {
+         IbApplication.SettingsChanged += IbSettingsChanged;
+      }
+
+      private void InitializeSolution()
       {
          string settingsString = ReadOption(SettingsKey);
          CoreSettings settings = settingsString == null
                                     ? null
                                     : settingsString.TrivialDeserialize<CoreSettings>();
-         if(settings == null) settings = new CoreSettings();
+         if (settings == null) settings = new CoreSettings();
+         IbApplication.Initialise(RBUtils.FindConfigFolder(SolutionDirectory.FullName), settings);         
+      }
 
-         IbApplication.Initialise(SolutionDirectory.FullName, settings);
-         IbApplication.SettingsChanged += IbSettingsChanged;
+      private uint _solutionEventsCookie;
+      private void InitializeShell()
+      {
+         IVsSolution2 solution = ServiceProvider.GlobalProvider.GetService(typeof(SVsSolution)) as IVsSolution2;
+         if (solution != null)
+         {
+            solution.AdviseSolutionEvents(this, out _solutionEventsCookie);
+         }
+
+      }
+
+      private void ShowToolWindow(bool show)
+      {
+         //this method will show the window if it's not active or bring it to front if it's collapsed
+         ToolWindowPane window = this.FindToolWindow(typeof(IronToolWindow), 0, true);
+         if ((null == window) || (null == window.Frame))
+         {
+            throw new NotSupportedException();
+         }
+         IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+         Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
       }
 
       #endregion

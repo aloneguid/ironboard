@@ -26,25 +26,28 @@ namespace IronBoard.Core.WinForms
          }
       }
 
-      private void RefreshRequests()
+      public void RefreshRequests()
       {
-         ReloadReviews.Enabled = false;
-         Task.Factory.StartNew(() =>
-            {
-               IEnumerable<Review> tickets = null;
-               try
+         if (IbApplication.RBClient != null)
+         {
+            ReloadReviews.Enabled = false;
+            Task.Factory.StartNew(() =>
                {
-                  tickets = IbApplication.RBClient.GetPersonalRequests();
-               }
-               catch(Exception ex)
-               {
-                  Messages.ShowError(ex);
-               }
-               finally
-               {
-                  UiScheduler.UiExecute(() => RenderTickets(tickets));
-               }
-            });
+                  IEnumerable<Review> tickets = null;
+                  try
+                  {
+                     tickets = IbApplication.RBClient.GetPersonalRequests();
+                  }
+                  catch (Exception ex)
+                  {
+                     Messages.ShowError(ex);
+                  }
+                  finally
+                  {
+                     UiScheduler.UiExecute(() => RenderTickets(tickets));
+                  }
+               });
+         }
       }
 
       private void RenderTickets(IEnumerable<Review> tickets)
