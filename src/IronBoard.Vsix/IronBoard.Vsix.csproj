@@ -115,16 +115,17 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="Package.SolutionEvents.cs" />
-    <Compile Include="Package.Utils.cs" />
+    <Compile Include="Package\Package.SolutionEvents.cs" />
+    <Compile Include="Package\Package.Utils.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Package.cs" />
+    <Compile Include="Package\Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
     <Compile Include="Windows\IronToolWindow.cs" />

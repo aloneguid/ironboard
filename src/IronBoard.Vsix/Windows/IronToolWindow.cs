@@ -8,7 +8,7 @@ namespace IronBoard.Vsix.Windows
    [Guid("757397F1-BA52-4BC7-8910-5EC1BEFED713")]
    public class IronToolWindow : ToolWindowPane
    {
-      //public static IReviewRequestsView Instance { get; private set; }
+      //public static IReviewRequestsView Panel { get; private set; }
 
       public IronToolWindow() : base(null)
       {

@@ -1,9 +1,10 @@
 ﻿using System.IO;
+using IronBoard.RBWebApi;
 using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell.Settings;
 
-namespace IronBoard.Vsix
+namespace IronBoard.Vsix.Package
 {
    public partial class Package
    {
@@ -59,6 +60,11 @@ namespace IronBoard.Vsix
             return _settingsStore.GetString(SettingsRoot, key);
 
          return null;
+      }
+
+      public bool ConfigExists
+      {
+         get { return RBUtils.FindConfigFolder(SolutionDirectory.FullName) != null; }
       }
    }
 }

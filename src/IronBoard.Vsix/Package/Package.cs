@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using IronBoard.Core;
-using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
@@ -13,7 +10,7 @@ using IronBoard.Vsix.Windows;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace IronBoard.Vsix
+namespace IronBoard.Vsix.Package
 {
    /// <summary>
    /// This is the class that implements the package exposed by this assembly.
@@ -82,12 +79,19 @@ namespace IronBoard.Vsix
 
       private void InitializeSolution()
       {
-         string settingsString = ReadOption(SettingsKey);
-         CoreSettings settings = settingsString == null
-                                    ? null
-                                    : settingsString.TrivialDeserialize<CoreSettings>();
-         if (settings == null) settings = new CoreSettings();
-         IbApplication.Initialise(RBUtils.FindConfigFolder(SolutionDirectory.FullName), settings);         
+         if (!ConfigExists)
+         {
+            Extension.State = GlobalState.NoConfigFile;
+         }
+         else
+         {
+            string settingsString = ReadOption(SettingsKey);
+            CoreSettings settings = settingsString == null
+                                       ? null
+                                       : settingsString.TrivialDeserialize<CoreSettings>();
+            if (settings == null) settings = new CoreSettings();
+            IbApplication.Initialise(RBUtils.FindConfigFolder(SolutionDirectory.FullName), settings);
+         }
       }
 
       private uint _solutionEventsCookie;

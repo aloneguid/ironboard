@@ -11,24 +11,41 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Strings = IronBoard.Vsix.Resources;
 
 namespace IronBoard.Vsix.Windows
 {
    /// <summary>
    /// Interaction logic for IronToolWindowHost.xaml
    /// </summary>
-   public partial class IronToolWindowHost : UserControl
+   public partial class IronToolWindowHost : UserControl, IGlobalPanel
    {
       public IronToolWindowHost()
       {
          InitializeComponent();
-         InitConsole();
+
+         Extension.Panel = this;
+
+         UpdateState();
       }
 
-      private void InitConsole()
+      public void UpdateState()
       {
-         var container = new ToolWindowHost();
-         FormsHost.Child = container;
+         Tabs.Visibility = Extension.State == GlobalState.Operational
+                              ? Visibility.Visible
+                              : Visibility.Hidden;
+         Error.Visibility = Extension.State != GlobalState.Operational
+                               ? Visibility.Visible
+                               : Visibility.Hidden;
+         switch (Extension.State)
+         {
+            case GlobalState.NoSolutionOpen:
+               Error.Content = Strings.Error_NoSolution;
+               break;
+            case GlobalState.NoConfigFile:
+               Error.Content = Strings.Error_ConfigNotFound;
+               break;
+         }
       }
    }
 }

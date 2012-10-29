@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using IronBoard.Core;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace IronBoard.Vsix
+namespace IronBoard.Vsix.Package
 {
    partial class Package
    {
