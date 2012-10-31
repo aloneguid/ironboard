@@ -77,6 +77,16 @@ namespace IronBoard.Vsix.Package
          IbApplication.SettingsChanged += IbSettingsChanged;
       }
 
+      private void OpenIbApp()
+      {
+         string settingsString = ReadOption(SettingsKey);
+         CoreSettings settings = settingsString == null
+                                    ? null
+                                    : settingsString.TrivialDeserialize<CoreSettings>();
+         if (settings == null) settings = new CoreSettings();
+         IbApplication.Initialise(ConfigFolder, settings);
+      }
+
       private void InitializeSolution()
       {
          if (!ConfigExists)
@@ -85,12 +95,8 @@ namespace IronBoard.Vsix.Package
          }
          else
          {
-            string settingsString = ReadOption(SettingsKey);
-            CoreSettings settings = settingsString == null
-                                       ? null
-                                       : settingsString.TrivialDeserialize<CoreSettings>();
-            if (settings == null) settings = new CoreSettings();
-            IbApplication.Initialise(RBUtils.FindConfigFolder(SolutionDirectory.FullName), settings);
+            Extension.State = GlobalState.Operational;
+            OpenIbApp();
          }
       }
 

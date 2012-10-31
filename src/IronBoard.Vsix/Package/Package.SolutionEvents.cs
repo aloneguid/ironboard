@@ -42,12 +42,13 @@ namespace IronBoard.Vsix.Package
          try
          {
             InitializeSolution();
-            ShowToolWindow(true);
          }
          catch(Exception ex)
          {
             Messages.ShowError(ex);
          }
+
+         ShowToolWindow(true);
 
          return VSConstants.S_OK;
       }
@@ -64,6 +65,8 @@ namespace IronBoard.Vsix.Package
 
       public int OnAfterCloseSolution(object pUnkReserved)
       {
+         Extension.State = GlobalState.NoSolutionOpen;
+
          return VSConstants.S_OK;
       }
    }

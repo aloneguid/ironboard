@@ -66,5 +66,10 @@ namespace IronBoard.Vsix.Package
       {
          get { return RBUtils.FindConfigFolder(SolutionDirectory.FullName) != null; }
       }
+
+      public string ConfigFolder
+      {
+         get { return RBUtils.FindConfigFolder(SolutionDirectory.FullName); }
+      }
    }
 }

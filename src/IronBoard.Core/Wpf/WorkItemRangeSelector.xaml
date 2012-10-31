@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="IronBoard.Core.Wpf.WorkItemRangeSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600">
+    <Grid>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+       
+      <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
+         <TextBlock Text="max revisions:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+         <ComboBox x:Name="MaxRevisions" Width="80" Margin="5"/>
+         <Button x:Name="Refresh" Content="refresh" Height="23"/>
+         
+         <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
+         <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
+      </StackPanel>
+
+      <ListView Grid.Row="1" x:Name="WorkItems">
+         
+      </ListView>
+   </Grid>
+</UserControl>

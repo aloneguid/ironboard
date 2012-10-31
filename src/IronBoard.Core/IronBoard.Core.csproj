@@ -37,6 +37,12 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\..\lib\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.Resources">
+      <HintPath>..\..\lib\MahApps.Metro.Resources.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpSvn">
@@ -130,6 +136,9 @@
     <Compile Include="WinForms\WorkItemRangeSelector.Designer.cs">
       <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\WorkItemRangeSelector.xaml.cs">
+      <DependentUpon>WorkItemRangeSelector.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Strings.resx">
@@ -170,8 +179,12 @@
       <Name>IronBoard.RBWebApi</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Wpf\" />
+    <Page Include="Wpf\WorkItemRangeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

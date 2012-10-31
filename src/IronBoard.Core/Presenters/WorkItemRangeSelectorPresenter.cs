@@ -1,4 +1,5 @@
-﻿using IronBoard.Core.Model;
+﻿using System.Collections.Generic;
+using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 
 namespace IronBoard.Core.Presenters
@@ -14,6 +15,11 @@ namespace IronBoard.Core.Presenters
       {
          return string.Format("{0}: {1}@{2}| {3}",
                               i.ItemId, i.Author, i.Time, i.Comment);
+      }
+
+      public IEnumerable<WorkItem> GetCurrentWorkItems(int maxItems)
+      {
+         return IbApplication.SvnRepository.GetCommitedWorkItems(maxItems);
       }
    }
 }
