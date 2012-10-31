@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:core="clr-namespace:IronBoard.Core.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
    <UserControl.Resources>
@@ -39,6 +40,8 @@
          
          <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
          <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
+         
+         <core:Progress x:Name="Progress" Margin="5"/>
       </StackPanel>
 
       <ListView Grid.Row="1" x:Name="WorkItems" AlternationCount="2" ItemContainerStyle="{StaticResource lvStyle}"
@@ -53,10 +56,10 @@
                      </DataTemplate>
                   </GridViewColumn.CellTemplate>
                </GridViewColumn>
-               <GridViewColumn Header="r#" DisplayMemberBinding="{Binding WorkItem.ItemId}"/>
-               <GridViewColumn Header="author" DisplayMemberBinding="{Binding WorkItem.Author}"/>
-               <GridViewColumn Header="date" DisplayMemberBinding="{Binding WorkItem.Time}"/>
-               <GridViewColumn Header="comment" DisplayMemberBinding="{Binding WorkItem.Comment}"/>
+               <GridViewColumn Header="r#" DisplayMemberBinding="{Binding ItemId}"/>
+               <GridViewColumn Header="author" DisplayMemberBinding="{Binding Author}"/>
+               <GridViewColumn Header="date" DisplayMemberBinding="{Binding Time}"/>
+               <GridViewColumn Header="comment" DisplayMemberBinding="{Binding Comment}"/>
             </GridView>
          </ListView.View>
       </ListView>

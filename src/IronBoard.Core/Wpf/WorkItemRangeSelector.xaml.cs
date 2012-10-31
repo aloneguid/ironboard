@@ -39,7 +39,8 @@ namespace IronBoard.Core.Wpf
       {
          if (MaxItems > 0 && WorkItems != null)
          {
-            ToolBar.IsEnabled = false;
+            //ToolBar.IsEnabled = false;
+            Progress.IsInProgress = true;
             int maxItems = MaxItems;
             Task.Factory.StartNew(() =>
                {
@@ -63,7 +64,8 @@ namespace IronBoard.Core.Wpf
                   }
                   Dispatcher.Push(() =>
                      {
-                        ToolBar.IsEnabled = true;
+                        //ToolBar.IsEnabled = true;
+                        Progress.IsInProgress = false;
                         WorkItems.ItemsSource = items;
                      });
                });

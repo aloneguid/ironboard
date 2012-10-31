@@ -137,6 +137,9 @@
     <Compile Include="Wpf\MyTicketsView.xaml.cs">
       <DependentUpon>MyTicketsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\Progress.xaml.cs">
+      <DependentUpon>Progress.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\WorkItemRangeSelector.xaml.cs">
       <DependentUpon>WorkItemRangeSelector.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Wpf\MyTicketsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wpf\Progress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
