@@ -5,28 +5,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
+   <UserControl.Resources>
+      <Style x:Key="lvStyle" TargetType="{x:Type ListViewItem}">
+         <Style.Triggers>
+            <!-- setting up triggers for alternate background colors -->
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+               <Setter Property="Background" Value="#F6F6F6"></Setter>
+            </Trigger>
+            <!--<Trigger Property="ItemsControl.AlternationIndex" Value="2">
+               <Setter Property="Background" Value="White"></Setter>
+            </Trigger>-->
+         </Style.Triggers>
+      </Style>
+   </UserControl.Resources>
+   
     <Grid>
       <Grid.RowDefinitions>
          <RowDefinition Height="Auto"/>
          <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
        
-      <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
+      <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" x:Name="ToolBar">
          <TextBlock Text="max revisions:" VerticalAlignment="Center" Margin="5,0,0,0"/>
-         <ComboBox x:Name="MaxRevisions" Width="80" Margin="5"/>
-         <Button x:Name="Refresh" Content="refresh" Height="23" Click="Refresh_Click"/>
+         <ComboBox x:Name="MaxRevisions" Width="80" Margin="5" SelectedIndex="0" SelectionChanged="MaxRevisions_SelectionChanged">
+            <ComboBoxItem>25</ComboBoxItem>
+            <ComboBoxItem>50</ComboBoxItem>
+            <ComboBoxItem>100</ComboBoxItem>
+            <ComboBoxItem>500</ComboBoxItem>
+         </ComboBox>
+         <Button x:Name="Refresh" Content="refresh" Height="23" Click="RefreshClick"/>
+         
+         <Button x:Name="PostReview" Content="post review" Height="23" Click="PostReview_Click" Margin="20,0,0,0" IsEnabled="False"/>
          
          <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
          <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
       </StackPanel>
 
-      <ListView Grid.Row="1" x:Name="WorkItems">
+      <ListView Grid.Row="1" x:Name="WorkItems" AlternationCount="2" ItemContainerStyle="{StaticResource lvStyle}"
+                SelectionChanged="WorkItems_SelectionChanged">
          <ListView.View>
             <GridView>
-               <GridViewColumn Header="r#" DisplayMemberBinding="{Binding ItemId}"/>
-               <GridViewColumn Header="author" DisplayMemberBinding="{Binding Author}"/>
-               <GridViewColumn Header="date" DisplayMemberBinding="{Binding Time}"/>
-               <GridViewColumn Header="comment" DisplayMemberBinding="{Binding Comment}"/>
+               <GridViewColumn>
+                  <GridViewColumn.CellTemplate>
+                     <DataTemplate>
+                        <CheckBox Tag="{Binding}"
+                                  IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"/>
+                     </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+               </GridViewColumn>
+               <GridViewColumn Header="r#" DisplayMemberBinding="{Binding WorkItem.ItemId}"/>
+               <GridViewColumn Header="author" DisplayMemberBinding="{Binding WorkItem.Author}"/>
+               <GridViewColumn Header="date" DisplayMemberBinding="{Binding WorkItem.Time}"/>
+               <GridViewColumn Header="comment" DisplayMemberBinding="{Binding WorkItem.Comment}"/>
             </GridView>
          </ListView.View>
       </ListView>
