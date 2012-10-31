@@ -47,6 +47,7 @@ namespace IronBoard.Vsix.Windows
                break;
            case GlobalState.Operational:
                WorkLog.RefreshView();
+               MyTickets.RefreshView();
                break;
          }
       }

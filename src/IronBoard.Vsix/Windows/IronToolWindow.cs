@@ -13,7 +13,7 @@ namespace IronBoard.Vsix.Windows
       public IronToolWindow() : base(null)
       {
          Caption = Resources.IronToolWindow_Title;
-         BitmapResourceID = 401;
+         BitmapResourceID = 402;
          BitmapIndex = 0;
          base.Content = new IronToolWindowHost();
       }

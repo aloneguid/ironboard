@@ -132,12 +132,6 @@
     <Compile Include="Windows\IronToolWindowHost.xaml.cs">
       <DependentUpon>IronToolWindowHost.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ToolWindowHost.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\ToolWindowHost.Designer.cs">
-      <DependentUpon>ToolWindowHost.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -149,9 +143,6 @@
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\ToolWindowHost.resx">
-      <DependentUpon>ToolWindowHost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

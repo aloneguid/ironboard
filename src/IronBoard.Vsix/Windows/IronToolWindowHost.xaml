@@ -14,7 +14,9 @@
          <TabItem Header="Work Log">
             <core:WorkItemRangeSelector x:Name="WorkLog"/>
          </TabItem>
-         <TabItem Header="My Tickets" />
+         <TabItem Header="My Tickets">
+            <core:MyTicketsView x:Name="MyTickets"/>
+         </TabItem>
       </TabControl>
       <Label x:Name="Error" Content="error"
              HorizontalAlignment="Center"

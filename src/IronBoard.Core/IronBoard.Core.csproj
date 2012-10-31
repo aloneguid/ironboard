@@ -62,6 +62,7 @@
     <Compile Include="Model\CoreSettings.cs" />
     <Compile Include="Model\DisplayItem.cs" />
     <Compile Include="Model\WorkItem.cs" />
+    <Compile Include="Presenters\MyTicketsPresenter.cs" />
     <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
     <Compile Include="Presenters\ReviewRequestsPresenter.cs" />
     <Compile Include="Presenters\WorkItemRangeSelectorPresenter.cs" />
@@ -72,6 +73,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\ILoginPasswordView.cs" />
+    <Compile Include="Views\IMyTicketsView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
     <Compile Include="Views\IReviewRequestsView.cs" />
     <Compile Include="Views\IWorkItemRangeSelectorView.cs" />
@@ -130,6 +132,9 @@
     <Compile Include="WinForms\WorkItemRangeSelector.Designer.cs">
       <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\MyTicketsView.xaml.cs">
+      <DependentUpon>MyTicketsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\WorkItemRangeSelector.xaml.cs">
       <DependentUpon>WorkItemRangeSelector.xaml</DependentUpon>
     </Compile>
@@ -175,6 +180,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Wpf\MyTicketsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Wpf\WorkItemRangeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
