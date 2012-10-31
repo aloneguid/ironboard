@@ -140,6 +140,9 @@
     <Compile Include="Wpf\Progress.xaml.cs">
       <DependentUpon>Progress.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\ReviewDetailsView.xaml.cs">
+      <DependentUpon>ReviewDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\WorkItemRangeSelector.xaml.cs">
       <DependentUpon>WorkItemRangeSelector.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <ApplicationDefinition Include="Wpf\ReviewDetailsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <Page Include="Wpf\WorkItemRangeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
