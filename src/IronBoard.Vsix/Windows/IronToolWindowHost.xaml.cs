@@ -45,6 +45,9 @@ namespace IronBoard.Vsix.Windows
             case GlobalState.NoConfigFile:
                Error.Content = Strings.Error_ConfigNotFound;
                break;
+           case GlobalState.Operational:
+               WorkLog.RefreshView();
+               break;
          }
       }
    }

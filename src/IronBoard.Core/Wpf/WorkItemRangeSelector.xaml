@@ -14,14 +14,21 @@
       <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
          <TextBlock Text="max revisions:" VerticalAlignment="Center" Margin="5,0,0,0"/>
          <ComboBox x:Name="MaxRevisions" Width="80" Margin="5"/>
-         <Button x:Name="Refresh" Content="refresh" Height="23"/>
+         <Button x:Name="Refresh" Content="refresh" Height="23" Click="Refresh_Click"/>
          
          <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
          <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
       </StackPanel>
 
       <ListView Grid.Row="1" x:Name="WorkItems">
-         
+         <ListView.View>
+            <GridView>
+               <GridViewColumn Header="r#" DisplayMemberBinding="{Binding ItemId}"/>
+               <GridViewColumn Header="author" DisplayMemberBinding="{Binding Author}"/>
+               <GridViewColumn Header="date" DisplayMemberBinding="{Binding Time}"/>
+               <GridViewColumn Header="comment" DisplayMemberBinding="{Binding Comment}"/>
+            </GridView>
+         </ListView.View>
       </ListView>
    </Grid>
 </UserControl>

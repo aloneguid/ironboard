@@ -95,8 +95,8 @@ namespace IronBoard.Vsix.Package
          }
          else
          {
-            Extension.State = GlobalState.Operational;
             OpenIbApp();
+            Extension.State = GlobalState.Operational;
          }
       }
 

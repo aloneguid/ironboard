@@ -30,10 +30,14 @@ namespace IronBoard.Core.Wpf
          _presenter = new WorkItemRangeSelectorPresenter(this);
       }
 
-      private void RefreshView()
+      public void RefreshView()
       {
-
          WorkItems.ItemsSource = _presenter.GetCurrentWorkItems(10);
+      }
+
+      private void Refresh_Click(object sender, RoutedEventArgs e)
+      {
+         RefreshView();
       }
    }
 }

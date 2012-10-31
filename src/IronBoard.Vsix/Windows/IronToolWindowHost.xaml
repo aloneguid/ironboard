@@ -5,22 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.10.0"
              xmlns:core="clr-namespace:IronBoard.Core.Wpf;assembly=IronBoard.Core"
-             xmlns:mathapp="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}"
              mc:Ignorable="d"
              d:DesignHeight="150" d:DesignWidth="600">
-   <UserControl.Resources>
-      <ResourceDictionary>
-         <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-         </ResourceDictionary.MergedDictionaries>
-      </ResourceDictionary>
-   </UserControl.Resources>
    <Grid>
       <!--<WindowsFormsHost x:Name="FormsHost" />-->
       <TabControl x:Name="Tabs" TabStripPlacement="Left">
          <TabItem Header="Work Log">
-            <core:WorkItemRangeSelector/>
+            <core:WorkItemRangeSelector x:Name="WorkLog"/>
          </TabItem>
          <TabItem Header="My Tickets" />
       </TabControl>
@@ -28,6 +20,5 @@
              HorizontalAlignment="Center"
              VerticalAlignment="Center"
              Foreground="Red"/>
-      <mathapp:ProgressRing/>
    </Grid>
 </UserControl>

@@ -114,7 +114,7 @@
          this.MaxRevisions.Size = new System.Drawing.Size(121, 21);
          this.MaxRevisions.TabIndex = 17;
          // 
-         // Refresh
+         // RefreshView
          // 
          this.Refresh.Location = new System.Drawing.Point(201, 0);
          this.Refresh.Name = "Refresh";
