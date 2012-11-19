@@ -22,12 +22,19 @@ namespace IronBoard.Core
 
       public static void Initialise(string solutionPath, CoreSettings settings)
       {
+         Initialise(solutionPath, settings,
+                    RbFactory.CreateHttpClient(solutionPath,
+                                               settings == null ? null : settings.AuthCookie));
+      }
+
+      public static void Initialise(string solutionPath, CoreSettings settings, IRbClient client)
+      {
          if (solutionPath == null) throw new ArgumentNullException("solutionPath");
          if (settings == null) throw new ArgumentNullException("settings");
 
          Settings = settings;
          SvnRepository = new SvnRepository(solutionPath);
-         RbClient = RbFactory.CreateHttpClient(solutionPath, settings.AuthCookie);
+         RbClient = client;
          RbClient.AuthenticationRequired += OnAuthenticationRequired;
          RbClient.AuthCookieChanged += OnAuthCookieChanged;
       }

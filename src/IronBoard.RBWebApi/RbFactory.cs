@@ -11,5 +11,10 @@ namespace IronBoard.RBWebApi
       {
          return new RbHttpClient(projectRootFolder, authCookie);
       }
+
+      public static IRbClient CreateMockedClient()
+      {
+         return new RbMockedClient();
+      }
    }
 }
