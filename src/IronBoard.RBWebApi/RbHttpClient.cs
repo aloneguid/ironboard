@@ -11,11 +11,10 @@ using RestSharp;
 
 namespace IronBoard.RBWebApi
 {
-   public class RBClient
+   class RbHttpClient : IRbClient
    {
       private readonly RestClient _client;
       private readonly ReviewBoardRc _config;
-      private readonly string _svnRepositoryPath;
       private string _authCookie;
       private static Dictionary<string, User> _userNameToUser;
       private static Dictionary<string, UserGroup> _groupNameToGroup; 
@@ -23,12 +22,10 @@ namespace IronBoard.RBWebApi
       public event Action<NetworkCredential> AuthenticationRequired;
       public event Action<string> AuthCookieChanged;
 
-      public RBClient(string svnRepositoryPath, string projectRootFolder, string authCookie)
+      public RbHttpClient(string projectRootFolder, string authCookie)
       {
-         if (svnRepositoryPath == null) throw new ArgumentNullException("svnRepositoryPath");
          if (projectRootFolder == null) throw new ArgumentNullException("projectRootFolder");
 
-         _svnRepositoryPath = svnRepositoryPath;
          _config = new ReviewBoardRc(projectRootFolder);
          if(_config.Uri == null) throw new ArgumentException("config file doesn't contain ReviewBoard server url");
          _client = new RestClient(new Uri(_config.Uri, "api").ToString());

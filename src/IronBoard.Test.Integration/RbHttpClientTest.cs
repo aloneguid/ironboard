@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using IronBoard.RBWebApi;
 using IronBoard.RBWebApi.Model;
 using NUnit.Framework;
@@ -10,14 +9,14 @@ using NUnit.Framework;
 namespace IronBoard.Test.Integration
 {
    [TestFixture]
-   public class RBClientTest
+   public class RbHttpClientTest
    {
-      private RBClient _client;
+      private IRbClient _client;
 
       [SetUp]
       public void SetUp()
       {
-         _client = new RBClient("https://ironboard.svn.codeplex.com/svn/trunk", @"c:\dev\ironboard", null);
+         _client = RbFactory.CreateHttpClient(@"c:\dev\ironboard", null);
          _client.Authenticate(new NetworkCredential("igavryliuk", "M1m3c45t"));
       }
 

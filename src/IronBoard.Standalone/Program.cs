@@ -6,6 +6,7 @@ using IronBoard.Core;
 using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
 using IronBoard.Standalone.Forms;
+using System.Reflection;
 
 namespace IronBoard.Standalone
 {

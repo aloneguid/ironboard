@@ -10,7 +10,7 @@ namespace IronBoard.Core
 {
    public static class IbApplication
    {
-      public static RBClient RBClient { get; private set; }
+      public static IRbClient RbClient { get; private set; }
 
       public static SvnRepository SvnRepository { get; private set; }
 
@@ -27,9 +27,9 @@ namespace IronBoard.Core
 
          Settings = settings;
          SvnRepository = new SvnRepository(solutionPath);
-         RBClient = new RBClient(SvnRepository.RepositoryUri.ToString(), solutionPath, settings.AuthCookie);
-         RBClient.AuthenticationRequired += OnAuthenticationRequired;
-         RBClient.AuthCookieChanged += OnAuthCookieChanged;
+         RbClient = RbFactory.CreateHttpClient(solutionPath, settings.AuthCookie);
+         RbClient.AuthenticationRequired += OnAuthenticationRequired;
+         RbClient.AuthCookieChanged += OnAuthCookieChanged;
       }
 
       static void OnAuthCookieChanged(string cookie)

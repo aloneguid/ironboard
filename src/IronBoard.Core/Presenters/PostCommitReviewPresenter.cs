@@ -15,7 +15,7 @@ namespace IronBoard.Core.Presenters
    public class PostCommitReviewPresenter
    {
       private readonly IPostCommitReviewView _view;
-      private readonly RBClient _rb;
+      private readonly IRbClient _rb;
       private List<User> _users;
       private List<UserGroup> _groups;
       private readonly SvnRepository _svn;
@@ -26,7 +26,7 @@ namespace IronBoard.Core.Presenters
          _view = view;
 
          if (IbApplication.LoginView == null) IbApplication.LoginView = _view.CreateLoginPasswordView();
-         _rb = IbApplication.RBClient;
+         _rb = IbApplication.RbClient;
          _svn = IbApplication.SvnRepository;
       }
 

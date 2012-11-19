@@ -28,7 +28,7 @@ namespace IronBoard.Core.WinForms
 
       public void RefreshRequests()
       {
-         if (IbApplication.RBClient != null)
+         if (IbApplication.RbClient != null)
          {
             ReloadReviews.Enabled = false;
             Task.Factory.StartNew(() =>
@@ -36,7 +36,7 @@ namespace IronBoard.Core.WinForms
                   IEnumerable<Review> tickets = null;
                   try
                   {
-                     tickets = IbApplication.RBClient.GetPersonalRequests();
+                     tickets = IbApplication.RbClient.GetPersonalRequests();
                   }
                   catch (Exception ex)
                   {

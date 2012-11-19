@@ -53,12 +53,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ReviewBoardRc.cs" />
+    <Compile Include="IRBClient.cs" />
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\Review.cs" />
     <Compile Include="Model\Reviewer.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserGroup.cs" />
-    <Compile Include="RBClient.cs" />
+    <Compile Include="RbFactory.cs" />
+    <Compile Include="RbHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RBUtils.cs" />
   </ItemGroup>
