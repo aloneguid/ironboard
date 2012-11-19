@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
-using IronBoard.Core.Wpf.Data;
 
 namespace IronBoard.Core.Wpf
 {
@@ -33,6 +24,8 @@ namespace IronBoard.Core.Wpf
          InitializeComponent();
 
          _presenter = new WorkItemRangeSelectorPresenter(this);
+         Warning.Visibility = Visibility.Collapsed;
+         CommandLine.Content = null;
       }
 
       public void RefreshView()
@@ -94,14 +87,31 @@ namespace IronBoard.Core.Wpf
 
       private void PostReview_Click(object sender, RoutedEventArgs e)
       {
+         var detailWindow = new ReviewDetails();
+         detailWindow.ShowDialog();
+      }
 
+      private IEnumerable<WorkItem> SelectCoutinuousSelectedItems(out bool skipped)
+      {
+         if(WorkItems.SelectedItems != null && WorkItems.Items != null)
+         {
+            return _presenter.SelectContinuousItems(WorkItems.Items, WorkItems.SelectedItems, out skipped);
+         }
+
+         skipped = false;
+         return null;
       }
 
       private void WorkItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
       {
          PostReview.IsEnabled = WorkItems.SelectedItems != null && WorkItems.SelectedItems.Count > 0;
 
+         bool skipped;
+         List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
+         Warning.Visibility = skipped ? Visibility.Visible : Visibility.Collapsed;
 
+         Tuple<int, int> range = _presenter.GetRange(continuous);
+         CommandLine.Content = _presenter.GetCommandLine(range);
       }
    }
 }

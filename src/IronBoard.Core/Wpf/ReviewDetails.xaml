@@ -1,0 +1,59 @@
+﻿<Window x:Class="IronBoard.Core.Wpf.ReviewDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ReviewDetails" Height="400" Width="600">
+    <Grid>
+      <Grid.ColumnDefinitions>
+         <ColumnDefinition Width="Auto"/>
+         <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="Auto"/>
+         
+         <!-- controls -->
+         <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <Label Content="summary:" Grid.Column="0"
+             HorizontalAlignment="Right"/>
+      <TextBox Grid.Column="1"/>
+
+      <Label Content="description:"
+              Grid.Column="0" Grid.Row="1"
+             HorizontalAlignment="Right"/>
+      <TextBox Grid.Column="1" Grid.Row="1"
+               TextWrapping="WrapWithOverflow"
+               VerticalScrollBarVisibility="Visible"
+               AcceptsReturn="True"
+               Height="Auto"/>
+
+      <Label Content="testing:" Grid.Column="0" Grid.Row="2"
+             HorizontalAlignment="Right"/>
+      <TextBox Grid.Column="1" Grid.Row="2"
+               TextWrapping="WrapWithOverflow"
+               VerticalScrollBarVisibility="Visible"
+               AcceptsReturn="True"
+               Height="80"/>
+
+      <Label Content="users:" Grid.Column="0" Grid.Row="3"
+             HorizontalAlignment="Right"/>
+
+      <Label Content="groups:" Grid.Column="0" Grid.Row="4"
+             HorizontalAlignment="Right"/>
+
+      <Label Content="bugs:" Grid.Column="0" Grid.Row="5"
+             HorizontalAlignment="Right"/>
+      <TextBox Grid.Column="1" Grid.Row="5"/>
+
+      <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal"
+                  HorizontalAlignment="Right">
+         <Button Content="Post" Margin="5" Padding="3" Width="70"/>
+         <Button Content="Cancel" Margin="5" Padding="3" Width="70"/>
+      </StackPanel>
+   </Grid>
+</Window>
