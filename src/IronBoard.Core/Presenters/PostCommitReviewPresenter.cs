@@ -85,8 +85,8 @@ namespace IronBoard.Core.Presenters
       public void PostReview(long fromRev, long toRev, Review review)
       {
          string diff = _svn.GetDiff(fromRev, toRev);
-
-         review.Repository = _rb.GetRepositories().First();
+         string repositoryPath = _svn.RepositoryUri.AbsoluteUri.Replace(_svn.RelativeRoot, "");
+         review.Repository = _rb.GetRepositories().First( x => string.Equals(x.Path, repositoryPath, StringComparison.InvariantCultureIgnoreCase));
          _rb.Post(review);
          _rb.AttachDiff(review, _svn.RelativeRoot, diff);
       }
