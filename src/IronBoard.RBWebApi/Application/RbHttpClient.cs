@@ -4,12 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Security.Authentication;
 using System.Text;
-using IronBoard.RBWebApi.Application;
 using IronBoard.RBWebApi.Model;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
-namespace IronBoard.RBWebApi
+namespace IronBoard.RBWebApi.Application
 {
    class RbHttpClient : IRbClient
    {

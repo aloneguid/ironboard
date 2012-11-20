@@ -60,9 +60,9 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserGroup.cs" />
     <Compile Include="RbFactory.cs" />
-    <Compile Include="RbHttpClient.cs" />
+    <Compile Include="Application\RbHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RbMockedClient.cs" />
+    <Compile Include="Application\RbMockedClient.cs" />
     <Compile Include="RBUtils.cs" />
   </ItemGroup>
   <ItemGroup>
