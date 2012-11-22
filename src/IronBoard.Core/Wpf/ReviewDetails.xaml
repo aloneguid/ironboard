@@ -24,7 +24,7 @@
        <!-- 0 -->
       <Label Content="summary:" Grid.Column="0"
              HorizontalAlignment="Right"/>
-      <TextBox Grid.Column="1" x:Name="SummaryText"/>
+      <TextBox Grid.Column="1" x:Name="SummaryText" TextChanged="FieldTextChanged" />
 
        <!-- 1 -->
       <Label Content="description:"
@@ -35,7 +35,7 @@
                VerticalScrollBarVisibility="Visible"
                AcceptsReturn="True"
                Height="Auto"
-               x:Name="DescriptionText"/>
+               x:Name="DescriptionText" TextChanged="FieldTextChanged" />
 
        <!-- 2 -->
       <Label Content="testing:" Grid.Column="0" Grid.Row="2"
@@ -44,7 +44,8 @@
                TextWrapping="WrapWithOverflow"
                VerticalScrollBarVisibility="Visible"
                AcceptsReturn="True"
-               Height="80"/>
+               Height="80"
+               x:Name="TestingText"/>
 
        <!-- 3 -->
       <Label Content="users:" Grid.Column="0" Grid.Row="3"
@@ -57,17 +58,22 @@
        <!-- 5 -->
       <Label Content="bugs:" Grid.Column="0" Grid.Row="5"
              HorizontalAlignment="Right"/>
-      <TextBox Grid.Column="1" Grid.Row="5"/>
+      <TextBox Grid.Column="1" Grid.Row="5"
+               x:Name="BugsText"/>
 
        <!-- 6 -->
-      <core:Progress ProgressTitle="creating SVN diff" x:Name="Progress"
-                     Grid.Row="6" Grid.Column="1"
+      <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1">
+         <core:Progress ProgressTitle="creating SVN diff" x:Name="Progress"
                      HorizontalAlignment="Left"/>
+         <Label Content="error" x:Name="DiffError"
+                Foreground="Red"/>
+      </StackPanel>
 
       <!-- 7 -->
       <StackPanel Grid.Column="1" Grid.Row="7" Orientation="Horizontal"
                   HorizontalAlignment="Right">
-         
+         <Button Content="view diff" Margin="5" Padding="3" MinWidth="70"
+                 x:Name="ViewDiff" Click="ViewDiffClick"/>
          <Button Content="Post" Margin="5" Padding="3" Width="70"
                  x:Name="Post" Click="Post_OnClick"/>
          <Button Content="Cancel" Margin="5" Padding="3" Width="70"

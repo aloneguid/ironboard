@@ -70,6 +70,15 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to error generating diff: {0}.
+        /// </summary>
+        internal static string ReviewDetails_GenerateDiff_Error {
+            get {
+                return ResourceManager.GetString("ReviewDetails_GenerateDiff_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New post commit review.
         /// </summary>
         internal static string ReviewDetails_NewTicket {

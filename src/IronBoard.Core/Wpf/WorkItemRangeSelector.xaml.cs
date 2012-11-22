@@ -91,7 +91,6 @@ namespace IronBoard.Core.Wpf
          List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
          Tuple<int, int> range = _presenter.GetRange(continuous);
          var detailWindow = new ReviewDetails(Strings.ReviewDetails_NewTicket, range.Item1, range.Item2);
-
          detailWindow.Description = _presenter.ProduceDescription(continuous);
          detailWindow.ShowDialog();
       }

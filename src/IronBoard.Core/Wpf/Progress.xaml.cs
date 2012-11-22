@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace IronBoard.Core.Wpf
@@ -33,8 +22,6 @@ namespace IronBoard.Core.Wpf
          InitializeComponent();
 
          IsInProgress = false;
-
-         if (ProgressTitle != null) ProgressText.Text = ProgressTitle;
       }
 
       public bool IsInProgress
@@ -51,6 +38,7 @@ namespace IronBoard.Core.Wpf
                   _timer.Start();
                }
                Visibility = Visibility.Visible;
+               if (ProgressTitle != null) ProgressText.Text = ProgressTitle;
             }
             else
             {
@@ -60,9 +48,10 @@ namespace IronBoard.Core.Wpf
                   _timer.Stop();
                   _timer = null;
                }
-               Visibility = Visibility.Hidden;
+               Visibility = Visibility.Collapsed;
             }
          }
+         get { return Visibility == Visibility.Visible; }
       }
 
       public string ProgressTitle { get; set; }
