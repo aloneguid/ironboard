@@ -33,6 +33,8 @@ namespace IronBoard.Core.Wpf
          InitializeComponent();
 
          IsInProgress = false;
+
+         if (ProgressTitle != null) ProgressText.Text = ProgressTitle;
       }
 
       public bool IsInProgress
@@ -62,6 +64,8 @@ namespace IronBoard.Core.Wpf
             }
          }
       }
+
+      public string ProgressTitle { get; set; }
 
       void ProgressTick(object sender, EventArgs e)
       {

@@ -120,4 +120,7 @@
   <data name="Message_Title_Error" xml:space="preserve">
     <value>IronBoard Error</value>
   </data>
+  <data name="ReviewDetails_NewTicket" xml:space="preserve">
+    <value>New post commit review</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 
@@ -97,6 +98,23 @@ namespace IronBoard.Core.Presenters
          return range == null
                    ? string.Empty
                    : string.Format("post-review --revision-range={0}:{1}", range.Item1, range.Item2);
+      }
+
+      public string ProduceDescription(IEnumerable<WorkItem> selectedItems)
+      {
+         if (selectedItems != null)
+         {
+            var b = new StringBuilder();
+            foreach (WorkItem wi in selectedItems)
+            {
+               if (!string.IsNullOrEmpty(wi.Comment))
+               {
+                  b.AppendLine(wi.Comment);
+               }
+            }
+            return b.ToString();
+         }
+         return null;
       }
    }
 }

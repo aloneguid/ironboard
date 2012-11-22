@@ -64,6 +64,7 @@
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\MyTicketsPresenter.cs" />
     <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
+    <Compile Include="Presenters\ReviewDetailsPresenter.cs" />
     <Compile Include="Presenters\ReviewRequestsPresenter.cs" />
     <Compile Include="Presenters\WorkItemRangeSelectorPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IMyTicketsView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
+    <Compile Include="Views\IReviewDetailsView.cs" />
     <Compile Include="Views\IReviewRequestsView.cs" />
     <Compile Include="Views\IWorkItemRangeSelectorView.cs" />
     <Compile Include="WinForms\FakeInitForm.cs">

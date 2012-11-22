@@ -87,7 +87,12 @@ namespace IronBoard.Core.Wpf
 
       private void PostReview_Click(object sender, RoutedEventArgs e)
       {
-         var detailWindow = new ReviewDetails();
+         bool skipped;
+         List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
+         Tuple<int, int> range = _presenter.GetRange(continuous);
+         var detailWindow = new ReviewDetails(Strings.ReviewDetails_NewTicket, range.Item1, range.Item2);
+
+         detailWindow.Description = _presenter.ProduceDescription(continuous);
          detailWindow.ShowDialog();
       }
 
