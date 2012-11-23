@@ -18,7 +18,7 @@ namespace IronBoard.Core.Wpf
    public partial class WorkItemRangeSelector : UserControl, IWorkItemRangeSelectorView
    {
       private readonly WorkItemRangeSelectorPresenter _presenter;
-      private readonly Dictionary<WorkItem, int> _itemOrder = new Dictionary<WorkItem, int>(); 
+      
 
       public WorkItemRangeSelector()
       {
@@ -36,34 +36,17 @@ namespace IronBoard.Core.Wpf
             //ToolBar.IsEnabled = false;
             Progress.IsInProgress = true;
             int maxItems = MaxItems;
-            Task.Factory.StartNew(() =>
-               {
-                  IEnumerable<WorkItem> items = null;
-                  try
-                  {
-                     items = _presenter.GetCurrentWorkItems(maxItems);
-                     _itemOrder.Clear();
-                     if (items != null)
-                     {
-                        int i = 0;
-                        foreach(WorkItem wi in items)
-                        {
-                           _itemOrder[wi] = i++;
-                        }
-                     }
-                  }
-                  catch(Exception ex)
-                  {
-                     //todo: show error
-                  }
-                  Dispatcher.Push(() =>
-                     {
-                        //ToolBar.IsEnabled = true;
-                        Progress.IsInProgress = false;
-                        WorkItems.ItemsSource = items;
-                     });
-               });
+            _presenter.ReloadData(maxItems);
          }
+      }
+
+      public void UpdateList(Exception ex, IEnumerable<WorkItem> items)
+      {
+         Dispatcher.Push(() =>
+         {
+            Progress.IsInProgress = false;
+            WorkItems.ItemsSource = items;
+         });
       }
 
       private int MaxItems

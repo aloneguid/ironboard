@@ -114,5 +114,10 @@ namespace IronBoard.Core.WinForms
       {
          if (WorkItemsInvalidated != null) WorkItemsInvalidated(null);
       }
+
+      public void UpdateList(Exception ex, IEnumerable<WorkItem> items)
+      {
+         throw new NotImplementedException();
+      }
    }
 }

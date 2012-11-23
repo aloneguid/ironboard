@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
@@ -11,9 +12,39 @@ namespace IronBoard.Core.Presenters
 {
    public class WorkItemRangeSelectorPresenter
    {
+      private readonly IWorkItemRangeSelectorView _view;
+      private readonly Dictionary<WorkItem, int> _itemOrder = new Dictionary<WorkItem, int>(); 
+
       public WorkItemRangeSelectorPresenter(IWorkItemRangeSelectorView view)
       {
-         
+         _view = view;
+      }
+
+      public void ReloadData(int maxItems)
+      {
+         Task.Factory.StartNew(() =>
+         {
+            IEnumerable<WorkItem> items = null;
+            Exception ex = null;
+            try
+            {
+               items = GetCurrentWorkItems(maxItems);
+               _itemOrder.Clear();
+               if (items != null)
+               {
+                  int i = 0;
+                  foreach (WorkItem wi in items)
+                  {
+                     _itemOrder[wi] = i++;
+                  }
+               }
+            }
+            catch (Exception ex1)
+            {
+               ex = ex1;
+            }
+            _view.UpdateList(ex, items);
+         });
       }
 
       public string ToListString(WorkItem i)
@@ -22,7 +53,7 @@ namespace IronBoard.Core.Presenters
                               i.ItemId, i.Author, i.Time, i.Comment);
       }
 
-      public IEnumerable<WorkItem> GetCurrentWorkItems(int maxItems)
+      private IEnumerable<WorkItem> GetCurrentWorkItems(int maxItems)
       {
          IEnumerable<WorkItem> items = null;
          if(IbApplication.SvnRepository != null)
