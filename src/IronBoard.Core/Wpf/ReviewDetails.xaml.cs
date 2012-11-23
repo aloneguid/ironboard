@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Wpf
 {
@@ -13,12 +14,16 @@ namespace IronBoard.Core.Wpf
    /// </summary>
    public partial class ReviewDetails : Window, IReviewDetailsView
    {
+      private readonly Review _review;
       private readonly long _fromRev;
       private readonly long _toRev;
       private readonly ReviewDetailsPresenter _presenter;
 
-      public ReviewDetails(string title, long fromRev, long toRev)
+      public ReviewDetails(string title, Review review, long fromRev, long toRev)
       {
+         if (review == null) throw new ArgumentNullException("review");
+
+         _review = review;
          _fromRev = fromRev;
          _toRev = toRev;
          InitializeComponent();
@@ -32,6 +37,10 @@ namespace IronBoard.Core.Wpf
       {
          if (!DesignerProperties.GetIsInDesignMode(this))
          {
+            SummaryText.Text = _review.Subject;
+            DescriptionText.Text = _review.Description;
+            BugsText.Text = _review.BugsClosed;
+
             Progress.IsInProgress = true;
             ViewDiff.IsEnabled = false;
             DiffError.Visibility = Visibility.Collapsed;
@@ -64,11 +73,6 @@ namespace IronBoard.Core.Wpf
                      });
                });
          }
-      }
-
-      public string Description
-      {
-         set { DescriptionText.Text = value; }
       }
 
       private void Post_OnClick(object sender, RoutedEventArgs e)

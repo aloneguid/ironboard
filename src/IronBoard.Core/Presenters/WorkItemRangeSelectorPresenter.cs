@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Presenters
 {
@@ -100,21 +101,44 @@ namespace IronBoard.Core.Presenters
                    : string.Format("post-review --revision-range={0}:{1}", range.Item1, range.Item2);
       }
 
-      public string ProduceDescription(IEnumerable<WorkItem> selectedItems)
+      private string ExtractBugsClosed(ICollection<WorkItem> lines)
+      {
+         //todo: search for jira issue patterns and extract the numbers
+         return null;
+      }
+
+      private string ExtractTestingDone(ICollection<WorkItem> lines)
+      {
+         //todo: extract for files ending with *test. and include comment like
+         //unit testing (File1Test, File2Test)
+         return null;
+      }
+
+      public void ExtractBasicMetadata(IEnumerable<WorkItem> selectedItems, Review review)
       {
          if (selectedItems != null)
          {
-            var b = new StringBuilder();
-            foreach (WorkItem wi in selectedItems)
+            List<WorkItem> itemsList = selectedItems.ToList();
+            var lines = new List<string>();
+            foreach (WorkItem wi in itemsList)
             {
-               if (!string.IsNullOrEmpty(wi.Comment))
+               string comment = wi.Comment == null ? null : wi.Comment.Trim();
+               if (!string.IsNullOrEmpty(comment))
                {
-                  b.AppendLine(wi.Comment);
+                  lines.Add(comment);
                }
             }
-            return b.ToString();
+
+            if (lines.Count > 0)
+            {
+               lines = lines.Distinct().ToList();
+               review.Subject = lines[0];
+               review.Description = String.Join(Environment.NewLine, lines);
+            }
+
+            review.BugsClosed = ExtractBugsClosed(itemsList);
+            review.TestingDone = ExtractTestingDone(itemsList);
          }
-         return null;
       }
    }
 }

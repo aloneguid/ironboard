@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Wpf
 {
@@ -90,8 +91,9 @@ namespace IronBoard.Core.Wpf
          bool skipped;
          List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
          Tuple<int, int> range = _presenter.GetRange(continuous);
-         var detailWindow = new ReviewDetails(Strings.ReviewDetails_NewTicket, range.Item1, range.Item2);
-         detailWindow.Description = _presenter.ProduceDescription(continuous);
+         Review review = new Review();
+         _presenter.ExtractBasicMetadata(continuous, review);
+         var detailWindow = new ReviewDetails(Strings.ReviewDetails_NewTicket, review, range.Item1, range.Item2);
          detailWindow.ShowDialog();
       }
 
