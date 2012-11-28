@@ -46,7 +46,8 @@
       </StackPanel>
 
       <ListView Grid.Row="1" x:Name="WorkItems" AlternationCount="2" ItemContainerStyle="{StaticResource lvStyle}"
-                SelectionChanged="WorkItems_SelectionChanged">
+                SelectionChanged="WorkItems_SelectionChanged"
+                >
          <ListView.View>
             <GridView>
                <GridViewColumn>
@@ -54,6 +55,9 @@
                      <DataTemplate>
                         <CheckBox Tag="{Binding}"
                                   IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"/>
+                        <DataTemplate.Triggers>
+                           
+                        </DataTemplate.Triggers>
                      </DataTemplate>
                   </GridViewColumn.CellTemplate>
                </GridViewColumn>

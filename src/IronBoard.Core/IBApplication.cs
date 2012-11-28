@@ -18,6 +18,8 @@ namespace IronBoard.Core
 
       public static event Action<CoreSettings> SettingsChanged;
 
+      public static event Action<string> OnOpenBrowserWindow;
+
       public static ILoginPasswordView LoginView { get; set; }
 
       public static void Initialise(string solutionPath, CoreSettings settings)
@@ -37,6 +39,14 @@ namespace IronBoard.Core
          RbClient = client;
          RbClient.AuthenticationRequired += OnAuthenticationRequired;
          RbClient.AuthCookieChanged += OnAuthCookieChanged;
+      }
+
+      public static void OpenBrowserWindow(string url)
+      {
+         if (OnOpenBrowserWindow != null)
+         {
+            OnOpenBrowserWindow(url);
+         }
       }
 
       static void OnAuthCookieChanged(string cookie)

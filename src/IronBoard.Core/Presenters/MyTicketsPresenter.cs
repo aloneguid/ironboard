@@ -2,15 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using IronBoard.Core.Views;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Presenters
 {
    class MyTicketsPresenter
    {
+      private readonly IMyTicketsView _view;
+
       public MyTicketsPresenter(IMyTicketsView view)
       {
-         
+         _view = view;
+      }
+
+      public void ReloadData()
+      {
+         IEnumerable<Review> myTickets = null;
+         Exception ex = null;
+         Task.Factory.StartNew(() =>
+            {
+               try
+               {
+                  myTickets = IbApplication.RbClient.GetPersonalRequests();
+               }
+               catch (Exception ex1)
+               {
+                  ex = ex1;
+               }
+               _view.UpdateList(myTickets, ex);
+            });
+      }
+
+      public void OpenInBrowser(Review r)
+      {
+         string url = string.Format("{0}/r/{1}", IbApplication.RbClient.ServerUri, r.Id);
+         IbApplication.OpenBrowserWindow(url);
       }
    }
 }

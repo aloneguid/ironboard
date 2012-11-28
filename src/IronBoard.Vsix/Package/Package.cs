@@ -75,6 +75,20 @@ namespace IronBoard.Vsix.Package
       private void InitialiseIbApp()
       {
          IbApplication.SettingsChanged += IbSettingsChanged;
+         IbApplication.OnOpenBrowserWindow += OnOpenBrowserWindow;
+      }
+
+      void OnOpenBrowserWindow(string url)
+      {
+         if (url != null)
+         {
+            IVsCommandWindow service = (IVsCommandWindow) this.GetService(typeof (SVsCommandWindow));
+            if (service != null)
+            {
+               string command = string.Format("File.OpenFile \"{0}\"", url);
+               service.ExecuteCommand(command);
+            }
+         }
       }
 
       private void OpenIbApp()
