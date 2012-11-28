@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
@@ -36,6 +29,11 @@ namespace IronBoard.Core.Wpf
       {
          Progress.IsInProgress = true;
          _presenter.ReloadData();   
+      }
+
+      public void SetSelection(IEnumerable<WorkItem> items)
+      {
+         
       }
 
       private void Refresh_Click(object sender, RoutedEventArgs e)

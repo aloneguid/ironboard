@@ -57,5 +57,9 @@
             </ContextMenu>
          </ListView.ContextMenu>
       </ListView>
+      
+      <Label x:Name="LoadError" Content="load error" Grid.Row="1"
+             HorizontalAlignment="Center" VerticalAlignment="Center"
+             Foreground="Red"/>
    </Grid>
 </UserControl>

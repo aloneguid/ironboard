@@ -70,6 +70,15 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to load error ({0}).
+        /// </summary>
+        internal static string MyTickets_LoadError {
+            get {
+                return ResourceManager.GetString("MyTickets_LoadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error generating diff: {0}.
         /// </summary>
         internal static string ReviewDetails_GenerateDiff_Error {

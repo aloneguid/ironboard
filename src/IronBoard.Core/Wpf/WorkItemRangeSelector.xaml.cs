@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -17,8 +16,9 @@ namespace IronBoard.Core.Wpf
    /// </summary>
    public partial class WorkItemRangeSelector : UserControl, IWorkItemRangeSelectorView
    {
+      public event Action<IEnumerable<WorkItem>> SelectectionChanged;
+
       private readonly WorkItemRangeSelectorPresenter _presenter;
-      
 
       public WorkItemRangeSelector()
       {
@@ -101,6 +101,11 @@ namespace IronBoard.Core.Wpf
 
          Tuple<int, int> range = _presenter.GetRange(continuous);
          CommandLine.Content = _presenter.GetCommandLine(range);
+
+         if(SelectectionChanged != null)
+         {
+            SelectectionChanged(continuous);
+         }
       }
    }
 }
