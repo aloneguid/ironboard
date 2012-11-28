@@ -29,6 +29,8 @@ namespace IronBoard.Core.Wpf
          _toRev = toRev;
          InitializeComponent();
          Title = title;
+         Background = IbApplication.BackgroundBrush;
+         Progress.ProgressTitle = Strings.ReviewDetails_GeneratingDiff;
 
          _presenter = new ReviewDetailsPresenter(this);
          InitialiseData();

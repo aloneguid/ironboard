@@ -26,6 +26,8 @@
 
       <StackPanel Orientation="Horizontal">
          <Button Content="refresh" Margin="5" x:Name="Refresh" Click="Refresh_Click"/>
+         <Label x:Name="TopHint" Content="right-click a ticket to update with r343:344"
+                Margin="0, 3, 0, 0"/>
          <core:Progress x:Name="Progress" Margin="5"/>
       </StackPanel>
 
@@ -53,6 +55,7 @@
          </ListView.View>
          <ListView.ContextMenu>
             <ContextMenu>
+               <MenuItem Header="open in web browser" Click="OpenInWebBrowserMenuItemClick"/>
                <MenuItem x:Name="UpdateTicketMenu" Click="UpdateTicketMenu_OnClick"/>
             </ContextMenu>
          </ListView.ContextMenu>

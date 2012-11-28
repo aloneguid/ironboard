@@ -17,11 +17,14 @@ namespace IronBoard.Core.Wpf
    public partial class MyTicketsView : UserControl, IMyTicketsView
    {
       private readonly MyTicketsPresenter _presenter;
+      private IEnumerable<WorkItem> items;
+      private int rmin, rmax;
 
       public MyTicketsView()
       {
          InitializeComponent();
          LoadError.Visibility = Visibility.Collapsed;
+         TopHint.Content = null;
          _presenter = new MyTicketsPresenter(this);
       }
 
@@ -32,9 +35,13 @@ namespace IronBoard.Core.Wpf
          _presenter.ReloadData();   
       }
 
-      public void SetSelection(IEnumerable<WorkItem> items)
+      public void SetSelection(IEnumerable<WorkItem> items, int rmin, int rmax)
       {
-         
+         this.items = items;
+         this.rmin = rmin;
+         this.rmax = rmax;
+
+         TopHint.Content = items == null ? null : string.Format(Strings.MyTickets_TopHint, rmin, rmax);
       }
       
       private void Refresh_Click(object sender, RoutedEventArgs e)
@@ -67,17 +74,28 @@ namespace IronBoard.Core.Wpf
          Review r = Tickets.SelectedItem as Review;
          if (r != null)
          {
-            UpdateTicketMenu.Header = "update #" + r.Id;
+            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, r.Id, rmin, rmax);
+            UpdateTicketMenu.Header = header;
          }
+      }
+
+      private void WebOpenSelectedTicket()
+      {
+         var r = Tickets.SelectedItem as Review;
+         if (r != null)
+         {
+            _presenter.OpenInBrowser(r);
+         }         
       }
 
       private void Tickets_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
       {
-         Review r = Tickets.SelectedItem as Review;
-         if (r != null)
-         {
-            _presenter.OpenInBrowser(r);
-         }
+         WebOpenSelectedTicket();
+      }
+
+      private void OpenInWebBrowserMenuItemClick(object sender, RoutedEventArgs e)
+      {
+         WebOpenSelectedTicket();
       }
    }
 }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:core="clr-namespace:IronBoard.Core.Wpf"
         Title="ReviewDetails" Height="400" Width="600">
-    <Grid>
+    <Grid Margin="0, 10, 5, 0">
       <Grid.ColumnDefinitions>
          <ColumnDefinition Width="Auto"/>
          <ColumnDefinition Width="*"/>

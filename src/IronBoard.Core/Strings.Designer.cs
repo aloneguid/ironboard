@@ -79,6 +79,24 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to right-click a ticket to update with r{0}:{1}.
+        /// </summary>
+        internal static string MyTickets_TopHint {
+            get {
+                return ResourceManager.GetString("MyTickets_TopHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update #{0} with r{1}:{2}.
+        /// </summary>
+        internal static string MyTickets_UpdateTicketMenu {
+            get {
+                return ResourceManager.GetString("MyTickets_UpdateTicketMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error generating diff: {0}.
         /// </summary>
         internal static string ReviewDetails_GenerateDiff_Error {
@@ -88,7 +106,16 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New post commit review.
+        ///   Looks up a localized string similar to generating SVN diff.
+        /// </summary>
+        internal static string ReviewDetails_GeneratingDiff {
+            get {
+                return ResourceManager.GetString("ReviewDetails_GeneratingDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New post-commit review.
         /// </summary>
         internal static string ReviewDetails_NewTicket {
             get {

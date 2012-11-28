@@ -123,11 +123,20 @@
   <data name="MyTickets_LoadError" xml:space="preserve">
     <value>load error ({0})</value>
   </data>
+  <data name="MyTickets_TopHint" xml:space="preserve">
+    <value>right-click a ticket to update with r{0}:{1}</value>
+  </data>
+  <data name="MyTickets_UpdateTicketMenu" xml:space="preserve">
+    <value>update #{0} with r{1}:{2}</value>
+  </data>
   <data name="ReviewDetails_GenerateDiff_Error" xml:space="preserve">
     <value>error generating diff: {0}</value>
   </data>
+  <data name="ReviewDetails_GeneratingDiff" xml:space="preserve">
+    <value>generating SVN diff</value>
+  </data>
   <data name="ReviewDetails_NewTicket" xml:space="preserve">
-    <value>New post commit review</value>
+    <value>New post-commit review</value>
   </data>
   <data name="ReviewDetails_NoTestingDone" xml:space="preserve">
     <value>i have done no testing and committed by mistake</value>

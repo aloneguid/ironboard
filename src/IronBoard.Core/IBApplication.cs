@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Windows.Media;
 using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
@@ -47,6 +48,20 @@ namespace IronBoard.Core
          {
             OnOpenBrowserWindow(url);
          }
+      }
+
+      private static Brush _backgroundBrush;
+      public static Brush BackgroundBrush
+      {
+         get
+         {
+            if(_backgroundBrush == null)
+            {
+               _backgroundBrush = System.Windows.SystemColors.ControlBrush;
+            }
+            return _backgroundBrush;
+         }
+         set { _backgroundBrush = value; }
       }
 
       static void OnAuthCookieChanged(string cookie)

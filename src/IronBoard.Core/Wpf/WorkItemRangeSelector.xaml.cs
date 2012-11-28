@@ -16,7 +16,7 @@ namespace IronBoard.Core.Wpf
    /// </summary>
    public partial class WorkItemRangeSelector : UserControl, IWorkItemRangeSelectorView
    {
-      public event Action<IEnumerable<WorkItem>> SelectectionChanged;
+      public event Action<IEnumerable<WorkItem>, int, int> SelectectionChanged;
 
       private readonly WorkItemRangeSelectorPresenter _presenter;
 
@@ -104,7 +104,7 @@ namespace IronBoard.Core.Wpf
 
          if(SelectectionChanged != null)
          {
-            SelectectionChanged(continuous);
+            SelectectionChanged(continuous, range.Item1, range.Item2);
          }
       }
    }

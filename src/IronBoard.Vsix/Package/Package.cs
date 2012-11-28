@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
+using System.Windows.Media;
 using EnvDTE;
 using EnvDTE80;
 using IronBoard.Core;
@@ -94,8 +95,9 @@ namespace IronBoard.Vsix.Package
                                     ? null
                                     : settingsString.TrivialDeserialize<CoreSettings>();
          if (settings == null) settings = new CoreSettings();
-         IbApplication.Initialise(ConfigFolder, settings);
-         //IbApplication.Initialise(ConfigFolder, settings, RbFactory.CreateMockedClient());
+         //IbApplication.BackgroundBrush = (SolidColorBrush)VsBrushes.ToolWindowBackgroundKey;
+         //IbApplication.Initialise(ConfigFolder, settings);
+         IbApplication.Initialise(ConfigFolder, settings, RbFactory.CreateMockedClient());
       }
 
       private void InitializeSolution()
