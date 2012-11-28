@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:core="clr-namespace:IronBoard.Core.Wpf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
    <UserControl.Resources>
@@ -19,61 +20,63 @@
          </Style.Triggers>
       </Style>
    </UserControl.Resources>
-   
-    <Grid>
-      <Grid.RowDefinitions>
-         <RowDefinition Height="Auto"/>
-         <RowDefinition Height="*"/>
-         <RowDefinition Height="20"/>
-      </Grid.RowDefinitions>
-       
-      <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" x:Name="ToolBar">
-         <TextBlock Text="max revisions:" VerticalAlignment="Center" Margin="5,0,0,0"/>
-         <ComboBox x:Name="MaxRevisions" Width="80" Margin="5" SelectedIndex="0" SelectionChanged="MaxRevisions_SelectionChanged">
-            <ComboBoxItem>25</ComboBoxItem>
-            <ComboBoxItem>50</ComboBoxItem>
-            <ComboBoxItem>100</ComboBoxItem>
-            <ComboBoxItem>500</ComboBoxItem>
-         </ComboBox>
-         <Button x:Name="Refresh" Content="refresh" Height="23" Click="RefreshClick"/>
-         
-         <Button x:Name="PostReview" Content="post review" Height="23" Click="PostReview_Click" Margin="20,0,0,0" IsEnabled="False"/>
-         
-         <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
-         <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
-         
-         <core:Progress x:Name="Progress" Margin="5"/>
-      </StackPanel>
 
-      <ListView Grid.Row="1" x:Name="WorkItems" AlternationCount="2" ItemContainerStyle="{StaticResource lvStyle}"
+   <xctk:BusyIndicator x:Name="Progress">
+      <Grid>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+         </Grid.RowDefinitions>
+
+         <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" x:Name="ToolBar">
+            <TextBlock Text="max revisions:" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <ComboBox x:Name="MaxRevisions" Width="80" Margin="5" SelectedIndex="0" SelectionChanged="MaxRevisions_SelectionChanged">
+               <ComboBoxItem>25</ComboBoxItem>
+               <ComboBoxItem>50</ComboBoxItem>
+               <ComboBoxItem>100</ComboBoxItem>
+               <ComboBoxItem>500</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="Refresh" Content="refresh" Height="23" Click="RefreshClick"/>
+
+            <Button x:Name="PostReview" Content="post review" Height="23" Click="PostReview_Click" Margin="20,0,0,0" IsEnabled="False"/>
+
+            <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
+            <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
+
+            <!--<core:Progress x:Name="Progress" Margin="5"/>-->
+         </StackPanel>
+
+         <ListView Grid.Row="1" x:Name="WorkItems" AlternationCount="2" ItemContainerStyle="{StaticResource lvStyle}"
                 SelectionChanged="WorkItems_SelectionChanged"
                 >
-         <ListView.View>
-            <GridView>
-               <GridViewColumn>
-                  <GridViewColumn.CellTemplate>
-                     <DataTemplate>
-                        <CheckBox Tag="{Binding}"
+            <ListView.View>
+               <GridView>
+                  <GridViewColumn>
+                     <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                           <CheckBox Tag="{Binding}"
                                   IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"/>
-                        <DataTemplate.Triggers>
-                           
-                        </DataTemplate.Triggers>
-                     </DataTemplate>
-                  </GridViewColumn.CellTemplate>
-               </GridViewColumn>
-               <GridViewColumn Header="r#" DisplayMemberBinding="{Binding ItemId}"/>
-               <GridViewColumn Header="author" DisplayMemberBinding="{Binding Author}"/>
-               <GridViewColumn Header="date" DisplayMemberBinding="{Binding Time}"/>
-               <GridViewColumn Header="comment" DisplayMemberBinding="{Binding Comment}"/>
-            </GridView>
-         </ListView.View>
-      </ListView>
+                           <DataTemplate.Triggers>
 
-      <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,-3,0,0">
-         <Label x:Name="Warning" Content="[some revisions skipped]" Foreground="Red"
+                           </DataTemplate.Triggers>
+                        </DataTemplate>
+                     </GridViewColumn.CellTemplate>
+                  </GridViewColumn>
+                  <GridViewColumn Header="r#" DisplayMemberBinding="{Binding ItemId}"/>
+                  <GridViewColumn Header="author" DisplayMemberBinding="{Binding Author}"/>
+                  <GridViewColumn Header="date" DisplayMemberBinding="{Binding Time}"/>
+                  <GridViewColumn Header="comment" DisplayMemberBinding="{Binding Comment}"/>
+               </GridView>
+            </ListView.View>
+         </ListView>
+
+         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,-3,0,0">
+            <Label x:Name="Warning" Content="[some revisions skipped]" Foreground="Red"
                 ToolTip="only continuous selection can be posted"/>
-         <Label x:Name="CommandLine" Content="command line"
+            <Label x:Name="CommandLine" Content="command line"
                 ToolTip="command line for post-review tool to execute this selection"/>
-      </StackPanel>
-   </Grid>
+         </StackPanel>
+      </Grid>
+   </xctk:BusyIndicator>
 </UserControl>

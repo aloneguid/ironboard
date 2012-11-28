@@ -34,7 +34,7 @@ namespace IronBoard.Core.Wpf
          if (MaxItems > 0 && WorkItems != null)
          {
             //ToolBar.IsEnabled = false;
-            Progress.IsInProgress = true;
+            Progress.IsBusy = true;
             int maxItems = MaxItems;
             _presenter.ReloadData(maxItems);
          }
@@ -44,7 +44,7 @@ namespace IronBoard.Core.Wpf
       {
          Dispatcher.Push(() =>
          {
-            Progress.IsInProgress = false;
+            Progress.IsBusy = false;
             WorkItems.ItemsSource = items;
          });
       }
