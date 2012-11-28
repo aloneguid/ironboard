@@ -21,13 +21,14 @@ namespace IronBoard.Core.Wpf
       public MyTicketsView()
       {
          InitializeComponent();
-
+         LoadError.Visibility = Visibility.Collapsed;
          _presenter = new MyTicketsPresenter(this);
       }
 
       public void RefreshView()
       {
          Progress.IsInProgress = true;
+         LoadError.Visibility = Visibility.Collapsed;
          _presenter.ReloadData();   
       }
 
@@ -35,7 +36,7 @@ namespace IronBoard.Core.Wpf
       {
          
       }
-
+      
       private void Refresh_Click(object sender, RoutedEventArgs e)
       {
          RefreshView();
@@ -46,6 +47,12 @@ namespace IronBoard.Core.Wpf
          Dispatcher.Push(() =>
          {
             Progress.IsInProgress = false;
+            if(error != null)
+            {
+               string msg = string.Format(Strings.MyTickets_LoadError, error.Message);
+               LoadError.Content = msg;
+               LoadError.Visibility = Visibility.Visible;
+            }
             Tickets.ItemsSource = myTickets;
          });
       }

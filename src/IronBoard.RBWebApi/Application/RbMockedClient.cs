@@ -13,7 +13,7 @@ namespace IronBoard.RBWebApi.Application
 
       public Uri ServerUri
       {
-         get { throw new NotImplementedException(); }
+         get { return new Uri("http://microsoft.com"); }
       }
 
       public string AuthCookie
@@ -59,7 +59,8 @@ namespace IronBoard.RBWebApi.Application
 
       public IEnumerable<Review> GetPersonalRequests()
       {
-         throw new NotImplementedException();
+         var r1 = new Review(1, "review 1", "no desc", "i hate tests", "MGK-76", DateTime.Now);
+         return new[] { r1 };
       }
    }
 }

@@ -82,10 +82,19 @@ namespace IronBoard.RBWebApi.Application
 
          if ((int)response.StatusCode != expectedCode)
          {
-            string msg = string.Format("code: {0}\r\ndescription: {1}\r\nresponse:{2}\r\n",
-                                       response.StatusCode,
-                                       response.StatusDescription,
-                                       response.Content);
+            string msg;
+
+            if ((int)response.StatusCode != 0)
+            {
+               msg = string.Format("code: {0}\r\ndescription: {1}\r\nresponse:{2}\r\n",
+                                   response.StatusCode,
+                                   response.StatusDescription,
+                                   response.Content);
+            }
+            else
+            {
+               msg = response.ErrorMessage;
+            }
 
             throw new InvalidOperationException(msg);
          }

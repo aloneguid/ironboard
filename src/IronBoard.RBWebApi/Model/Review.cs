@@ -26,6 +26,16 @@ namespace IronBoard.RBWebApi.Model
          
       }
 
+      public Review(long id, string subject, string description, string testingDone, string bugsClosed, DateTime lastUpdated)
+      {
+         Id = id;
+         Subject = subject;
+         Description = description;
+         TestingDone = testingDone;
+         BugsClosed = bugsClosed;
+         LastUpdated = lastUpdated;
+      }
+
       public long Id { get; set; }
 
       public Repository Repository { get; set; }

@@ -2,6 +2,8 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
+using EnvDTE;
+using EnvDTE80;
 using IronBoard.Core;
 using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
@@ -80,15 +82,9 @@ namespace IronBoard.Vsix.Package
 
       void OnOpenBrowserWindow(string url)
       {
-         if (url != null)
-         {
-            IVsCommandWindow service = (IVsCommandWindow) this.GetService(typeof (SVsCommandWindow));
-            if (service != null)
-            {
-               string command = string.Format("File.OpenFile \"{0}\"", url);
-               service.ExecuteCommand(command);
-            }
-         }
+         var dte = GetGlobalService(typeof(DTE)) as DTE2;
+         var itemOps = dte.ItemOperations;
+         itemOps.Navigate(url);
       }
 
       private void OpenIbApp()
@@ -99,6 +95,7 @@ namespace IronBoard.Vsix.Package
                                     : settingsString.TrivialDeserialize<CoreSettings>();
          if (settings == null) settings = new CoreSettings();
          IbApplication.Initialise(ConfigFolder, settings);
+         //IbApplication.Initialise(ConfigFolder, settings, RbFactory.CreateMockedClient());
       }
 
       private void InitializeSolution()
