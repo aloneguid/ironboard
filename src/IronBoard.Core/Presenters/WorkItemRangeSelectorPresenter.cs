@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
@@ -12,6 +12,7 @@ namespace IronBoard.Core.Presenters
 {
    public class WorkItemRangeSelectorPresenter
    {
+      private static readonly Regex JiraIssueRegex = new Regex("[a-zA-Z]+-[0-9]+", RegexOptions.Multiline);
       private readonly IWorkItemRangeSelectorView _view;
       private readonly Dictionary<WorkItem, int> _itemOrder = new Dictionary<WorkItem, int>(); 
 
@@ -132,17 +133,47 @@ namespace IronBoard.Core.Presenters
                    : string.Format("post-review --revision-range={0}:{1}", range.Item1, range.Item2);
       }
 
-      private string ExtractBugsClosed(ICollection<WorkItem> lines)
+      public string[] ExtractBugsClosed(IEnumerable<WorkItem> lines)
       {
-         //todo: search for jira issue patterns and extract the numbers
-         return null;
+         var result = new HashSet<string>();
+         if (lines != null)
+         {
+            foreach (WorkItem wi in lines)
+            {
+               if (wi != null && wi.Comment != null)
+               {
+                  foreach (Match m in JiraIssueRegex.Matches(wi.Comment))
+                  {
+                     result.Add(m.ToString().ToUpper());
+                  }
+               }
+            }
+         }
+
+         return result.ToArray();
       }
 
-      private string ExtractTestingDone(ICollection<WorkItem> lines)
+      public string ExtractTestingDone(IEnumerable<WorkItem> lines)
       {
-         //todo: extract for files ending with *test. and include comment like
-         //unit testing (File1Test, File2Test)
-         return null;
+         var utFileNames = new HashSet<string>();
+         if (lines != null)
+         {
+            foreach (WorkItem wi in lines)
+            {
+               foreach (string filePath in wi.ChangedFilePaths)
+               {
+                  string name = filePath.Substring(filePath.LastIndexOf('/') + 1);
+                  if (name.IndexOf("test", StringComparison.InvariantCultureIgnoreCase) != -1)
+                  {
+                     utFileNames.Add(name);
+                  }
+               }
+            }
+         }
+
+         if (utFileNames.Count == 0) return Strings.ReviewDetails_NoTestingDone;
+
+         return string.Format(Strings.ReviewDetails_UnitTestingDone, string.Join(", ", utFileNames));
       }
 
       public void ExtractBasicMetadata(IEnumerable<WorkItem> selectedItems, Review review)
@@ -163,11 +194,13 @@ namespace IronBoard.Core.Presenters
             if (lines.Count > 0)
             {
                lines = lines.Distinct().ToList();
-               review.Subject = lines[0];
+               review.Subject = lines[0]
+                  .Trim(' ', '*', '-', '+', '=', '\t', '[', ']', '.')
+                  .Replace("\r", "").Replace("\n", " ").Replace("  ", " ");
                review.Description = String.Join(Environment.NewLine, lines);
             }
 
-            review.BugsClosed = ExtractBugsClosed(itemsList);
+            review.BugsClosed = String.Join(", ", ExtractBugsClosed(itemsList));
             review.TestingDone = ExtractTestingDone(itemsList);
          }
       }

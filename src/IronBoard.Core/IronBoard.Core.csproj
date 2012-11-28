@@ -145,6 +145,9 @@
     <Compile Include="Wpf\ReviewDetails.xaml.cs">
       <DependentUpon>ReviewDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\ReviewerSelector.xaml.cs">
+      <DependentUpon>ReviewerSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\WorkItemRangeSelector.xaml.cs">
       <DependentUpon>WorkItemRangeSelector.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
     <Page Include="Wpf\ReviewDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Wpf\ReviewerSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Wpf\WorkItemRangeSelector.xaml">
       <SubType>Designer</SubType>

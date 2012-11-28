@@ -65,6 +65,23 @@ namespace IronBoard.Core.Application
          return diffText;
       }
 
+      private WorkItem ToWorkItem(SvnLogEventArgs logEntry)
+      {
+         var item = new WorkItem(
+            logEntry.Revision.ToString(CultureInfo.InvariantCulture),
+            logEntry.Author,
+            logEntry.LogMessage,
+            logEntry.Time);
+         if (logEntry.ChangedPaths != null)
+         {
+            foreach (SvnChangeItem ci in logEntry.ChangedPaths)
+            {
+               item.ChangedFilePaths.Add(ci.Path);
+            }
+         }
+         return item;
+      }
+
       public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
       {
          var args = new SvnLogArgs { Limit = maxRevisions };
@@ -74,11 +91,7 @@ namespace IronBoard.Core.Application
 
          if (entries != null && entries.Count > 0)
          {
-            return entries.Select(e => new WorkItem(
-                                          e.Revision.ToString(CultureInfo.InvariantCulture),
-                                          e.Author,
-                                          e.LogMessage,
-                                          e.Time));
+            return entries.Select(ToWorkItem);
          }
 
          return null;

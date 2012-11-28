@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IronBoard.Core.Model
 {
    [Serializable]
    public class WorkItem
    {
+      private readonly HashSet<string> _changedFilePaths = new HashSet<string>();
+
       public WorkItem(string itemId, string author, string comment, DateTime time)
       {
          if (itemId == null) throw new ArgumentNullException("itemId");
@@ -27,5 +27,10 @@ namespace IronBoard.Core.Model
       public string Comment { get; private set; }
 
       public DateTime Time { get; private set; }
+
+      public ICollection<string> ChangedFilePaths
+      {
+         get { return _changedFilePaths; }
+      } 
    }
 }

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Vsix", "IronBoard
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7363C6B1-1C00-4F38-BEC6-2391661CC00E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Test.Integration", "IronBoard.Test.Integration\IronBoard.Test.Integration.csproj", "{9D7CBE43-03B7-4844-83BA-9B1A67B5340E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Test", "IronBoard.Test.Integration\IronBoard.Test.csproj", "{9D7CBE43-03B7-4844-83BA-9B1A67B5340E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

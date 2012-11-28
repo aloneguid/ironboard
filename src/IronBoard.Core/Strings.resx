@@ -126,4 +126,10 @@
   <data name="ReviewDetails_NewTicket" xml:space="preserve">
     <value>New post commit review</value>
   </data>
+  <data name="ReviewDetails_NoTestingDone" xml:space="preserve">
+    <value>i have done no testing and committed by mistake</value>
+  </data>
+  <data name="ReviewDetails_UnitTestingDone" xml:space="preserve">
+    <value>unit testing (see {0})</value>
+  </data>
 </root>

@@ -8,8 +8,8 @@
     <ProjectGuid>{9D7CBE43-03B7-4844-83BA-9B1A67B5340E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IronBoard.Test.Integration</RootNamespace>
-    <AssemblyName>IronBoard.Test.Integration</AssemblyName>
+    <RootNamespace>IronBoard.Test</RootNamespace>
+    <AssemblyName>IronBoard.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,15 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RbHttpClientTest.cs" />
+    <Compile Include="Integration\RbHttpClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unit\Presenters\WorkItemRangeSelectorPresenterTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IronBoard.Core\IronBoard.Core.csproj">
+      <Project>{01AC8415-7201-40AF-B6CA-8DD1DBECB496}</Project>
+      <Name>IronBoard.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IronBoard.RBWebApi\IronBoard.RBWebApi.csproj">
       <Project>{259CDD9D-ECF7-48C1-9C6C-0E403F9DEB9E}</Project>
       <Name>IronBoard.RBWebApi</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

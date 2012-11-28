@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -40,6 +41,7 @@ namespace IronBoard.Core.Wpf
             SummaryText.Text = _review.Subject;
             DescriptionText.Text = _review.Description;
             BugsText.Text = _review.BugsClosed;
+            TestingText.Text = _review.TestingDone;
 
             Progress.IsInProgress = true;
             ViewDiff.IsEnabled = false;
@@ -75,8 +77,24 @@ namespace IronBoard.Core.Wpf
          }
       }
 
+      private void FillReview()
+      {
+         _review.TargetUsers.Clear();
+         _review.TargetGroups.Clear();
+         if (Users.Reviewers != null)
+         {
+            foreach (User u in Users.Reviewers) _review.TargetUsers.Add(u);
+         }
+         if (Groups.Reviewers != null)
+         {
+            foreach (UserGroup g in Groups.Reviewers) _review.TargetGroups.Add(g);
+         }         
+      }
+
       private void Post_OnClick(object sender, RoutedEventArgs e)
       {
+         FillReview();
+         //todo: post this shit
          Close();
       }
 

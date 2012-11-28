@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace IronBoard.RBWebApi.Model
+﻿namespace IronBoard.RBWebApi.Model
 {
    public class Reviewer
    {
-      public Reviewer(string internalName, string name)
+      protected Reviewer(string internalName, string name)
       {
-         this.InternalName = internalName;
-         this.Name = name;
+         InternalName = internalName;
+         Name = name;
       }
 
       public string InternalName { get; set; }

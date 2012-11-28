@@ -86,5 +86,23 @@ namespace IronBoard.Core {
                 return ResourceManager.GetString("ReviewDetails_NewTicket", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to i have done no testing and committed by mistake.
+        /// </summary>
+        internal static string ReviewDetails_NoTestingDone {
+            get {
+                return ResourceManager.GetString("ReviewDetails_NoTestingDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unit testing (see {0}).
+        /// </summary>
+        internal static string ReviewDetails_UnitTestingDone {
+            get {
+                return ResourceManager.GetString("ReviewDetails_UnitTestingDone", resourceCulture);
+            }
+        }
     }
 }
