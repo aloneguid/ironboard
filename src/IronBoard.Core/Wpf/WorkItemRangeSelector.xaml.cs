@@ -104,7 +104,9 @@ namespace IronBoard.Core.Wpf
 
          if(SelectectionChanged != null)
          {
-            SelectectionChanged(continuous, range.Item1, range.Item2);
+            SelectectionChanged(continuous,
+               range == null ? 0 : range.Item1,
+               range == null ? 0 : range.Item2);
          }
       }
    }

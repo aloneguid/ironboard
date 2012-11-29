@@ -79,6 +79,15 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to loading tickets.
+        /// </summary>
+        internal static string MyTickets_LoadingTickets {
+            get {
+                return ResourceManager.GetString("MyTickets_LoadingTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to right-click a ticket to update with r{0}:{1}.
         /// </summary>
         internal static string MyTickets_TopHint {
@@ -97,6 +106,15 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to updating ticket #{0}.
+        /// </summary>
+        internal static string MyTickets_UpdatingTicket {
+            get {
+                return ResourceManager.GetString("MyTickets_UpdatingTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error generating diff: {0}.
         /// </summary>
         internal static string ReviewDetails_GenerateDiff_Error {
@@ -106,7 +124,7 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to generating SVN diff.
+        ///   Looks up a localized string similar to generating subversion diff.
         /// </summary>
         internal static string ReviewDetails_GeneratingDiff {
             get {

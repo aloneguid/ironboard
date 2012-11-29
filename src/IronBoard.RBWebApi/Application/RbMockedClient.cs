@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.RBWebApi.Application
@@ -59,6 +60,8 @@ namespace IronBoard.RBWebApi.Application
 
       public IEnumerable<Review> GetPersonalRequests()
       {
+         Thread.Sleep(TimeSpan.FromSeconds(5));
+
          var r1 = new Review(1, "review 1", "no desc", "i hate tests", "MGK-76", DateTime.Now);
          return new[] { r1 };
       }

@@ -30,7 +30,8 @@ namespace IronBoard.Core.Wpf
 
       public void RefreshView()
       {
-         Progress.IsInProgress = true;
+         Progress.BusyContent = Strings.MyTickets_LoadingTickets;
+         Progress.IsBusy = true;
          LoadError.Visibility = Visibility.Collapsed;
          _presenter.ReloadData();   
       }
@@ -53,7 +54,7 @@ namespace IronBoard.Core.Wpf
       {
          Dispatcher.Push(() =>
          {
-            Progress.IsInProgress = false;
+            Progress.IsBusy = false;
             if(error != null)
             {
                string msg = string.Format(Strings.MyTickets_LoadError, error.Message);

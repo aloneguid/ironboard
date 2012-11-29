@@ -21,7 +21,7 @@
       </Style>
    </UserControl.Resources>
 
-   <xctk:BusyIndicator x:Name="Progress">
+   <xctk:BusyIndicator x:Name="Progress" BusyContent="reading subversion log...">
       <Grid>
          <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
