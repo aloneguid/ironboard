@@ -49,15 +49,14 @@ namespace IronBoard.Test.Integration
          review.Subject = "integration test";
          review.TestingDone = "integration " + DateTime.Now.ToString();
 
-         User u1 = _client.GetUsers().First(u => u.InternalName == "cfullerton");
-         User u2 = _client.GetUsers().First(u => u.InternalName == "iknight");
-         UserGroup g1 = _client.GetGroups().First(g => g.Name == "mso4-all");
+         User u2 = _client.GetUsers().First(u => u.InternalName == "igavryliuk");
+         UserGroup g1 = _client.GetGroups().First(g => g.Name == "MSW");
          
-         review.TargetUsers.Add(u1);
          review.TargetUsers.Add(u2);
          review.TargetGroups.Add(g1);
 
          _client.Post(review);
+         _client.MakePublic(review);
       }
 
       [Test]

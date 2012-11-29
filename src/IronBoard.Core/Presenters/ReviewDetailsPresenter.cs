@@ -70,6 +70,7 @@ namespace IronBoard.Core.Presenters
 
                   _view.UpdatePostStatus(Strings.PostProgress_Diff);
                   IbApplication.RbClient.AttachDiff(r, IbApplication.SvnRepository.RelativeRoot, _lastDiff);
+                  IbApplication.RbClient.MakePublic(r);
                }
                catch (Exception ex1)
                {

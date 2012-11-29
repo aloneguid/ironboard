@@ -63,6 +63,11 @@ namespace IronBoard.RBWebApi.Application
          throw new NotImplementedException();
       }
 
+      public void MakePublic(Review review)
+      {
+         throw new NotImplementedException();
+      }
+
       public void AttachDiff(Review review, string repoRoot, string diffText)
       {
          throw new NotImplementedException();

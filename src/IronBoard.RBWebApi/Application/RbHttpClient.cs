@@ -350,6 +350,13 @@ namespace IronBoard.RBWebApi.Application
          Execute(request, 200);
       }
 
+      public void MakePublic(Review review)
+      {
+         var request = CreateRequest(review.Links.Draft, Method.POST);
+         request.AddFile("public", Encoding.UTF8.GetBytes("1"), null);  //strange
+         Execute(request, 201);
+      }
+
       public void AttachDiff(Review review, string repoRoot, string diffText)
       {
          if (review == null) throw new ArgumentNullException("review");
