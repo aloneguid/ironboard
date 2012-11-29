@@ -33,6 +33,9 @@ namespace IronBoard.Core.Wpf
          Progress.ProgressTitle = Strings.ReviewDetails_GeneratingDiff;
 
          _presenter = new ReviewDetailsPresenter(this);
+         Users.Reviewers = _presenter.Users;
+         Groups.Reviewers = _presenter.Groups;
+
          InitialiseData();
       }
 

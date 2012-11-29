@@ -35,10 +35,7 @@ namespace IronBoard.Core.Wpf
             //todo:
             return null;
          }
-         set
-         {
-            //todo:
-         }
+         set { Combo.ItemsSource = value; }
       }
    }
 }

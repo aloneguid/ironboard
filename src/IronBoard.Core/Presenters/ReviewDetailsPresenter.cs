@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using IronBoard.Core.Views;
+using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Presenters
 {
@@ -43,6 +44,17 @@ namespace IronBoard.Core.Presenters
          p.StartInfo.UseShellExecute = true;
          p.StartInfo.FileName = targetPath;
          p.Start();
+      }
+
+      private static IEnumerable<User> _users;
+      private static IEnumerable<UserGroup> _groups;
+      public IEnumerable<User> Users
+      {
+         get { return _users ?? (_users = IbApplication.RbClient.GetUsers()); }
+      }
+      public IEnumerable<UserGroup> Groups
+      {
+         get { return _groups ?? (_groups = IbApplication.RbClient.GetGroups()); }
       }
    }
 }

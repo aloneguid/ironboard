@@ -30,12 +30,22 @@ namespace IronBoard.RBWebApi.Application
 
       public IEnumerable<UserGroup> GetGroups()
       {
-         throw new NotImplementedException();
+         return new[]
+                   {
+                      new UserGroup(1, "group1", "Group One", null, true, false, null), 
+                      new UserGroup(2, "group2", "Group Two", null, true, false, null), 
+                   };
       }
 
       public IEnumerable<User> GetUsers()
       {
-         throw new NotImplementedException();
+         return new[]
+                   {
+                      new User(1, "ivan", "Ivan", "Gavryliuk", "asshole", "dsfadf@gmail.com", null),
+                      new User(1, "ivan1", "Ivan1", "Gavryliuk1", "asshole1", "1dsfadf@gmail.com", null),
+                      new User(1, "ivan2", "Ivan2", "Gavryliuk2", "asshole2", "2dsfadf@gmail.com", null),
+                      new User(1, "ivan3", "Ivan3", "Gavryliuk3", "asshole3", "3dsfadf@gmail.com", null)
+                   };
       }
 
       public void Authenticate(NetworkCredential creds)
