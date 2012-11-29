@@ -79,6 +79,15 @@ namespace IronBoard.Vsix.Package
       {
          IbApplication.SettingsChanged += IbSettingsChanged;
          IbApplication.OnOpenBrowserWindow += OnOpenBrowserWindow;
+         IbApplication.OnOpenFile += IbApplication_OnOpenFile;
+      }
+
+      void IbApplication_OnOpenFile(string fullPath)
+      {
+         var p = new System.Diagnostics.Process();
+         p.StartInfo.UseShellExecute = true;
+         p.StartInfo.FileName = fullPath;
+         p.Start();
       }
 
       void OnOpenBrowserWindow(string url)
@@ -96,8 +105,8 @@ namespace IronBoard.Vsix.Package
                                     : settingsString.TrivialDeserialize<CoreSettings>();
          if (settings == null) settings = new CoreSettings();
          //IbApplication.BackgroundBrush = (SolidColorBrush)VsBrushes.ToolWindowBackgroundKey;
-         //IbApplication.Initialise(ConfigFolder, settings);
-         IbApplication.Initialise(ConfigFolder, settings, RbFactory.CreateMockedClient());
+         IbApplication.Initialise(ConfigFolder, settings);
+         //IbApplication.Initialise(ConfigFolder, settings, RbFactory.CreateMockedClient());
       }
 
       private void InitializeSolution()

@@ -21,6 +21,8 @@ namespace IronBoard.Core
 
       public static event Action<string> OnOpenBrowserWindow;
 
+      public static event Action<string> OnOpenFile;
+
       public static ILoginPasswordView LoginView { get; set; }
 
       public static void Initialise(string solutionPath, CoreSettings settings)
@@ -47,6 +49,14 @@ namespace IronBoard.Core
          if (OnOpenBrowserWindow != null)
          {
             OnOpenBrowserWindow(url);
+         }
+      }
+
+      public static void OpenFile(string fullPath)
+      {
+         if (OnOpenFile != null)
+         {
+            OnOpenFile(fullPath);
          }
       }
 

@@ -39,11 +39,7 @@ namespace IronBoard.Core.Presenters
 
          string targetPath = Path.Combine(Path.GetTempPath(), "ironboard-last.diff");
          File.WriteAllText(targetPath, _lastDiff, Encoding.UTF8);
-
-         Process p = new Process();
-         p.StartInfo.UseShellExecute = true;
-         p.StartInfo.FileName = targetPath;
-         p.Start();
+         IbApplication.OpenFile(targetPath);
       }
 
       private static IEnumerable<User> _users;
