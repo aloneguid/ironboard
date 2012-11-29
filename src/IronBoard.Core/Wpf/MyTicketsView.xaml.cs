@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
+using IronBoard.Core.Wpf.Data;
 using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Wpf
@@ -50,7 +51,7 @@ namespace IronBoard.Core.Wpf
          RefreshView();
       }
 
-      public void UpdateList(IEnumerable<Review> myTickets, Exception error)
+      public void UpdateList(IEnumerable<MyTicketData> myTickets, Exception error)
       {
          Dispatcher.Push(() =>
          {
@@ -72,20 +73,20 @@ namespace IronBoard.Core.Wpf
 
       private void Tickets_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
       {
-         Review r = Tickets.SelectedItem as Review;
+         var r = Tickets.SelectedItem as MyTicketData;
          if (r != null)
          {
-            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, r.Id, rmin, rmax);
+            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, r.R.Id, rmin, rmax);
             UpdateTicketMenu.Header = header;
          }
       }
 
       private void WebOpenSelectedTicket()
       {
-         var r = Tickets.SelectedItem as Review;
+         var r = Tickets.SelectedItem as MyTicketData;
          if (r != null)
          {
-            _presenter.OpenInBrowser(r);
+            _presenter.OpenInBrowser(r.R);
          }         
       }
 

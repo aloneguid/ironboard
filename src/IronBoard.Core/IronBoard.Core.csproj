@@ -137,6 +137,7 @@
     <Compile Include="WinForms\WorkItemRangeSelector.Designer.cs">
       <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\Data\MyTicketData.cs" />
     <Compile Include="Wpf\Data\WorkItemData.cs" />
     <Compile Include="Wpf\DispatcherExtensions.cs" />
     <Compile Include="Wpf\MyTicketsView.xaml.cs">

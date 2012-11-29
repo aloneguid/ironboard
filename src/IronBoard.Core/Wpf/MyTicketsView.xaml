@@ -49,10 +49,11 @@
                         </DataTemplate>
                      </GridViewColumn.CellTemplate>
                   </GridViewColumn>
-                  <GridViewColumn Header="#" DisplayMemberBinding="{Binding Id}"/>
-                  <GridViewColumn Header="to" DisplayMemberBinding="{Binding Submitter.InternalName}"/>
-                  <GridViewColumn Header="updated" DisplayMemberBinding="{Binding LastUpdated}"/>
-                  <GridViewColumn Header="summary" DisplayMemberBinding="{Binding Subject}"/>
+                  <GridViewColumn Header="#" DisplayMemberBinding="{Binding R.Id}"/>
+                  <GridViewColumn Header="from" DisplayMemberBinding="{Binding R.Submitter}"/>
+                  <GridViewColumn Header="to" DisplayMemberBinding="{Binding To}"/>
+                  <GridViewColumn Header="updated" DisplayMemberBinding="{Binding R.LastUpdated}"/>
+                  <GridViewColumn Header="summary" DisplayMemberBinding="{Binding R.Subject}"/>
                </GridView>
             </ListView.View>
             <ListView.ContextMenu>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IronBoard.Core.Views;
+using IronBoard.Core.Wpf.Data;
 using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Presenters
@@ -31,7 +32,7 @@ namespace IronBoard.Core.Presenters
                {
                   ex = ex1;
                }
-               _view.UpdateList(myTickets, ex);
+               _view.UpdateList(myTickets == null ? null : myTickets.Select(t => new MyTicketData(t)), ex);
             });
       }
 

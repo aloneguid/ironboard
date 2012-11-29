@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using IronBoard.RBWebApi.Model;
+using IronBoard.Core.Wpf.Data;
 
 namespace IronBoard.Core.Views
 {
    interface IMyTicketsView
    {
-      void UpdateList(IEnumerable<Review> myTickets, Exception error);
+      void UpdateList(IEnumerable<MyTicketData> myTickets, Exception error);
    }
 }
