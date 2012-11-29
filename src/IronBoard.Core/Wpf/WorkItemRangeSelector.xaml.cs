@@ -74,10 +74,11 @@ namespace IronBoard.Core.Wpf
          bool skipped;
          List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
          Tuple<int, int> range = _presenter.GetRange(continuous);
-         Review review = new Review();
+         var review = new Review();
          _presenter.ExtractBasicMetadata(continuous, review);
          var detailWindow = new ReviewDetails(Strings.ReviewDetails_NewTicket, review, range.Item1, range.Item2);
          detailWindow.ShowDialog();
+         if(review.Id != 0) _presenter.OpenInBrowser(review);
       }
 
       private IEnumerable<WorkItem> SelectCoutinuousSelectedItems(out bool skipped)

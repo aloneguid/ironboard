@@ -115,6 +115,33 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to detecting repository.
+        /// </summary>
+        internal static string PostProgress_DetectRepository {
+            get {
+                return ResourceManager.GetString("PostProgress_DetectRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to attaching source code.
+        /// </summary>
+        internal static string PostProgress_Diff {
+            get {
+                return ResourceManager.GetString("PostProgress_Diff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to creating main ticket.
+        /// </summary>
+        internal static string PostProgress_MainTicket {
+            get {
+                return ResourceManager.GetString("PostProgress_MainTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to error generating diff: {0}.
         /// </summary>
         internal static string ReviewDetails_GenerateDiff_Error {

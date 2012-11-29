@@ -2,86 +2,92 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:core="clr-namespace:IronBoard.Core.Wpf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="ReviewDetails" Height="400" Width="600">
-    <Grid Margin="0, 10, 5, 0">
-      <Grid.ColumnDefinitions>
-         <ColumnDefinition Width="Auto"/>
-         <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-         <RowDefinition Height="Auto"/>
-         <RowDefinition Height="*"/>
-         <RowDefinition Height="Auto"/>
-         <RowDefinition Height="Auto"/>
-         <RowDefinition Height="Auto"/>
-         <RowDefinition Height="Auto"/> <!-- 5 -->
-         <RowDefinition Height="Auto"/> <!-- 6 -->
+   <xctk:BusyIndicator x:Name="PostProgress">
+      <Grid Margin="0, 10, 5, 0">
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 5 -->
+            <RowDefinition Height="Auto"/>
+            <!-- 6 -->
 
-         <!-- controls -->
-         <RowDefinition Height="Auto"/> <!-- 7 -->
-      </Grid.RowDefinitions>
+            <!-- controls -->
+            <RowDefinition Height="Auto"/>
+            <!-- 7 -->
+         </Grid.RowDefinitions>
 
-       <!-- 0 -->
-      <Label Content="summary:" Grid.Column="0"
+         <!-- 0 -->
+         <Label Content="summary:" Grid.Column="0"
              HorizontalAlignment="Right"/>
-      <TextBox Grid.Column="1" x:Name="SummaryText" TextChanged="FieldTextChanged" />
+         <TextBox Grid.Column="1" x:Name="SummaryText" TextChanged="FieldTextChanged" />
 
-       <!-- 1 -->
-      <Label Content="description:"
+         <!-- 1 -->
+         <Label Content="description:"
               Grid.Column="0" Grid.Row="1"
              HorizontalAlignment="Right"/>
-      <TextBox Grid.Column="1" Grid.Row="1"
+         <TextBox Grid.Column="1" Grid.Row="1"
                TextWrapping="WrapWithOverflow"
                VerticalScrollBarVisibility="Visible"
                AcceptsReturn="True"
                Height="Auto"
                x:Name="DescriptionText" TextChanged="FieldTextChanged" />
 
-       <!-- 2 -->
-      <Label Content="testing:" Grid.Column="0" Grid.Row="2"
+         <!-- 2 -->
+         <Label Content="testing:" Grid.Column="0" Grid.Row="2"
              HorizontalAlignment="Right"/>
-      <TextBox Grid.Column="1" Grid.Row="2"
+         <TextBox Grid.Column="1" Grid.Row="2"
                TextWrapping="WrapWithOverflow"
                VerticalScrollBarVisibility="Visible"
                AcceptsReturn="True"
                Height="80"
                x:Name="TestingText"/>
 
-       <!-- 3 -->
-      <Label Content="users:" Grid.Column="0" Grid.Row="3"
+         <!-- 3 -->
+         <Label Content="users:" Grid.Column="0" Grid.Row="3"
              HorizontalAlignment="Right"/>
-      <core:ReviewerSelector x:Name="Users"
+         <core:ReviewerSelector x:Name="Users"
                              Grid.Column="1" Grid.Row="3"/>
 
-       <!-- 4 -->
-      <Label Content="groups:" Grid.Column="0" Grid.Row="4"
+         <!-- 4 -->
+         <Label Content="groups:" Grid.Column="0" Grid.Row="4"
              HorizontalAlignment="Right"/>
-      <core:ReviewerSelector x:Name="Groups"
+         <core:ReviewerSelector x:Name="Groups"
                              Grid.Column="1" Grid.Row="4"/>
 
-      <!-- 5 -->
-      <Label Content="bugs:" Grid.Column="0" Grid.Row="5"
+         <!-- 5 -->
+         <Label Content="bugs:" Grid.Column="0" Grid.Row="5"
              HorizontalAlignment="Right"/>
-      <TextBox Grid.Column="1" Grid.Row="5"
+         <TextBox Grid.Column="1" Grid.Row="5"
                x:Name="BugsText"/>
 
-       <!-- 6 -->
-      <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1">
-         <core:Progress ProgressTitle="creating SVN diff" x:Name="Progress"
+         <!-- 6 -->
+         <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1">
+            <core:Progress ProgressTitle="creating SVN diff" x:Name="DiffProgress"
                      HorizontalAlignment="Left"/>
-         <Label Content="error" x:Name="DiffError"
+            <Label Content="error" x:Name="DiffError"
                 Foreground="Red"/>
-      </StackPanel>
+         </StackPanel>
 
-      <!-- 7 -->
-      <StackPanel Grid.Column="1" Grid.Row="7" Orientation="Horizontal"
+         <!-- 7 -->
+         <StackPanel Grid.Column="1" Grid.Row="7" Orientation="Horizontal"
                   HorizontalAlignment="Right">
-         <Button Content="view diff" Margin="5" Padding="3" MinWidth="70"
+            <Button Content="view diff" Margin="5" Padding="3" MinWidth="70"
                  x:Name="ViewDiff" Click="ViewDiffClick"/>
-         <Button Content="Post" Margin="5" Padding="3" Width="70"
+            <Button Content="Post" Margin="5" Padding="3" Width="70"
                  x:Name="Post" Click="Post_OnClick"/>
-         <Button Content="Cancel" Margin="5" Padding="3" Width="70"
+            <Button Content="Cancel" Margin="5" Padding="3" Width="70"
                  x:Name="Cancel" Click="Cancel_OnClick"/>
-      </StackPanel>
-   </Grid>
+         </StackPanel>
+      </Grid>
+   </xctk:BusyIndicator>
 </Window>

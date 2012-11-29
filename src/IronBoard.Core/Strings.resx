@@ -135,6 +135,15 @@
   <data name="MyTickets_UpdatingTicket" xml:space="preserve">
     <value>updating ticket #{0}</value>
   </data>
+  <data name="PostProgress_DetectRepository" xml:space="preserve">
+    <value>detecting repository</value>
+  </data>
+  <data name="PostProgress_Diff" xml:space="preserve">
+    <value>attaching source code</value>
+  </data>
+  <data name="PostProgress_MainTicket" xml:space="preserve">
+    <value>creating main ticket</value>
+  </data>
   <data name="ReviewDetails_GenerateDiff_Error" xml:space="preserve">
     <value>error generating diff: {0}</value>
   </data>

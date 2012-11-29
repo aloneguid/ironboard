@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IronBoard.Core.Views
 {
    public interface IReviewDetailsView
    {
+      void UpdatePostStatus(string status);
 
+      void UpdatePostFinish(Exception error);
    }
 }

@@ -77,6 +77,8 @@ namespace IronBoard.Vsix.Package
 
       private void InitialiseIbApp()
       {
+         UiScheduler.InitializeUiContext();
+         IbApplication.LoginView = new RBAuthForm(null);
          IbApplication.SettingsChanged += IbSettingsChanged;
          IbApplication.OnOpenBrowserWindow += OnOpenBrowserWindow;
          IbApplication.OnOpenFile += IbApplication_OnOpenFile;

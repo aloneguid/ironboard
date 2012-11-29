@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -30,7 +29,7 @@ namespace IronBoard.Core.Wpf
          InitializeComponent();
          Title = title;
          Background = IbApplication.BackgroundBrush;
-         Progress.ProgressTitle = Strings.ReviewDetails_GeneratingDiff;
+         DiffProgress.ProgressTitle = Strings.ReviewDetails_GeneratingDiff;
 
          _presenter = new ReviewDetailsPresenter(this);
          Users.Reviewers = _presenter.Users;
@@ -48,7 +47,7 @@ namespace IronBoard.Core.Wpf
             BugsText.Text = _review.BugsClosed;
             TestingText.Text = _review.TestingDone;
 
-            Progress.IsInProgress = true;
+            DiffProgress.IsInProgress = true;
             ViewDiff.IsEnabled = false;
             DiffError.Visibility = Visibility.Collapsed;
             UpdateButtons();
@@ -66,7 +65,7 @@ namespace IronBoard.Core.Wpf
 
                   Dispatcher.Push(() =>
                      {
-                        Progress.IsInProgress = false;
+                        DiffProgress.IsInProgress = false;
                         if(ex == null)
                         {
                            ViewDiff.IsEnabled = true;
@@ -99,8 +98,7 @@ namespace IronBoard.Core.Wpf
       private void Post_OnClick(object sender, RoutedEventArgs e)
       {
          FillReview();
-         //todo: post this shit
-         Close();
+         _presenter.PostReview(_review);
       }
 
       private void Cancel_OnClick(object sender, RoutedEventArgs e)
@@ -114,8 +112,8 @@ namespace IronBoard.Core.Wpf
                            DescriptionText.Text.Trim().Length > 0 &&
                            TestingText.Text.Trim().Length > 0;
 
-         Cancel.IsEnabled = !Progress.IsInProgress;
-         Post.IsEnabled = enoughData && !Progress.IsInProgress && ViewDiff.IsEnabled;
+         Cancel.IsEnabled = !DiffProgress.IsInProgress;
+         Post.IsEnabled = enoughData && !DiffProgress.IsInProgress && ViewDiff.IsEnabled;
       }
 
       private void ViewDiffClick(object sender, RoutedEventArgs e)
@@ -126,6 +124,35 @@ namespace IronBoard.Core.Wpf
       private void FieldTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
       {
          UpdateButtons();
+      }
+
+      public void UpdatePostStatus(string status)
+      {
+         Dispatcher.Push(() =>
+            {
+               if (status == null)
+               {
+                  PostProgress.IsBusy = false;
+               }
+               else
+               {
+                  PostProgress.IsBusy = true;
+                  PostProgress.BusyContent = status;
+               }
+            });
+      }
+
+      public void UpdatePostFinish(Exception error)
+      {
+         Dispatcher.Push(() =>
+            {
+               PostProgress.IsBusy = false;
+               if (error != null)
+               {
+                  Messages.ShowError(error);
+               }
+               Close();
+            });
       }
    }
 }
