@@ -57,6 +57,20 @@ namespace IronBoard.Test.Integration
 
          _client.Post(review);
          _client.MakePublic(review);
+
+         _client.Delete(review.Id);
+      }
+
+      [Test]
+      public void UpdateWithNewDiffTest()
+      {
+         var review = new Review();
+         review.Repository = _client.GetRepositories().First();
+         review.Subject = "integration test (diff udpate)";
+         review.TestingDone = "integration " + DateTime.Now.ToString();
+         
+
+         _client.Delete(review.Id);
       }
 
       [Test]

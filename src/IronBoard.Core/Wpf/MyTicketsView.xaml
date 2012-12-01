@@ -61,6 +61,7 @@
                <ContextMenu>
                   <MenuItem Header="open in internal browser" Click="OpenInWebBrowserMenuItemClick"/>
                   <MenuItem Header="open in external browser" Click="OpenInExternalWebBrowserClick"/>
+                  <MenuItem Header="delete permanently" Click="DeletePermanentlyClick"/>
                   <MenuItem x:Name="UpdateTicketMenu" Click="UpdateTicketMenu_OnClick"/>
                </ContextMenu>
             </ListView.ContextMenu>

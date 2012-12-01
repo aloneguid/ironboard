@@ -41,5 +41,10 @@ namespace IronBoard.Core.Presenters
          string url = string.Format("{0}/r/{1}", IbApplication.RbClient.ServerUri, r.Id);
          IbApplication.OpenBrowserWindow(url, external);
       }
+
+      public void Delete(Review r)
+      {
+         IbApplication.RbClient.Delete(r.Id);
+      }
    }
 }

@@ -104,5 +104,15 @@ namespace IronBoard.Core.Wpf
       {
          WebOpenSelectedTicket(true);
       }
+
+      private void DeletePermanentlyClick(object sender, RoutedEventArgs e)
+      {
+         var r = Tickets.SelectedItem as MyTicketData;
+         if (r != null)
+         {
+            _presenter.Delete(r.R);
+            RefreshView();
+         }
+      }
    }
 }

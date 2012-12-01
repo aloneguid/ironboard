@@ -33,6 +33,8 @@ namespace IronBoard.RBWebApi
 
       void MakePublic(Review review);
 
+      void Delete(long id);
+
       void AttachDiff(Review review, string repoRoot, string diffText);
 
       IEnumerable<Review> GetPersonalRequests();

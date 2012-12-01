@@ -357,6 +357,12 @@ namespace IronBoard.RBWebApi.Application
          Execute(request, 201);
       }
 
+      public void Delete(long id)
+      {
+         var request = CreateRequest("review-requests/" + id, Method.DELETE);
+         Execute(request, 204);
+      }
+
       public void AttachDiff(Review review, string repoRoot, string diffText)
       {
          if (review == null) throw new ArgumentNullException("review");
