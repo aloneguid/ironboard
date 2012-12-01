@@ -19,7 +19,7 @@ namespace IronBoard.Core
 
       public static event Action<CoreSettings> SettingsChanged;
 
-      public static event Action<string> OnOpenBrowserWindow;
+      public static event Action<string, bool> OnOpenBrowserWindow;
 
       public static event Action<string> OnOpenFile;
 
@@ -44,11 +44,11 @@ namespace IronBoard.Core
          RbClient.AuthCookieChanged += OnAuthCookieChanged;
       }
 
-      public static void OpenBrowserWindow(string url)
+      public static void OpenBrowserWindow(string url, bool external)
       {
          if (OnOpenBrowserWindow != null)
          {
-            OnOpenBrowserWindow(url);
+            OnOpenBrowserWindow(url, external);
          }
       }
 

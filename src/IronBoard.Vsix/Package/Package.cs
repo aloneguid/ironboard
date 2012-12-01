@@ -12,6 +12,7 @@ using IronBoard.RBWebApi;
 using IronBoard.Vsix.Windows;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Process = System.Diagnostics.Process;
 
 namespace IronBoard.Vsix.Package
 {
@@ -92,11 +93,21 @@ namespace IronBoard.Vsix.Package
          p.Start();
       }
 
-      void OnOpenBrowserWindow(string url)
+      void OnOpenBrowserWindow(string url, bool external)
       {
-         var dte = GetGlobalService(typeof(DTE)) as DTE2;
-         var itemOps = dte.ItemOperations;
-         itemOps.Navigate(url);
+         if (!external)
+         {
+            var dte = GetGlobalService(typeof (DTE)) as DTE2;
+            var itemOps = dte.ItemOperations;
+            itemOps.Navigate(url);
+         }
+         else
+         {
+            var p = new Process();
+            p.StartInfo.UseShellExecute = true;
+            p.StartInfo.FileName = string.Format(url);
+            p.Start();
+         }
       }
 
       private void OpenIbApp()

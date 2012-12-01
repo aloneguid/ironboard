@@ -53,12 +53,14 @@
                   <GridViewColumn Header="from" DisplayMemberBinding="{Binding R.Submitter}"/>
                   <GridViewColumn Header="to" DisplayMemberBinding="{Binding To}"/>
                   <GridViewColumn Header="updated" DisplayMemberBinding="{Binding R.LastUpdated}"/>
+                  <GridViewColumn Header="status" DisplayMemberBinding="{Binding R.Status}"/>
                   <GridViewColumn Header="summary" DisplayMemberBinding="{Binding R.Subject}"/>
                </GridView>
             </ListView.View>
             <ListView.ContextMenu>
                <ContextMenu>
-                  <MenuItem Header="open in web browser" Click="OpenInWebBrowserMenuItemClick"/>
+                  <MenuItem Header="open in internal browser" Click="OpenInWebBrowserMenuItemClick"/>
+                  <MenuItem Header="open in external browser" Click="OpenInExternalWebBrowserClick"/>
                   <MenuItem x:Name="UpdateTicketMenu" Click="UpdateTicketMenu_OnClick"/>
                </ContextMenu>
             </ListView.ContextMenu>

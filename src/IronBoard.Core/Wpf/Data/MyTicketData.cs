@@ -18,7 +18,7 @@ namespace IronBoard.Core.Wpf.Data
          }
          if (review.TargetUsers.Count > 0)
          {
-            if (To.Length > 0) To += ";";
+            if (To.Length > 0) To += "; ";
             To += string.Join(", ", review.TargetUsers.Select(u => u.ToString()));
          }
       }

@@ -64,14 +64,14 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node or set it to <Icon guid="guidOfficeIcon" id="msotcidNoIcon" /> -->
 
-      <Button guid="guidIronBoard_VsixCmdSet" id="cmdidReviewBoard" priority="0x0100" type="Button">
+       <!--<Button guid="guidIronBoard_VsixCmdSet" id="cmdidReviewBoard" priority="0x0100" type="Button">
         <Parent guid="guidIronBoard_VsixCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <CommandName>cmdidReviewBoard</CommandName>
           <ButtonText>Post Code Review...</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
 
 
 

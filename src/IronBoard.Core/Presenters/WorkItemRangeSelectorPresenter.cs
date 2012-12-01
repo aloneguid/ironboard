@@ -208,7 +208,7 @@ namespace IronBoard.Core.Presenters
       public void OpenInBrowser(Review r)
       {
          string url = string.Format("{0}/r/{1}", IbApplication.RbClient.ServerUri, r.Id);
-         IbApplication.OpenBrowserWindow(url);
+         IbApplication.OpenBrowserWindow(url, false);
       }
    }
 }

@@ -81,23 +81,28 @@ namespace IronBoard.Core.Wpf
          }
       }
 
-      private void WebOpenSelectedTicket()
+      private void WebOpenSelectedTicket(bool external)
       {
          var r = Tickets.SelectedItem as MyTicketData;
          if (r != null)
          {
-            _presenter.OpenInBrowser(r.R);
+            _presenter.OpenInBrowser(r.R, external);
          }         
       }
 
       private void Tickets_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
       {
-         WebOpenSelectedTicket();
+         WebOpenSelectedTicket(false);
       }
 
       private void OpenInWebBrowserMenuItemClick(object sender, RoutedEventArgs e)
       {
-         WebOpenSelectedTicket();
+         WebOpenSelectedTicket(false);
+      }
+
+      private void OpenInExternalWebBrowserClick(object sender, RoutedEventArgs e)
+      {
+         WebOpenSelectedTicket(true);
       }
    }
 }
