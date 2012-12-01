@@ -76,7 +76,8 @@ namespace IronBoard.Core.Wpf
          Tuple<int, int> range = _presenter.GetRange(continuous);
          var review = new Review();
          _presenter.ExtractBasicMetadata(continuous, review);
-         var detailWindow = new ReviewDetails(Strings.ReviewDetails_NewTicket, review, range.Item1, range.Item2);
+         var detailWindow = new ReviewDetails(_presenter.GetDetailsTitle(),
+            review, range.Item1, range.Item2);
          detailWindow.ShowDialog();
          if(review.Id != 0) _presenter.OpenInBrowser(review);
       }

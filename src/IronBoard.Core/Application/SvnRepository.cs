@@ -36,6 +36,29 @@ namespace IronBoard.Core.Application
          get { return _relativeRoot; }
       }
 
+      public string Branch
+      {
+         get
+         {
+            if (_repositoryUri != null)
+            {
+               string s = _repositoryUri.ToString();
+               int idx = s.LastIndexOf("branch");
+               if (idx != -1)
+               {
+                  idx = s.IndexOf('/', idx);
+                  if (idx != -1)
+                  {
+                     string branchName = s.Substring(idx + 1);
+                     return branchName;
+                  }
+               }
+            }
+
+            return "trunk";
+         }
+      }
+
       private void Initialize()
       {
          _svn = new SvnClient();

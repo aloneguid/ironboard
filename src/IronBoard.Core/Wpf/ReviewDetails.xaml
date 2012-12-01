@@ -17,13 +17,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <!-- 5 -->
-            <RowDefinition Height="Auto"/>
             <!-- 6 -->
-
-            <!-- controls -->
             <RowDefinition Height="Auto"/>
-            <!-- 7 -->
+
+            <!-- controls (7) -->
+            <RowDefinition Height="Auto"/>
+            
          </Grid.RowDefinitions>
 
          <!-- 0 -->
@@ -53,16 +52,16 @@
                x:Name="TestingText"/>
 
          <!-- 3 -->
-         <Label Content="users:" Grid.Column="0" Grid.Row="3"
-             HorizontalAlignment="Right"/>
-         <core:ReviewerSelector x:Name="Users"
-                             Grid.Column="1" Grid.Row="3"/>
-
-         <!-- 4 -->
-         <Label Content="groups:" Grid.Column="0" Grid.Row="4"
+         <Label Content="groups:" Grid.Column="0" Grid.Row="3"
              HorizontalAlignment="Right"/>
          <core:ReviewerSelector x:Name="Groups"
-                             Grid.Column="1" Grid.Row="4"/>
+                             Grid.Column="1" Grid.Row="3" Width="200" HorizontalAlignment="Left"/>
+
+         <!-- 4 -->
+         <Label Content="users:" Grid.Column="0" Grid.Row="4"
+             HorizontalAlignment="Right"/>
+         <core:ReviewerSelector x:Name="Users"
+                             Grid.Column="1" Grid.Row="4" Width="200" HorizontalAlignment="Left"/>
 
          <!-- 5 -->
          <Label Content="bugs:" Grid.Column="0" Grid.Row="5"

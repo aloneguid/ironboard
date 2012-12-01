@@ -61,5 +61,7 @@ namespace IronBoard.RBWebApi.Model
       public DateTime LastUpdated { get; set; }
 
       public string Status { get; set; }
+
+      public string Branch { get; set; }
    }
 }

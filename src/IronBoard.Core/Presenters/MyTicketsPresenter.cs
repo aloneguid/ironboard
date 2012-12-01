@@ -38,7 +38,7 @@ namespace IronBoard.Core.Presenters
 
       public void OpenInBrowser(Review r, bool external)
       {
-         string url = string.Format("{0}/r/{1}", IbApplication.RbClient.ServerUri, r.Id);
+         string url = string.Format("{0}r/{1}", IbApplication.RbClient.ServerUri, r.Id);
          IbApplication.OpenBrowserWindow(url, external);
       }
 

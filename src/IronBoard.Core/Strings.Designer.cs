@@ -160,7 +160,7 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New post-commit review.
+        ///   Looks up a localized string similar to New post-commit review ({0}).
         /// </summary>
         internal static string ReviewDetails_NewTicket {
             get {

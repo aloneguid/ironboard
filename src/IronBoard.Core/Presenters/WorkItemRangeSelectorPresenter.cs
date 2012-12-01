@@ -202,6 +202,7 @@ namespace IronBoard.Core.Presenters
 
             review.BugsClosed = String.Join(", ", ExtractBugsClosed(itemsList));
             review.TestingDone = ExtractTestingDone(itemsList);
+            review.Branch = IbApplication.SvnRepository.Branch;
          }
       }
 
@@ -209,6 +210,11 @@ namespace IronBoard.Core.Presenters
       {
          string url = string.Format("{0}/r/{1}", IbApplication.RbClient.ServerUri, r.Id);
          IbApplication.OpenBrowserWindow(url, false);
+      }
+
+      public string GetDetailsTitle()
+      {
+         return string.Format(Strings.ReviewDetails_NewTicket, IbApplication.SvnRepository.Branch);
       }
    }
 }

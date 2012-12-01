@@ -262,6 +262,7 @@ namespace IronBoard.RBWebApi.Application
             //review.BugsClosed = jo.Value<string>("bugs_closed"); //this is not a string but an array (TODO)
             review.LastUpdated = jo.Value<DateTime>("last_updated");
             review.Status = jo.Value<string>("status");
+            review.Branch = jo.Value<string>("branch");
 
             //target groups
             JArray jgroups = jo["target_groups"] as JArray;
@@ -336,6 +337,7 @@ namespace IronBoard.RBWebApi.Application
          if (review.Description != null) request.AddParameter("description", review.Description);
          if (review.TestingDone != null) request.AddParameter("testing_done", review.TestingDone);
          if (review.BugsClosed != null) request.AddParameter("bugs_closed", review.BugsClosed);
+         if (review.Branch != null) request.AddParameter("branch", review.Branch);
 
          if (review.TargetUsers.Count > 0)
          {

@@ -151,7 +151,7 @@
     <value>generating subversion diff</value>
   </data>
   <data name="ReviewDetails_NewTicket" xml:space="preserve">
-    <value>New post-commit review</value>
+    <value>New post-commit review ({0})</value>
   </data>
   <data name="ReviewDetails_NoTestingDone" xml:space="preserve">
     <value>i have done no testing and committed by mistake</value>
