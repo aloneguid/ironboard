@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MenuUpdate_NoTickets" xml:space="preserve">
+    <value>no revisions selected</value>
+  </data>
   <data name="Message_Title_Error" xml:space="preserve">
     <value>IronBoard Error</value>
   </data>
@@ -130,19 +133,25 @@
     <value>right-click a ticket to update with r{0}:{1}</value>
   </data>
   <data name="MyTickets_UpdateTicketMenu" xml:space="preserve">
-    <value>update #{0} with r{1}:{2}</value>
+    <value>update ticket with r{0}:{1}</value>
+  </data>
+  <data name="MyTickets_Update_Diff" xml:space="preserve">
+    <value>attaching source code (stage 2 of 2)</value>
+  </data>
+  <data name="MyTickets_Update_GeneratingDiff" xml:space="preserve">
+    <value>generating diff (stage 1 of 2)</value>
   </data>
   <data name="MyTickets_UpdatingTicket" xml:space="preserve">
     <value>updating ticket #{0}</value>
   </data>
   <data name="PostProgress_DetectRepository" xml:space="preserve">
-    <value>detecting repository</value>
+    <value>detecting repository (stage 1 of 3)</value>
   </data>
   <data name="PostProgress_Diff" xml:space="preserve">
-    <value>attaching source code</value>
+    <value>attaching source code (stage 3 of 3)</value>
   </data>
   <data name="PostProgress_MainTicket" xml:space="preserve">
-    <value>creating main ticket</value>
+    <value>creating main ticket (stage 2 of 3)</value>
   </data>
   <data name="ReviewDetails_GenerateDiff_Error" xml:space="preserve">
     <value>error generating diff: {0}</value>

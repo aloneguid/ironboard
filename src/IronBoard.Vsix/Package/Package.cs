@@ -1,14 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using System.Windows.Media;
 using EnvDTE;
 using EnvDTE80;
 using IronBoard.Core;
 using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
-using IronBoard.RBWebApi;
 using IronBoard.Vsix.Windows;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -59,17 +55,6 @@ namespace IronBoard.Vsix.Package
       protected override void Initialize()
       {
          base.Initialize();
-
-         // Add our command handlers for menu (commands must exist in the .vsct file)
-         OleMenuCommandService mcs = GetService(typeof (IMenuCommandService)) as OleMenuCommandService;
-         if (null != mcs)
-         {
-            // Create the command for the menu item.
-            CommandID menuCommandID = new CommandID(GuidList.guidIronBoard_VsixCmdSet,
-                                                    (int) PkgCmdIDList.cmdidReviewBoard);
-            MenuCommand menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
-            mcs.AddCommand(menuItem);
-         }
 
          _settingsStore = GetWritableSettingsStore(SettingsRoot);
          InitialiseIbApp();
@@ -159,42 +144,6 @@ namespace IronBoard.Vsix.Package
       }
 
       #endregion
-
-      /// <summary>
-      /// This function is the callback used to execute a command when the a menu item is clicked.
-      /// See the Initialize method to see how the menu item is associated to this function using
-      /// the OleMenuCommandService service and the MenuCommand class.
-      /// </summary>
-      private void MenuItemCallback(object sender, EventArgs e)
-      {
-         DirectoryInfo di = SolutionDirectory;
-         if (di != null)
-         {
-            string configFolder = RBUtils.FindConfigFolder(di.FullName);
-            if (configFolder == null)
-            {
-               Messages.ShowError("config file not found");
-            }
-            else
-            {
-               try
-               {
-                  var form = new PostCommitReviewForm();
-                  form.ShowDialog();
-               }
-               catch (Exception ex)
-               {
-                  Messages.ShowError(ex.Message +
-                                     Environment.NewLine + Environment.NewLine +
-                                     ex.StackTrace);
-               }
-            }
-         }
-         else
-         {
-            Messages.ShowError("Open a solution first");
-         }
-      }
 
       void IbSettingsChanged(CoreSettings settings)
       {

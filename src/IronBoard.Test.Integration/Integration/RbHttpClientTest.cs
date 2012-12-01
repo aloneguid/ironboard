@@ -72,12 +72,5 @@ namespace IronBoard.Test.Integration
 
          _client.Delete(review.Id);
       }
-
-      [Test]
-      public void GetMyReviewsTest()
-      {
-         IEnumerable<Review> reviews = _client.GetPersonalRequests();
-         reviews = null;
-      }
    }
 }

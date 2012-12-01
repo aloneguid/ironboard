@@ -18,12 +18,13 @@ namespace IronBoard.Core.Wpf
    public partial class MyTicketsView : UserControl, IMyTicketsView
    {
       private readonly MyTicketsPresenter _presenter;
-      private IEnumerable<WorkItem> items;
-      private int rmin, rmax;
+      private IEnumerable<WorkItem> _items;
+      private int _rmin, _rmax;
 
       public MyTicketsView()
       {
          InitializeComponent();
+         UpdateMenus(0, 0);
          LoadError.Visibility = Visibility.Collapsed;
          TopHint.Content = null;
          _presenter = new MyTicketsPresenter(this);
@@ -39,11 +40,28 @@ namespace IronBoard.Core.Wpf
 
       public void SetSelection(IEnumerable<WorkItem> items, int rmin, int rmax)
       {
-         this.items = items;
-         this.rmin = rmin;
-         this.rmax = rmax;
+         this._items = items;
+         this._rmin = rmin;
+         this._rmax = rmax;
 
-         TopHint.Content = items == null ? null : string.Format(Strings.MyTickets_TopHint, rmin, rmax);
+         UpdateMenus(rmin, rmax);
+      }
+
+      private void UpdateMenus(int rmin, int rmax)
+      {
+         bool selected = rmin != 0;
+         TopHint.Content = !selected ? null : string.Format(Strings.MyTickets_TopHint, rmin, rmax);
+
+         MenuUpdateTicketMenu.IsEnabled = selected;
+         if (!selected)
+         {
+            MenuUpdateTicketMenu.Header = Strings.MenuUpdate_NoTickets;
+         }
+         else
+         {
+            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, _rmin, _rmax);
+            MenuUpdateTicketMenu.Header = header;
+         }
       }
       
       private void Refresh_Click(object sender, RoutedEventArgs e)
@@ -66,9 +84,34 @@ namespace IronBoard.Core.Wpf
          });
       }
 
+      public void UpdateBusyStatus(string busyMessage)
+      {
+         Dispatcher.Push(() =>
+            {
+               Progress.IsBusy = true;
+               Progress.BusyContent = busyMessage;
+            });
+      }
+
+      public void FinishTicketUpdate(Exception ex)
+      {
+         Dispatcher.Push(() =>
+            {
+               Progress.IsBusy = false;
+               if (ex != null)
+               {
+                  Messages.ShowError(ex);
+               }
+            });
+      }
+
       private void UpdateTicketMenu_OnClick(object sender, RoutedEventArgs e)
       {
-         //
+         var r = Tickets.SelectedItem as MyTicketData;
+         if (r != null)
+         {
+            _presenter.UpdateTicket(r.R, _rmin, _rmax);
+         }
       }
 
       private void Tickets_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -76,8 +119,7 @@ namespace IronBoard.Core.Wpf
          var r = Tickets.SelectedItem as MyTicketData;
          if (r != null)
          {
-            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, r.R.Id, rmin, rmax);
-            UpdateTicketMenu.Header = header;
+            UpdateMenus(_rmin, _rmax);
          }
       }
 

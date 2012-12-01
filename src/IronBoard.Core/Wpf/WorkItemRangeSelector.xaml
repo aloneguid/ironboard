@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:core="clr-namespace:IronBoard.Core.Wpf"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
@@ -41,8 +40,8 @@
 
             <Button x:Name="PostReview" Content="post review" Height="23" Click="PostReview_Click" Margin="20,0,0,0" IsEnabled="False"/>
 
-            <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0"/>
-            <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5"/>
+            <TextBlock Text="author filter:" VerticalAlignment="Center" Margin="20,0,0,0" Visibility="Collapsed"/>
+            <TextBox x:Name="AuthorFilter" Width="80" Height="20" Margin="5" Visibility="Collapsed"/>
 
             <!--<core:Progress x:Name="Progress" Margin="5"/>-->
          </StackPanel>

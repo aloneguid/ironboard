@@ -38,7 +38,7 @@
                 MouseDoubleClick="Tickets_OnMouseDoubleClick">
             <ListView.View>
                <GridView>
-                  <GridViewColumn>
+                  <!--<GridViewColumn>
                      <GridViewColumn.CellTemplate>
                         <DataTemplate>
                            <CheckBox Tag="{Binding}"
@@ -48,7 +48,7 @@
                            </DataTemplate.Triggers>
                         </DataTemplate>
                      </GridViewColumn.CellTemplate>
-                  </GridViewColumn>
+                  </GridViewColumn>-->
                   <GridViewColumn Header="#" DisplayMemberBinding="{Binding R.Id}"/>
                   <GridViewColumn Header="from" DisplayMemberBinding="{Binding R.Submitter}"/>
                   <GridViewColumn Header="to" DisplayMemberBinding="{Binding To}"/>
@@ -59,10 +59,10 @@
             </ListView.View>
             <ListView.ContextMenu>
                <ContextMenu>
-                  <MenuItem Header="open in internal browser" Click="OpenInWebBrowserMenuItemClick"/>
-                  <MenuItem Header="open in external browser" Click="OpenInExternalWebBrowserClick"/>
-                  <MenuItem Header="delete permanently" Click="DeletePermanentlyClick"/>
-                  <MenuItem x:Name="UpdateTicketMenu" Click="UpdateTicketMenu_OnClick"/>
+                  <MenuItem x:Name="MenuWebBrowser" Header="open in internal browser" Click="OpenInWebBrowserMenuItemClick"/>
+                  <MenuItem x:Name="MenuExternalWebBrowser" Header="open in external browser" Click="OpenInExternalWebBrowserClick"/>
+                  <MenuItem x:Name="MenuDelete" Header="delete permanently" Click="DeletePermanentlyClick"/>
+                  <MenuItem x:Name="MenuUpdateTicketMenu" Click="UpdateTicketMenu_OnClick"/>
                </ContextMenu>
             </ListView.ContextMenu>
          </ListView>

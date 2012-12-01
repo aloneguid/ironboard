@@ -61,6 +61,15 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no revisions selected.
+        /// </summary>
+        internal static string MenuUpdate_NoTickets {
+            get {
+                return ResourceManager.GetString("MenuUpdate_NoTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IronBoard Error.
         /// </summary>
         internal static string Message_Title_Error {
@@ -97,7 +106,25 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update #{0} with r{1}:{2}.
+        ///   Looks up a localized string similar to attaching source code (stage 2 of 2).
+        /// </summary>
+        internal static string MyTickets_Update_Diff {
+            get {
+                return ResourceManager.GetString("MyTickets_Update_Diff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to generating diff (stage 1 of 2).
+        /// </summary>
+        internal static string MyTickets_Update_GeneratingDiff {
+            get {
+                return ResourceManager.GetString("MyTickets_Update_GeneratingDiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update ticket with r{0}:{1}.
         /// </summary>
         internal static string MyTickets_UpdateTicketMenu {
             get {
@@ -115,7 +142,7 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to detecting repository.
+        ///   Looks up a localized string similar to detecting repository (stage 1 of 3).
         /// </summary>
         internal static string PostProgress_DetectRepository {
             get {
@@ -124,7 +151,7 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to attaching source code.
+        ///   Looks up a localized string similar to attaching source code (stage 3 of 3).
         /// </summary>
         internal static string PostProgress_Diff {
             get {
@@ -133,7 +160,7 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to creating main ticket.
+        ///   Looks up a localized string similar to creating main ticket (stage 2 of 3).
         /// </summary>
         internal static string PostProgress_MainTicket {
             get {
