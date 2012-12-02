@@ -117,6 +117,8 @@
      <GuidSymbol name="guidRBIcon" value="{D2DEC474-02FE-44B9-BAB9-A85A926583F5}">
         <IDSymbol name="icoRB" value="1"/>
      </GuidSymbol>
+
+     <GuidSymbol name="GuidToolWindow" value="{757397F1-BA52-4BC7-8910-5EC1BEFED713}"/>
   </Symbols>
 
 </CommandTable>

@@ -1,6 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using IronBoard.Core.Views;
-using IronBoard.Core.WinForms;
 using Microsoft.VisualStudio.Shell;
 
 namespace IronBoard.Vsix.Windows
@@ -9,13 +7,19 @@ namespace IronBoard.Vsix.Windows
    public class IronToolWindow : ToolWindowPane
    {
       //public static IReviewRequestsView Panel { get; private set; }
+      private IronToolWindowHost _content;
 
       public IronToolWindow() : base(null)
       {
          Caption = Resources.IronToolWindow_Title;
-         BitmapResourceID = 402;
+         BitmapResourceID = 400;
          BitmapIndex = 0;
-         base.Content = new IronToolWindowHost();
+      }
+
+      public override object Content
+      {
+         get { return _content ?? (_content = new IronToolWindowHost()); }
+         set { base.Content = value; }
       }
    }
 }
