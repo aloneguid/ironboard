@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using EnvDTE;
 using EnvDTE80;
@@ -14,7 +15,7 @@ namespace IronBoard.Vsix.Package
 {
    [PackageRegistration(UseManagedResourcesOnly = true)]
    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
-   [ProvideMenuResource(1000, 1)]
+   [ProvideMenuResource("Menus.ctmenu", 1)]
    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
    [Guid(GuidList.guidIronBoard_VsixPkgString)]
    [ProvideToolWindow(typeof(IronToolWindow),
@@ -43,6 +44,15 @@ namespace IronBoard.Vsix.Package
       protected override void Initialize()
       {
          base.Initialize();
+
+         OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+         if (null != mcs)
+         {
+            // Create the command for the tool window
+            CommandID toolwndCommandID = new CommandID(GuidList.guidIronBoard_VsixCmdSet, (int)PkgCmdIDList.cmdidIronToolWindow);
+            MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
+            mcs.AddCommand(menuToolWin);
+         }
 
          _settingsStore = GetWritableSettingsStore(SettingsRoot);
          InitialiseIbApp();
@@ -119,7 +129,12 @@ namespace IronBoard.Vsix.Package
 
       }
 
-      private void ShowToolWindow(bool show)
+      private void ShowToolWindow(object o, EventArgs args)
+      {
+         ShowToolWindow();
+      }
+
+      private void ShowToolWindow()
       {
          //this method will show the window if it's not active or bring it to front if it's collapsed
          ToolWindowPane window = this.FindToolWindow(typeof(IronToolWindow), 0, true);

@@ -48,7 +48,7 @@ namespace IronBoard.Vsix.Package
             Messages.ShowError(ex);
          }
 
-         ShowToolWindow(true);
+         ShowToolWindow();
 
          return VSConstants.S_OK;
       }

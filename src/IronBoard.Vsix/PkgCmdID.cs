@@ -3,10 +3,9 @@
 
 namespace IronBoard.Vsix
 {
-    static class PkgCmdIDList
-    {
-        public const uint cmdidReviewBoard =        0x100;
-
-
-    };
+   internal static class PkgCmdIDList
+   {
+      public const uint cmdidReviewBoard = 0x100;
+      public const uint cmdidIronToolWindow = 0x101;
+   };
 }

@@ -12,8 +12,8 @@ namespace IronBoard.Vsix.Windows
       public IronToolWindow() : base(null)
       {
          Caption = Resources.IronToolWindow_Title;
-         BitmapResourceID = 400;
-         BitmapIndex = 0;
+         //BitmapResourceID = 400;
+         //BitmapIndex = 0;
       }
 
       public override object Content
