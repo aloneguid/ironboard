@@ -83,6 +83,10 @@ namespace IronBoard.Core.Wpf
 
       private void FillReview()
       {
+         _review.Subject = SummaryText.Text;
+         _review.Description = DescriptionText.Text;
+         _review.TestingDone = TestingText.Text;
+         _review.BugsClosed = BugsText.Text;
          _review.TargetUsers.Clear();
          _review.TargetGroups.Clear();
          if (Users.Reviewers != null)
