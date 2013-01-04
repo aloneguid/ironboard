@@ -119,5 +119,34 @@ namespace IronBoard.Core.Application
 
          return null;
       }
+
+      public IEnumerable<LocalWorkItem> GetPendingChanges()
+      {
+         var result = new List<LocalWorkItem>();
+
+         Collection<SvnStatusEventArgs> changes;
+         _svn.GetStatus(_workingCopyPath, out changes);
+         if (changes != null && changes.Count > 0)
+         {
+            result.AddRange(changes.Select(change => new LocalWorkItem(change)).Where(change => change.Status != LocalItemStatus.Unknown));
+            return result.Count == 0 ? null : result;
+         }
+
+         return null;
+      }
+
+      public string GetUncommittedDiff(IEnumerable<WorkItem> itemsToDiff)
+      {
+         string diffText;
+         using (var ms = new MemoryStream())
+         {
+            _svn.Diff(new SvnUriTarget(_repositoryUri, SvnRevision.Working), new SvnPathTarget(_workingCopyPath), ms);
+            ms.Position = 0;
+
+            diffText = Encoding.UTF8.GetString(ms.ToArray());
+         }
+
+         return diffText;
+      }
    }
 }

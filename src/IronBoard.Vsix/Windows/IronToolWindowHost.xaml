@@ -10,12 +10,15 @@
              d:DesignHeight="150" d:DesignWidth="600">
    <Grid>
       <!--<WindowsFormsHost x:Name="FormsHost" />-->
-      <TabControl x:Name="Tabs" TabStripPlacement="Left">
+      <TabControl x:Name="Tabs" TabStripPlacement="Left" SelectionChanged="Tabs_OnSelectionChanged">
          <TabItem Header="Work Log">
             <core:WorkItemRangeSelector x:Name="WorkLog"/>
          </TabItem>
          <TabItem Header="My Tickets">
             <core:MyTicketsView x:Name="MyTickets"/>
+         </TabItem>
+         <TabItem Header="Pending">
+            <core:PendingChangesView x:Name="PendingChanges"/>
          </TabItem>
       </TabControl>
       <Label x:Name="Error" Content="error"

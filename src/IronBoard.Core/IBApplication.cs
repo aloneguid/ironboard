@@ -25,6 +25,8 @@ namespace IronBoard.Core
 
       public static ILoginPasswordView LoginView { get; set; }
 
+      public static string SolutionPath { get; private set; }
+
       public static void Initialise(string solutionPath, CoreSettings settings)
       {
          Initialise(solutionPath, settings,
@@ -37,6 +39,7 @@ namespace IronBoard.Core
          if (solutionPath == null) throw new ArgumentNullException("solutionPath");
          if (settings == null) throw new ArgumentNullException("settings");
 
+         SolutionPath = solutionPath;
          Settings = settings;
          SvnRepository = new SvnRepository(solutionPath);
          RbClient = client;

@@ -64,8 +64,11 @@
     <Compile Include="Messages.cs" />
     <Compile Include="Model\CoreSettings.cs" />
     <Compile Include="Model\DisplayItem.cs" />
+    <Compile Include="Model\LocalItemStatus.cs" />
+    <Compile Include="Model\LocalWorkItem.cs" />
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\MyTicketsPresenter.cs" />
+    <Compile Include="Presenters\PendingChangesPresenter.cs" />
     <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
     <Compile Include="Presenters\ReviewDetailsPresenter.cs" />
     <Compile Include="Presenters\ReviewRequestsPresenter.cs" />
@@ -78,6 +81,7 @@
     </Compile>
     <Compile Include="Views\ILoginPasswordView.cs" />
     <Compile Include="Views\IMyTicketsView.cs" />
+    <Compile Include="Views\IPendingChangesView.cs" />
     <Compile Include="Views\IPostCommitReviewView.cs" />
     <Compile Include="Views\IReviewDetailsView.cs" />
     <Compile Include="Views\IReviewRequestsView.cs" />
@@ -143,6 +147,9 @@
     <Compile Include="Wpf\MyTicketsView.xaml.cs">
       <DependentUpon>MyTicketsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\PendingChangesView.xaml.cs">
+      <DependentUpon>PendingChangesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\Progress.xaml.cs">
       <DependentUpon>Progress.xaml</DependentUpon>
     </Compile>
@@ -198,6 +205,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Wpf\MyTicketsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wpf\PendingChangesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

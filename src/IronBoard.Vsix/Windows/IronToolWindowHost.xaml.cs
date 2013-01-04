@@ -48,5 +48,13 @@ namespace IronBoard.Vsix.Windows
                break;
          }
       }
+
+      private void Tabs_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+      {
+         if (Tabs.SelectedIndex == 2)
+         {
+            PendingChanges.RefreshView();
+         }
+      }
    }
 }

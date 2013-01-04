@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Integration\RbHttpClientTest.cs" />
+    <Compile Include="Integration\SubversionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Presenters\WorkItemRangeSelectorPresenterTest.cs" />
   </ItemGroup>
