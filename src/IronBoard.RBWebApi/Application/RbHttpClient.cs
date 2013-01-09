@@ -155,7 +155,8 @@ namespace IronBoard.RBWebApi.Application
 
       public IEnumerable<User> GetUsers()
       {
-         var response = Execute(CreateRequest("users/", Method.GET), 200);
+         var request = CreateRequest("users/?max-results=1000", Method.GET);
+         var response = Execute(request, 200);
          if(response != null)
          {
             JObject jo = JObject.Parse(response.Content);

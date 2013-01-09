@@ -17,7 +17,7 @@
          <TabItem Header="My Tickets">
             <core:MyTicketsView x:Name="MyTickets"/>
          </TabItem>
-         <TabItem Header="Pending">
+         <TabItem Header="Pending" Visibility="Hidden">
             <core:PendingChangesView x:Name="PendingChanges"/>
          </TabItem>
       </TabControl>
@@ -26,7 +26,7 @@
              VerticalAlignment="Center"
              Foreground="Red"/>
       
-      <Image Height="60" HorizontalAlignment="Left" Margin="10,0,0,10"
+      <Image Height="60" HorizontalAlignment="Left" Margin="10,0,0,10" Visibility="Hidden"
              x:Name="SourceProviderImage"
              Stretch="Fill" VerticalAlignment="Bottom" Width="60" Source="/IronBoard;component/Resources/scm_svn.png" />
    </Grid>
