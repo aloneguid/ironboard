@@ -123,6 +123,9 @@
   <data name="Message_Title_Error" xml:space="preserve">
     <value>IronBoard Error</value>
   </data>
+  <data name="Message_Title_Info" xml:space="preserve">
+    <value>IronBoard</value>
+  </data>
   <data name="MyTickets_LoadError" xml:space="preserve">
     <value>load error ({0})</value>
   </data>
