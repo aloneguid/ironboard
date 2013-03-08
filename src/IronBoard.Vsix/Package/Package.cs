@@ -7,6 +7,7 @@ using IronBoard.Core;
 using IronBoard.Core.Model;
 using IronBoard.Core.WinForms;
 using IronBoard.Vsix.Windows;
+using IronBoard.Vsix.Windows.Settings;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Process = System.Diagnostics.Process;
@@ -21,6 +22,7 @@ namespace IronBoard.Vsix.Package
    [ProvideToolWindow(typeof(IronToolWindow),
         Style = VsDockStyle.Tabbed,
         Orientation = ToolWindowOrientation.Right)]
+   [ProvideOptionPage(typeof(VsixOptionsPage), "IronBoard", "General", 113, 114, true)]
    [ComVisible(true)]
    public partial class Package : Microsoft.VisualStudio.Shell.Package, IVsSolutionEvents
    {

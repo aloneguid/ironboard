@@ -133,6 +133,18 @@
     <Compile Include="Windows\IronToolWindowHost.xaml.cs">
       <DependentUpon>IronToolWindowHost.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Settings\Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Settings\VsixOptionsPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\WinFormsToWpfBridgeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\WinFormsToWpfBridgeControl.Designer.cs">
+      <DependentUpon>WinFormsToWpfBridgeControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -144,6 +156,9 @@
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\WinFormsToWpfBridgeControl.resx">
+      <DependentUpon>WinFormsToWpfBridgeControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +204,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Windows\IronToolWindowHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Settings\Options.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

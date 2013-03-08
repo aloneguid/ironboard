@@ -79,15 +79,6 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IronBoard.
-        /// </summary>
-        internal static string Message_Title_Info {
-            get {
-                return ResourceManager.GetString("Message_Title_Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to load error ({0}).
         /// </summary>
         internal static string MyTickets_LoadError {

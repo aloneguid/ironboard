@@ -84,8 +84,6 @@
                  x:Name="ViewDiff" Click="ViewDiffClick"/>
             <Button Content="Post" Margin="5" Padding="3" Width="70"
                  x:Name="Post" Click="Post_OnClick"/>
-            <Button Content="Reset Auth Cookie" Margin="5" Padding="3" MinWidth="70"
-                 x:Name="ResetCookie" Click="ResetCookie_OnClick"/>
             <Button Content="Cancel" Margin="5" Padding="3" Width="70"
                  x:Name="Cancel" Click="Cancel_OnClick"/>
          </StackPanel>

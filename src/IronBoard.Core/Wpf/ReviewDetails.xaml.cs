@@ -105,13 +105,6 @@ namespace IronBoard.Core.Wpf
          _presenter.PostReview(_review);
       }
 
-      private void ResetCookie_OnClick(object sender, EventArgs e)
-      {
-         IbApplication.RbClient.AuthCookie = null;
-         IbApplication.Settings.AuthCookie = null;
-         Messages.ShowInfo("Auth cookie cleared successfully.");
-      }
-
       private void Cancel_OnClick(object sender, RoutedEventArgs e)
       {
          Close();
