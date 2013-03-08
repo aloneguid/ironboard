@@ -205,7 +205,23 @@ namespace IronBoard.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to unit testing (see {0}).
+        ///   Looks up a localized string similar to It is working on my computer...
+        ///It was working yesterday !?
+        ///It cannot be done !?
+        ///The problem cannot be reproduced :((
+        ///I didn’t have enough time to test
+        ///It&apos;s not my job to test code
+        ///I don&apos;t really know how the code is supposed to behave so I can&apos;t test it
+        ///I can&apos;t test everything!.
+        /// </summary>
+        internal static string ReviewDetails_NoTestingExcuse {
+            get {
+                return ResourceManager.GetString("ReviewDetails_NoTestingExcuse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to see {0}.
         /// </summary>
         internal static string ReviewDetails_UnitTestingDone {
             get {

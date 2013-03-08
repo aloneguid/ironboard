@@ -165,7 +165,17 @@
   <data name="ReviewDetails_NoTestingDone" xml:space="preserve">
     <value>i have done no testing and committed by mistake</value>
   </data>
+  <data name="ReviewDetails_NoTestingExcuse" xml:space="preserve">
+    <value>It is working on my computer...
+It was working yesterday !?
+It cannot be done !?
+The problem cannot be reproduced :((
+I didn’t have enough time to test
+It's not my job to test code
+I don't really know how the code is supposed to behave so I can't test it
+I can't test everything!</value>
+  </data>
   <data name="ReviewDetails_UnitTestingDone" xml:space="preserve">
-    <value>unit testing (see {0})</value>
+    <value>see {0}</value>
   </data>
 </root>

@@ -153,6 +153,14 @@ namespace IronBoard.Core.Presenters
          return result.ToArray();
       }
 
+      private string GenerateExcuseForNoTesting()
+      {
+         var rnd = new Random(DateTime.Now.Millisecond);
+         string[] excuses = Strings.ReviewDetails_NoTestingExcuse.Split(new[] { Environment.NewLine },
+                                                                        StringSplitOptions.RemoveEmptyEntries);
+         return excuses[rnd.Next(excuses.Length)];
+      }
+
       public string ExtractTestingDone(IEnumerable<WorkItem> lines)
       {
          var utFileNames = new HashSet<string>();
@@ -163,7 +171,7 @@ namespace IronBoard.Core.Presenters
                foreach (string filePath in wi.ChangedFilePaths)
                {
                   string name = filePath.Substring(filePath.LastIndexOf('/') + 1);
-                  if (name.IndexOf("test", StringComparison.InvariantCultureIgnoreCase) != -1)
+                  if (name.IndexOf("test", StringComparison.InvariantCultureIgnoreCase) != -1 && !name.Contains(".csproj"))
                   {
                      utFileNames.Add(name);
                   }
@@ -171,7 +179,7 @@ namespace IronBoard.Core.Presenters
             }
          }
 
-         if (utFileNames.Count == 0) return Strings.ReviewDetails_NoTestingDone;
+         if (utFileNames.Count == 0) return GenerateExcuseForNoTesting();
 
          return string.Format(Strings.ReviewDetails_UnitTestingDone, string.Join(", ", utFileNames));
       }
@@ -187,7 +195,7 @@ namespace IronBoard.Core.Presenters
                string comment = wi.Comment == null ? null : wi.Comment.Trim();
                if (!string.IsNullOrEmpty(comment))
                {
-                  lines.Add(comment);
+                  lines.AddRange(comment.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries));
                }
             }
 
@@ -197,6 +205,7 @@ namespace IronBoard.Core.Presenters
                review.Subject = lines[0]
                   .Trim(' ', '*', '-', '+', '=', '\t', '[', ']', '.')
                   .Replace("\r", "").Replace("\n", " ").Replace("  ", " ");
+               review.Subject = review.Subject.Substring(0, 1).ToUpper() + review.Subject.Substring(1);
                review.Description = String.Join(Environment.NewLine, lines);
             }
 
