@@ -10,8 +10,15 @@ namespace System.Windows.Threading
    {
       public static void Push(this Dispatcher dispatcher, Action a)
       {
-         var th = new ThreadStart(a);
-         dispatcher.Invoke(th);
+         if (dispatcher.CheckAccess())
+         {
+             a();
+         }
+         else
+         {
+             var th = new ThreadStart(a);
+             dispatcher.Invoke(th);
+         }
       }
    }
 }
