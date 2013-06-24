@@ -135,14 +135,22 @@ namespace IronBoard.Core.Application
          return null;
       }
 
-      public string GetUncommittedDiff(IEnumerable<WorkItem> itemsToDiff)
+      public string GetDiff(IEnumerable<LocalWorkItem> itemsToDiff)
       {
          string diffText;
          using (var ms = new MemoryStream())
          {
-            _svn.Diff(new SvnUriTarget(_repositoryUri, SvnRevision.Working), new SvnPathTarget(_workingCopyPath), ms);
+            SvnDiffArgs diffArgs = new SvnDiffArgs();
+            diffArgs.RelativeToPath = _workingCopyPath;
+            foreach (LocalWorkItem item in itemsToDiff)
+            {
+                _svn.Diff(
+                   item.Path,
+                   new SvnRevisionRange(SvnRevision.Base, SvnRevision.Working),
+                   diffArgs,
+                   ms);
+            }
             ms.Position = 0;
-
             diffText = Encoding.UTF8.GetString(ms.ToArray());
          }
 
