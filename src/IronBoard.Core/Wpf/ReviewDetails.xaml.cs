@@ -113,8 +113,7 @@ namespace IronBoard.Core.Wpf
       private void UpdateButtons()
       {
          bool enoughData = SummaryText.Text.Trim().Length > 0 &&
-                           DescriptionText.Text.Trim().Length > 0 &&
-                           TestingText.Text.Trim().Length > 0;
+                           DescriptionText.Text.Trim().Length > 0;
 
          Cancel.IsEnabled = !DiffProgress.IsInProgress;
          Post.IsEnabled = enoughData && !DiffProgress.IsInProgress && ViewDiff.IsEnabled;
