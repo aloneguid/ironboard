@@ -15,23 +15,19 @@ namespace IronBoard.Core.Wpf
    public partial class ReviewDetails : Window, IReviewDetailsView
    {
       private readonly Review _review;
-      private readonly long _fromRev;
-      private readonly long _toRev;
       private readonly ReviewDetailsPresenter _presenter;
 
-      public ReviewDetails(string title, Review review, long fromRev, long toRev)
+      public ReviewDetails(string title, Review review, GetDiff getDiff)
       {
          if (review == null) throw new ArgumentNullException("review");
 
          _review = review;
-         _fromRev = fromRev;
-         _toRev = toRev;
          InitializeComponent();
          Title = title;
          Background = IbApplication.BackgroundBrush;
          DiffProgress.ProgressTitle = Strings.ReviewDetails_GeneratingDiff;
 
-         _presenter = new ReviewDetailsPresenter(this);
+         _presenter = new ReviewDetailsPresenter(this, getDiff);
          Users.Reviewers = _presenter.Users;
          Groups.Reviewers = _presenter.Groups;
 
@@ -56,7 +52,7 @@ namespace IronBoard.Core.Wpf
                   Exception ex = null;
                   try
                   {
-                     _presenter.GenerateDiff(_fromRev, _toRev);
+                     _presenter.GenerateDiff();
                   }
                   catch (Exception ex1)
                   {

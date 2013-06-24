@@ -77,7 +77,8 @@ namespace IronBoard.Core.Wpf
          var review = new Review();
          _presenter.ExtractBasicMetadata(continuous, review);
          var detailWindow = new ReviewDetails(_presenter.GetDetailsTitle(),
-            review, range.Item1, range.Item2);
+            review,
+            delegate() { return IbApplication.SvnRepository.GetDiff(range.Item1, range.Item2); });
          detailWindow.ShowDialog();
          if(review.Id != 0) _presenter.OpenInBrowser(review);
       }

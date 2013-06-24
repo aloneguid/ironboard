@@ -9,21 +9,26 @@ using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Presenters
 {
+
+   public delegate string GetDiff();
+
    class ReviewDetailsPresenter
    {
       private readonly IReviewDetailsView _view;
+      private readonly GetDiff _getDiff;
       private string _lastDiff;
 
-      public ReviewDetailsPresenter(IReviewDetailsView view)
+      public ReviewDetailsPresenter(IReviewDetailsView view, GetDiff getDiff)
       {
          _view = view;
+         _getDiff = getDiff;
       }
 
-      public string GenerateDiff(long fromRev, long toRev)
+      public string GenerateDiff()
       {
          if (_lastDiff == null)
          {
-            _lastDiff = IbApplication.SvnRepository.GetDiff(fromRev, toRev);
+             _lastDiff = _getDiff();
          }
 
          return _lastDiff;
