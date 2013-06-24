@@ -162,6 +162,9 @@
   <data name="ReviewDetails_NewTicket" xml:space="preserve">
     <value>New post-commit review ({0})</value>
   </data>
+  <data name="ReviewDetails_NewTicket_PreCommit" xml:space="preserve">
+    <value>New pre-commit review ({0})</value>
+  </data>
   <data name="ReviewDetails_NoTestingDone" xml:space="preserve">
     <value>i have done no testing and committed by mistake</value>
   </data>
