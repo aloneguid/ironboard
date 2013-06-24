@@ -11,13 +11,13 @@
    <Grid>
       <!--<WindowsFormsHost x:Name="FormsHost" />-->
       <TabControl x:Name="Tabs" TabStripPlacement="Left" SelectionChanged="Tabs_OnSelectionChanged">
-         <TabItem Header="Work Log">
+         <TabItem x:Name="WorkLogTab" Header="Work Log">
             <core:WorkItemRangeSelector x:Name="WorkLog"/>
          </TabItem>
-         <TabItem Header="My Tickets">
+         <TabItem x:Name="MyTicketsTab" Header="My Tickets">
             <core:MyTicketsView x:Name="MyTickets"/>
          </TabItem>
-         <TabItem Header="Pending" Visibility="Hidden">
+         <TabItem x:Name="PendingChangesTab" Header="Pending">
             <core:PendingChangesView x:Name="PendingChanges"/>
          </TabItem>
       </TabControl>
