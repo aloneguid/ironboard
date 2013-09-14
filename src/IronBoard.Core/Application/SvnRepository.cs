@@ -156,5 +156,10 @@ namespace IronBoard.Core.Application
 
          return diffText;
       }
+
+       public string GetUncommittedDiff(object o)
+       {
+           throw new NotImplementedException();
+       }
    }
 }
