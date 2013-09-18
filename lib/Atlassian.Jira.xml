@@ -188,12 +188,32 @@
             Represents a type that can provide RemoteFieldValues. 
             </summary>
         </member>
+        <member name="M:Atlassian.Jira.CustomFieldCollection.Add(System.String,System.String)">
+            <summary>
+            Add a custom field by name
+            </summary>
+            <param name="fieldName">The name of the custom field as defined in JIRA</param>
+            <param name="fieldValue">The value of the field</param>
+        </member>
         <member name="M:Atlassian.Jira.CustomFieldCollection.Add(System.String,System.String[])">
             <summary>
             Add a custom field by name
             </summary>
             <param name="fieldName">The name of the custom field as defined in JIRA</param>
             <param name="fieldValues">The values of the field</param>
+        </member>
+        <member name="M:Atlassian.Jira.CustomFieldCollection.ForEdit">
+            <summary>
+            Changes context of collection to operate against fields for edit.
+            </summary>
+            <returns>Current collection with changed context/</returns>
+        </member>
+        <member name="M:Atlassian.Jira.CustomFieldCollection.ForAction(System.String)">
+            <summary>
+            Changes context of collection to operate against fields for action.
+            </summary>
+            <param name="actionId">Id of action as defined in JIRA.</param>
+            <returns>Current collection with changed context/</returns>
         </member>
         <member name="P:Atlassian.Jira.CustomFieldCollection.Item(System.String)">
             <summary>
@@ -227,6 +247,16 @@
             <remarks>
             Allows calls in the form of issue.Priority != "High"
             </remarks>
+        </member>
+        <member name="T:Atlassian.Jira.JiraCredentials">
+            <summary>
+            Holds user and password information for user that connects to JIRA.
+            </summary>
+        </member>
+        <member name="T:Atlassian.Jira.LiteralDateTime">
+            <summary>
+            Force a DateTime field to use a string provided as the JQL query value.
+            </summary>
         </member>
         <member name="T:Atlassian.Jira.LiteralMatch">
             <summary>
@@ -480,22 +510,40 @@
         </member>
         <member name="M:Atlassian.Jira.Jira.#ctor(System.String)">
             <summary>
-            Create a connection to a JIRA server with anonymous access
+            Create a proxy that connects with a JIRA server with anonymous access.
             </summary>
             <param name="url">Url to the JIRA server</param>
+        </member>
+        <member name="M:Atlassian.Jira.Jira.#ctor(Atlassian.Jira.Linq.IJqlExpressionVisitor,Atlassian.Jira.Remote.IJiraSoapServiceClient,Atlassian.Jira.IFileSystem)">
+            <summary>
+            Create a proxy that connects with a JIRA server with anonymous access with depencies.
+            </summary>
         </member>
         <member name="M:Atlassian.Jira.Jira.#ctor(System.String,System.String,System.String)">
             <summary>
-            Create a connection to a JIRA server with provided credentials
+            Create a proxy that connects with a JIRA server with specified credentials.
             </summary>
             <param name="url">Url to the JIRA server</param>
-            <param name="username">username to use to authenticate</param>
-            <param name="password">passowrd to use to authenticate</param>
+            <param name="username">Username used to authenticate</param>
+            <param name="password">Password used to authenticate</param>
         </member>
-        <member name="M:Atlassian.Jira.Jira.#ctor(Atlassian.Jira.Linq.IJqlExpressionVisitor,Atlassian.Jira.Remote.IJiraSoapServiceClient,Atlassian.Jira.IFileSystem,System.String,System.String)">
+        <member name="M:Atlassian.Jira.Jira.#ctor(System.String,System.String,System.Func{Atlassian.Jira.JiraCredentials})">
             <summary>
-            Create a connection to a JIRA server
+            Create a proxy that connects with a JIRA server with specified access token.
             </summary>
+            <param name="url">Url to the JIRA server.</param>
+            <param name="token">JIRA access token to use.</param>
+            <param name="credentialsProvider">Provider of credentials needed to re-generate token.</param>
+        </member>
+        <member name="M:Atlassian.Jira.Jira.#ctor(Atlassian.Jira.Linq.IJqlExpressionVisitor,Atlassian.Jira.Remote.IJiraSoapServiceClient,Atlassian.Jira.IFileSystem,System.String,System.Func{Atlassian.Jira.JiraCredentials})">
+            <summary>
+            Create a proxy that connects with a JIRA server with specified access token and dependencies.
+            </summary>
+            <param name="translator"></param>
+            <param name="jiraSoapService"></param>
+            <param name="fileSystem"></param>
+            <param name="accessToken"></param>
+            <param name="credentialsProvider"></param>
         </member>
         <member name="M:Atlassian.Jira.Jira.GetIssue(System.String)">
             <summary>
@@ -531,6 +579,12 @@
             <summary>
             Returns a new issue that when saved will be created on the remote JIRA server
             </summary>
+        </member>
+        <member name="M:Atlassian.Jira.Jira.DeleteIssue(Atlassian.Jira.Issue)">
+            <summary>
+            Deletes the issue specified from the JIRA server.
+            </summary>
+            <param name="issue">Issue to delete.</param>
         </member>
         <member name="M:Atlassian.Jira.Jira.GetIssueTypes(System.String)">
             <summary>
@@ -622,6 +676,11 @@
             If function fails with 'com.atlassian.jira.rpc.exception.RemoteAuthenticationException'
             a new token will be requested from server and the function called again.
             </remarks>
+        </member>
+        <member name="M:Atlassian.Jira.Jira.GetAccessToken">
+            <summary>
+            Retrieves an access token from server using current credentials.
+            </summary>
         </member>
         <member name="P:Atlassian.Jira.Jira.Debug">
             <summary>
