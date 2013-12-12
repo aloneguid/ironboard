@@ -16,7 +16,8 @@ namespace IronBoard.RBWebApi.Application
       private readonly ReviewBoardRc _config;
       private string _authCookie;
       private static Dictionary<string, User> _userNameToUser;
-      private static Dictionary<string, UserGroup> _groupNameToGroup; 
+      private static Dictionary<string, UserGroup> _groupNameToGroup;
+      private static string _myName;
 
       public event Action<NetworkCredential> AuthenticationRequired;
       public event Action<string> AuthCookieChanged;
@@ -28,7 +29,7 @@ namespace IronBoard.RBWebApi.Application
          _config = new ReviewBoardRc(projectRootFolder);
          if(_config.Uri == null) throw new ArgumentException("config file doesn't contain ReviewBoard server url");
          _client = new RestClient(new Uri(_config.Uri, "api").ToString());
-         AuthCookie = authCookie;
+         _authCookie = authCookie;
       }
 
       public Uri ServerUri { get { return _config.Uri; } }
@@ -102,11 +103,35 @@ namespace IronBoard.RBWebApi.Application
          return response;
       }
 
+      public string MyName
+      {
+         get
+         {
+            if (string.IsNullOrEmpty(_myName))
+            {
+               var request = CreateRequest("session/", Method.GET);
+               RestResponse response = Execute(request, 200);
+               if (response != null)
+               {
+                  JObject jo = JObject.Parse(response.Content);
+                  JObject session = (JObject)jo["session"];
+
+                  JObject links = (JObject) session["links"];
+                  JObject user = (JObject) session["user"] ?? (JObject) links["user"];
+                  if (user == null) throw new ApplicationException("cannot find user object in response");
+                  _myName = user.Value<string>("title");
+               }
+
+            }
+
+            return _myName;
+         }
+      }
+
       public IEnumerable<Repository> GetRepositories()
       {
          var result = new List<Repository>();
-         var request = new RestRequest("repositories/");
-         request.Method = Method.GET;
+         var request = CreateRequest("repositories/", Method.GET);
          RestResponse response = Execute(request, 200);
          if(response != null)
          {
@@ -419,10 +444,20 @@ namespace IronBoard.RBWebApi.Application
             var request = CreateRequest(resource, Method.GET);
             var response = Execute(request, 200);
             IEnumerable<Review> batch = ParseReviews(response.Content, out resource);
-            if(batch != null) r.AddRange(batch);
+            if(batch != null) r.AddRange(batch.Where(rv => rv.Submitter != null && rv.Submitter.InternalName == MyName));
             resource = null;
          }
          return r;
+      }
+
+      public void PostComment(Review review, string comment)
+      {
+         throw new NotImplementedException();
+      }
+
+      public IEnumerable<Review> GetRequestsToGroup(string groupName)
+      {
+         throw new NotImplementedException();
       }
    }
 }

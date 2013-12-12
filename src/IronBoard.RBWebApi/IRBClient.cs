@@ -15,6 +15,8 @@ namespace IronBoard.RBWebApi
 
       string AuthCookie { get; set; }
 
+      string MyName { get; }
+
       IEnumerable<Repository> GetRepositories();
 
       IEnumerable<UserGroup> GetGroups();
@@ -38,5 +40,9 @@ namespace IronBoard.RBWebApi
       void AttachDiff(Review review, string repoRoot, string diffText);
 
       IEnumerable<Review> GetPersonalRequests();
+
+      void PostComment(Review review, string comment);
+
+      IEnumerable<Review> GetRequestsToGroup(string groupName);
    }
 }

@@ -37,6 +37,9 @@
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Atlassian.Jira">
+      <HintPath>..\..\lib\Atlassian.Jira.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpSvn">
@@ -58,12 +61,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\JiraIssueTracker.cs" />
+    <Compile Include="Application\JqlBuilder.cs" />
     <Compile Include="Application\SvnRepository.cs" />
     <Compile Include="Extensions\TrivialUnreliablePersistenceExtensions.cs" />
     <Compile Include="IBApplication.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="Model\CoreSettings.cs" />
     <Compile Include="Model\DisplayItem.cs" />
+    <Compile Include="Model\IssueTracker\IIssueTracker.cs" />
+    <Compile Include="Model\IssueTracker\TrackerIssue.cs" />
+    <Compile Include="Model\IssueTracker\TrackerProject.cs" />
     <Compile Include="Model\LocalItemStatus.cs" />
     <Compile Include="Model\LocalWorkItem.cs" />
     <Compile Include="Model\WorkItem.cs" />

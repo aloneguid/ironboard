@@ -23,6 +23,8 @@ namespace IronBoard.RBWebApi.Application
          set { throw new NotImplementedException(); }
       }
 
+      public string MyName { get; private set; }
+
       public IEnumerable<Repository> GetRepositories()
       {
          throw new NotImplementedException();
@@ -84,6 +86,16 @@ namespace IronBoard.RBWebApi.Application
 
          var r1 = new Review(1, "review 1", "no desc", "i hate tests", "MGK-76", DateTime.Now);
          return new[] { r1 };
+      }
+
+      public void PostComment(Review review, string comment)
+      {
+         throw new NotImplementedException();
+      }
+
+      public IEnumerable<Review> GetRequestsToGroup(string groupName)
+      {
+         throw new NotImplementedException();
       }
    }
 }
