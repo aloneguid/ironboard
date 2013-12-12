@@ -372,7 +372,7 @@ namespace IronBoard.RBWebApi.Application
          }
          if (review.TargetGroups.Count > 0)
          {
-            string s = string.Join(",", review.TargetGroups.Select(g => g.Name));
+            string s = string.Join(",", review.TargetGroups.Select(g => g.InternalName));
             request.AddParameter("target_groups", s);
          }
          Execute(request, 200);
