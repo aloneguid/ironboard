@@ -68,7 +68,16 @@ namespace IronBoard.Core.Presenters
                {
                   _view.UpdatePostStatus(Strings.PostProgress_DetectRepository);
                   string repositoryPath = IbApplication.SvnRepository.RepositoryUri.AbsoluteUri.Replace(IbApplication.SvnRepository.RelativeRoot, "");
-                  r.Repository = IbApplication.RbClient.GetRepositories().First(x => string.Equals(x.Path, repositoryPath, StringComparison.InvariantCultureIgnoreCase));
+                  r.Repository = IbApplication.RbClient.GetRepositories().FirstOrDefault(x => string.Equals(x.Path, repositoryPath, StringComparison.InvariantCultureIgnoreCase));
+
+                  if (r.Repository == null)
+                  {
+                     string allRepos = string.Join("; ", IbApplication.RbClient.GetRepositories().Select(ir => ir.Path));
+
+                     throw new ApplicationException(
+                        string.Format("cannot find a valid SVN repository, was looking for {0} ({1}), your server has: [{2}]",
+                           IbApplication.SvnRepository.RepositoryUri.AbsoluteUri, repositoryPath, allRepos));
+                  }
 
                   _view.UpdatePostStatus(Strings.PostProgress_MainTicket);
                   IbApplication.RbClient.Post(r);
