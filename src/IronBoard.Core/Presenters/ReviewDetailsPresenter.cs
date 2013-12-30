@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IronBoard.Core.Application;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
 
@@ -67,16 +68,22 @@ namespace IronBoard.Core.Presenters
                try
                {
                   _view.UpdatePostStatus(Strings.PostProgress_DetectRepository);
-                  string repositoryPath = IbApplication.SvnRepository.RepositoryUri.AbsoluteUri.Replace(IbApplication.SvnRepository.RelativeRoot, "");
-                  r.Repository = IbApplication.RbClient.GetRepositories().FirstOrDefault(x => string.Equals(x.Path, repositoryPath, StringComparison.InvariantCultureIgnoreCase));
+                  r.Repository = IbApplication.RbClient
+                     .GetRepositories()
+                     .FirstOrDefault(x => string.Equals(SvnRepository.TrimRepositoryUrl(x.Path),
+                        SvnRepository.TrimRepositoryUrl(IbApplication.SvnRepository.RelativeRepositoryUri),
+                        StringComparison.InvariantCultureIgnoreCase));
 
                   if (r.Repository == null)
                   {
                      string allRepos = string.Join("; ", IbApplication.RbClient.GetRepositories().Select(ir => ir.Path));
 
                      throw new ApplicationException(
-                        string.Format("cannot find a valid SVN repository, was looking for {0} ({1}), your server has: [{2}]",
-                           IbApplication.SvnRepository.RepositoryUri.AbsoluteUri, repositoryPath, allRepos));
+                        string.Format("cannot find a valid SVN repository, was looking for [{0}], relative root: [{1}], path: [{2}], your server has: [{3}]",
+                           IbApplication.SvnRepository.RepositoryUri.AbsoluteUri,
+                           IbApplication.SvnRepository.RelativeRoot,
+                           IbApplication.SvnRepository.RelativeRepositoryUri,
+                           allRepos));
                   }
 
                   _view.UpdatePostStatus(Strings.PostProgress_MainTicket);

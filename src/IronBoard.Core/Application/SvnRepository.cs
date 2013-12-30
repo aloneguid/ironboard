@@ -36,6 +36,16 @@ namespace IronBoard.Core.Application
          get { return _relativeRoot; }
       }
 
+      public string RelativeRepositoryUri
+      {
+         get
+         {
+            if(_relativeRoot == "/") return RepositoryUri.AbsoluteUri;
+
+            return RepositoryUri.AbsoluteUri.Replace(_relativeRoot, string.Empty);
+         }
+      }
+
       public string Branch
       {
          get
@@ -57,6 +67,14 @@ namespace IronBoard.Core.Application
 
             return "trunk";
          }
+      }
+
+      private static readonly char[] RepositoryTrimChars = {'/', ';'};
+      public static string TrimRepositoryUrl(string url)
+      {
+         if (string.IsNullOrEmpty(url)) return null;
+
+         return url.Trim(RepositoryTrimChars);
       }
 
       private void Initialize()
