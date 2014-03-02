@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using NUnit.Framework;
 
 namespace IronBoard.Test.Integration
 {
-   [TestFixture, Ignore]
+   [Ignore]
    public class SubversionTest
    {
       private SvnRepository _svn;
@@ -22,14 +20,10 @@ namespace IronBoard.Test.Integration
       [Test]
       public void GetPendingChangesTest()
       {
-         IEnumerable<LocalWorkItem> pending = _svn.GetPendingChanges();
+         IEnumerable<LocalWorkItem> pending = _svn.GetLocalChanges();
          Assert.Greater(pending.Count(), 0);
-      }
 
-      [Test]
-      public void GetUncommittedDiffTest()
-      {
-         string diff = _svn.GetUncommittedDiff(null);
+         string diff = _svn.GetLocalDiff();
       }
    }
 }

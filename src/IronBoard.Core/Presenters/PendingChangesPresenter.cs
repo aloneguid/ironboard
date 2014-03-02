@@ -40,7 +40,7 @@ namespace IronBoard.Core.Presenters
       {
          Initialise();
 
-         return IbApplication.SvnRepository.GetPendingChanges();
+         return IbApplication.SvnRepository.GetLocalChanges();
       }
 
       public void OpenInBrowser(Review r)

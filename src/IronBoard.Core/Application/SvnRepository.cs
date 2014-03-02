@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -26,21 +27,15 @@ namespace IronBoard.Core.Application
          Initialize();
       }
 
-      public Uri RepositoryUri
-      {
-         get { return _repositoryUri; }
-      }
+      public Uri RepositoryUri { get { return _repositoryUri; } }
 
-      public string RelativeRoot
-      {
-         get { return _relativeRoot; }
-      }
+      public string RelativeRoot { get { return _relativeRoot; } }
 
       public string RelativeRepositoryUri
       {
          get
          {
-            if(_relativeRoot == "/") return RepositoryUri.AbsoluteUri;
+            if (_relativeRoot == "/") return RepositoryUri.AbsoluteUri;
 
             return RepositoryUri.AbsoluteUri.Replace(_relativeRoot, string.Empty);
          }
@@ -70,6 +65,7 @@ namespace IronBoard.Core.Application
       }
 
       private static readonly char[] RepositoryTrimChars = {'/', ';'};
+
       public static string TrimRepositoryUrl(string url)
       {
          if (string.IsNullOrEmpty(url)) return null;
@@ -106,6 +102,34 @@ namespace IronBoard.Core.Application
          return diffText;
       }
 
+      public string GetLocalDiff()
+      {
+         //SharpSvn doesn't do just "svn diff" and always requires some arguments, so I have nothing else to do other than run it directly
+
+         var p = new Process
+         {
+            StartInfo = new ProcessStartInfo("svn", "diff")
+            {
+               UseShellExecute = false,
+               RedirectStandardOutput = true,
+               CreateNoWindow = true,
+               WorkingDirectory = _workingCopyPath
+            }
+         };
+
+         p.Start();
+
+         var b = new StringBuilder();
+         while (!p.StandardOutput.EndOfStream)
+         {
+            b.AppendLine(p.StandardOutput.ReadLine());
+         }
+
+         p.WaitForExit();
+
+         return b.ToString();
+      }
+
       private WorkItem ToWorkItem(SvnLogEventArgs logEntry)
       {
          var item = new WorkItem(
@@ -125,7 +149,7 @@ namespace IronBoard.Core.Application
 
       public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
       {
-         var args = new SvnLogArgs { Limit = maxRevisions };
+         var args = new SvnLogArgs {Limit = maxRevisions};
 
          Collection<SvnLogEventArgs> entries;
          _svn.GetLog(_root.Uri, args, out entries);
@@ -138,7 +162,7 @@ namespace IronBoard.Core.Application
          return null;
       }
 
-      public IEnumerable<LocalWorkItem> GetPendingChanges()
+      public IEnumerable<LocalWorkItem> GetLocalChanges()
       {
          var result = new List<LocalWorkItem>();
 
@@ -146,38 +170,13 @@ namespace IronBoard.Core.Application
          _svn.GetStatus(_workingCopyPath, out changes);
          if (changes != null && changes.Count > 0)
          {
-            result.AddRange(changes.Select(change => new LocalWorkItem(change)).Where(change => change.Status != LocalItemStatus.Unknown));
+            result.AddRange(
+               changes.Select(change => new LocalWorkItem(change))
+                  .Where(change => change.Status != LocalItemStatus.Unknown));
             return result.Count == 0 ? null : result;
          }
 
          return null;
       }
-
-      public string GetDiff(IEnumerable<LocalWorkItem> itemsToDiff)
-      {
-         string diffText;
-         using (var ms = new MemoryStream())
-         {
-            SvnDiffArgs diffArgs = new SvnDiffArgs();
-            diffArgs.RelativeToPath = _workingCopyPath;
-            foreach (LocalWorkItem item in itemsToDiff)
-            {
-                _svn.Diff(
-                   item.Path,
-                   new SvnRevisionRange(SvnRevision.Base, SvnRevision.Working),
-                   diffArgs,
-                   ms);
-            }
-            ms.Position = 0;
-            diffText = Encoding.UTF8.GetString(ms.ToArray());
-         }
-
-         return diffText;
-      }
-
-       public string GetUncommittedDiff(object o)
-       {
-           throw new NotImplementedException();
-       }
    }
 }

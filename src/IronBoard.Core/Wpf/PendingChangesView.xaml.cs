@@ -59,11 +59,10 @@ namespace IronBoard.Core.Wpf
 
       private void PreCommitReview_OnClick(object sender, RoutedEventArgs e)
       {
-         IEnumerable<LocalWorkItem> selectedItems = ChangesList.SelectedItems.Cast<LocalWorkItem>();
          var review = new Review();
          var detailWindow = new ReviewDetails(_presenter.GetDetailsTitle(),
             review,
-            delegate() { return IbApplication.SvnRepository.GetDiff(selectedItems); });
+            () => IbApplication.SvnRepository.GetLocalDiff());
          detailWindow.ShowDialog();
          if (review.Id != 0) _presenter.OpenInBrowser(review);
       }
