@@ -13,7 +13,7 @@ namespace IronBoard.Core
    {
       public static IRbClient RbClient { get; private set; }
 
-      public static SvnRepository SvnRepository { get; private set; }
+      public static ICodeRepository CodeRepository { get; private set; }
 
       public static CoreSettings Settings { get; private set; }
 
@@ -41,7 +41,20 @@ namespace IronBoard.Core
 
          SolutionPath = solutionPath;
          Settings = settings;
-         SvnRepository = new SvnRepository(solutionPath);
+
+         ScmProvider provider = new ScmProviderDetector(solutionPath).DetectProvider();
+         switch (provider)
+         {
+            case ScmProvider.None:
+               throw new ApplicationException("not under source control");
+            case ScmProvider.Git:
+               CodeRepository = new GitRepository(solutionPath);
+               break;
+            case ScmProvider.Svn:
+               CodeRepository = new SvnRepository(solutionPath);
+               break;
+         }
+
          RbClient = client;
          RbClient.AuthenticationRequired += OnAuthenticationRequired;
          RbClient.AuthCookieChanged += OnAuthCookieChanged;

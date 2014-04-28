@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -27,17 +26,17 @@ namespace IronBoard.Core.Application
          Initialize();
       }
 
-      public Uri RepositoryUri { get { return _repositoryUri; } }
+      public override Uri RemoteRepositoryUri { get { return _repositoryUri; } }
 
-      public string RelativeRoot { get { return _relativeRoot; } }
+      public override string RelativeRoot { get { return _relativeRoot; } }
 
-      public string RelativeRepositoryUri
+      public override string RelativeRepositoryUri
       {
          get
          {
-            if (_relativeRoot == "/") return RepositoryUri.AbsoluteUri;
+            if (_relativeRoot == "/") return RemoteRepositoryUri.AbsoluteUri;
 
-            return RepositoryUri.AbsoluteUri.Replace(_relativeRoot, string.Empty);
+            return RemoteRepositoryUri.AbsoluteUri.Replace(_relativeRoot, string.Empty);
          }
       }
 
@@ -90,8 +89,11 @@ namespace IronBoard.Core.Application
          _repositoryUri = args.Uri;
       }
 
-      public string GetDiff(long fromRev, long toRev)
+      public override string GetDiff(string from, string to)
       {
+         long fromRev = long.Parse(from);
+         long toRev = long.Parse(to);
+
          string diffText;
          using (var ms = new MemoryStream())
          {
@@ -129,7 +131,7 @@ namespace IronBoard.Core.Application
          return item;
       }
 
-      public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
+      public override IEnumerable<WorkItem> GetHistory(int maxRevisions)
       {
          var args = new SvnLogArgs {Limit = maxRevisions};
 

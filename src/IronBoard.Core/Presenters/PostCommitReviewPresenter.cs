@@ -18,7 +18,7 @@ namespace IronBoard.Core.Presenters
       private readonly IRbClient _rb;
       private List<User> _users;
       private List<UserGroup> _groups;
-      private readonly SvnRepository _svn;
+      private readonly ICodeRepository _scm;
 
       public PostCommitReviewPresenter(IPostCommitReviewView view)
       {
@@ -27,14 +27,14 @@ namespace IronBoard.Core.Presenters
 
          if (IbApplication.LoginView == null) IbApplication.LoginView = _view.CreateLoginPasswordView();
          _rb = IbApplication.RbClient;
-         _svn = IbApplication.SvnRepository;
+         _scm = IbApplication.CodeRepository;
       }
 
-      public string SvnRepositoryUri { get { return _svn.RepositoryUri.ToString(); } }
+      public string RemoteRepositoryUri { get { return _scm.RemoteRepositoryUri.ToString(); } }
 
       public IEnumerable<WorkItem> GetCommitedWorkItems(int maxRevisions)
       {
-         return _svn.GetCommitedWorkItems(maxRevisions);
+         return _scm.GetHistory(maxRevisions);
       }
 
       public string ProduceDescription(IEnumerable<WorkItem> selectedItems)
@@ -84,16 +84,16 @@ namespace IronBoard.Core.Presenters
 
       public void PostReview(long fromRev, long toRev, Review review)
       {
-         string diff = _svn.GetDiff(fromRev, toRev);
-         string repositoryPath = _svn.RepositoryUri.AbsoluteUri.Replace(_svn.RelativeRoot, "");
+         string diff = _scm.GetDiff(fromRev.ToString(), toRev.ToString());
+         string repositoryPath = _scm.RemoteRepositoryUri.AbsoluteUri.Replace(_scm.RelativeRoot, "");
          review.Repository = _rb.GetRepositories().First( x => string.Equals(x.Path, repositoryPath, StringComparison.InvariantCultureIgnoreCase));
          _rb.Post(review);
-         _rb.AttachDiff(review, _svn.RelativeRoot, diff);
+         _rb.AttachDiff(review, _scm.RelativeRoot, diff);
       }
 
       public void SaveDiff(long fromRev, long toRev, string targetFileName)
       {
-         string diff = _svn.GetDiff(fromRev, toRev);
+         string diff = _scm.GetDiff(fromRev.ToString(), toRev.ToString());
          File.WriteAllText(targetFileName, diff, Encoding.UTF8);
       }
 

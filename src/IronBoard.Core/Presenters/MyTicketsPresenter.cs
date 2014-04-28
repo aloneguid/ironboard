@@ -55,10 +55,10 @@ namespace IronBoard.Core.Presenters
                try
                {
                   _view.UpdateBusyStatus(Strings.MyTickets_Update_GeneratingDiff);
-                  string diffText = IbApplication.SvnRepository.GetDiff(fromRev, toRev);
+                  string diffText = IbApplication.CodeRepository.GetDiff(fromRev.ToString(), toRev.ToString());
 
                   _view.UpdateBusyStatus(Strings.MyTickets_Update_Diff);
-                  IbApplication.RbClient.AttachDiff(r, IbApplication.SvnRepository.RelativeRoot, diffText);
+                  IbApplication.RbClient.AttachDiff(r, IbApplication.CodeRepository.RelativeRoot, diffText);
                   IbApplication.RbClient.MakePublic(r);
 
                   string url = string.Format("{0}r/{1}", IbApplication.RbClient.ServerUri, r.Id);

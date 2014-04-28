@@ -28,7 +28,7 @@ namespace IronBoard.Core.WinForms
          {
             _presenter = new PostCommitReviewPresenter(this);
 
-            SvnUri.Text = _presenter.SvnRepositoryUri;
+            SvnUri.Text = _presenter.RemoteRepositoryUri;
             Progress.Text = "hi :)";
             WorkItems.SelectedWorkItemsChanged += WorkItems_SelectedWorkItemsChanged;
             WorkItems.WorkItemsInvalidated += WorkItems_WorkItemsInvalidated;

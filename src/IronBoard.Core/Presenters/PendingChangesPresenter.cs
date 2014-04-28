@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
@@ -40,7 +37,9 @@ namespace IronBoard.Core.Presenters
       {
          Initialise();
 
-         return IbApplication.SvnRepository.GetLocalChanges();
+         //going to remove pending changes anyways
+         //return IbApplication.CodeRepository.GetLocalChanges();
+         return null;
       }
 
       public void OpenInBrowser(Review r)
@@ -51,7 +50,7 @@ namespace IronBoard.Core.Presenters
 
       public string GetDetailsTitle()
       {
-          return string.Format(Strings.ReviewDetails_NewTicket_PreCommit, IbApplication.SvnRepository.Branch);
+          return string.Format(Strings.ReviewDetails_NewTicket_PreCommit, IbApplication.CodeRepository.Branch);
       }
    }
 }

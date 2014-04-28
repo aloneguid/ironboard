@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace IronBoard.Vsix
+﻿namespace IronBoard.Vsix
 {
    interface IGlobalPanel
    {
@@ -14,6 +9,7 @@ namespace IronBoard.Vsix
    {
       NoSolutionOpen,
       NoConfigFile,
+      //NotUnderSourceControl,
       Operational
    }
 

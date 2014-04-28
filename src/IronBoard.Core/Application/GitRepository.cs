@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IronBoard.Core.Model;
 
@@ -25,9 +26,33 @@ namespace IronBoard.Core.Application
          }
       }
 
+      public override string RelativeRoot { get { throw new NotImplementedException(); } }
+
+      public override Uri RemoteRepositoryUri
+      {
+         get
+         {
+            string url = Exec("config --get remote.origin.url");
+
+            return new Uri(url);
+         }
+      }
+
+      public override string RelativeRepositoryUri { get { throw new NotImplementedException(); } }
+
       public override string GetLocalDiff()
       {
          return Exec("diff");
+      }
+
+      public override string GetDiff(string @from, string to)
+      {
+         throw new NotImplementedException();
+      }
+
+      public override IEnumerable<WorkItem> GetHistory(int maxEntries)
+      {
+         throw new NotImplementedException();
       }
 
       public override void Dispose()

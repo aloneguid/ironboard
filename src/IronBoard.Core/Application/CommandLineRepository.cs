@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using IronBoard.Core.Model;
@@ -28,7 +29,17 @@ namespace IronBoard.Core.Application
 
       public abstract string Branch { get; }
 
+      public abstract string RelativeRoot { get; }
+
+      public abstract Uri RemoteRepositoryUri { get;}
+
+      public abstract string RelativeRepositoryUri { get; }
+
       public abstract string GetLocalDiff();
+
+      public abstract string GetDiff(string @from, string to);
+
+      public abstract IEnumerable<WorkItem> GetHistory(int maxEntries);
 
       protected string Exec(string command, params object[] parameters)
       {

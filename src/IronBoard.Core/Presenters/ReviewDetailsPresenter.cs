@@ -71,7 +71,7 @@ namespace IronBoard.Core.Presenters
                   r.Repository = IbApplication.RbClient
                      .GetRepositories()
                      .FirstOrDefault(x => string.Equals(SvnRepository.TrimRepositoryUrl(x.Path),
-                        SvnRepository.TrimRepositoryUrl(IbApplication.SvnRepository.RelativeRepositoryUri),
+                        SvnRepository.TrimRepositoryUrl(IbApplication.CodeRepository.RelativeRepositoryUri),
                         StringComparison.InvariantCultureIgnoreCase));
 
                   if (r.Repository == null)
@@ -80,9 +80,9 @@ namespace IronBoard.Core.Presenters
 
                      throw new ApplicationException(
                         string.Format("cannot find a valid SVN repository, was looking for [{0}], relative root: [{1}], path: [{2}], your server has: [{3}]",
-                           IbApplication.SvnRepository.RepositoryUri.AbsoluteUri,
-                           IbApplication.SvnRepository.RelativeRoot,
-                           IbApplication.SvnRepository.RelativeRepositoryUri,
+                           IbApplication.CodeRepository.RemoteRepositoryUri.AbsoluteUri,
+                           IbApplication.CodeRepository.RelativeRoot,
+                           IbApplication.CodeRepository.RelativeRepositoryUri,
                            allRepos));
                   }
 
@@ -90,7 +90,7 @@ namespace IronBoard.Core.Presenters
                   IbApplication.RbClient.Post(r);
 
                   _view.UpdatePostStatus(Strings.PostProgress_Diff);
-                  IbApplication.RbClient.AttachDiff(r, IbApplication.SvnRepository.RelativeRoot, _lastDiff);
+                  IbApplication.RbClient.AttachDiff(r, IbApplication.CodeRepository.RelativeRoot, _lastDiff);
                   IbApplication.RbClient.MakePublic(r);
                }
                catch (Exception ex1)

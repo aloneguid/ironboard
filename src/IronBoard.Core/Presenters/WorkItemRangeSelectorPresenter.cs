@@ -57,9 +57,9 @@ namespace IronBoard.Core.Presenters
       private IEnumerable<WorkItem> GetCurrentWorkItems(int maxItems)
       {
          IEnumerable<WorkItem> items = null;
-         if(IbApplication.SvnRepository != null)
+         if(IbApplication.CodeRepository != null)
          {
-            items = IbApplication.SvnRepository.GetCommitedWorkItems(maxItems);
+            items = IbApplication.CodeRepository.GetHistory(maxItems);
             if (items != null) items = items.OrderBy(i => -int.Parse(i.ItemId)); //order by revision number desc
          }
          return items;
@@ -211,7 +211,7 @@ namespace IronBoard.Core.Presenters
 
             review.BugsClosed = String.Join(", ", ExtractBugsClosed(itemsList));
             review.TestingDone = ExtractTestingDone(itemsList);
-            review.Branch = IbApplication.SvnRepository.Branch;
+            review.Branch = IbApplication.CodeRepository.Branch;
          }
       }
 
@@ -223,7 +223,7 @@ namespace IronBoard.Core.Presenters
 
       public string GetDetailsTitle()
       {
-         return string.Format(Strings.ReviewDetails_NewTicket, IbApplication.SvnRepository.Branch);
+         return string.Format(Strings.ReviewDetails_NewTicket, IbApplication.CodeRepository.Branch);
       }
    }
 }
