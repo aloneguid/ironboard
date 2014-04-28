@@ -42,7 +42,7 @@ namespace IronBoard.Core.Application
 
       public override string GetLocalDiff()
       {
-         return Exec("diff");
+         return Exec("diff {0}", "origin/master");
       }
 
       public override string GetDiff(string @from, string to)
