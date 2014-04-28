@@ -11,7 +11,7 @@ using SharpSvn;
 
 namespace IronBoard.Core.Application
 {
-   public class SvnRepository : ICodeRepository
+   public class SvnRepository : CommandLineRepository
    {
       private readonly string _workingCopyPath;
       private SvnClient _svn;
@@ -19,7 +19,7 @@ namespace IronBoard.Core.Application
       private string _relativeRoot;
       private Uri _repositoryUri;
 
-      public SvnRepository(string workingCopyPath)
+      public SvnRepository(string workingCopyPath) : base(workingCopyPath, "svn")
       {
          if (workingCopyPath == null) throw new ArgumentNullException("workingCopyPath");
          _workingCopyPath = workingCopyPath;
@@ -41,7 +41,12 @@ namespace IronBoard.Core.Application
          }
       }
 
-      public string Branch
+      public override string ClientVersion
+      {
+         get { return Exec("--version"); }
+      }
+
+      public override string Branch
       {
          get
          {
@@ -102,32 +107,9 @@ namespace IronBoard.Core.Application
          return diffText;
       }
 
-      public string GetLocalDiff()
+      public override string GetLocalDiff()
       {
-         //SharpSvn doesn't do just "svn diff" and always requires some arguments, so I have nothing else to do other than run it directly
-
-         var p = new Process
-         {
-            StartInfo = new ProcessStartInfo("svn", "diff")
-            {
-               UseShellExecute = false,
-               RedirectStandardOutput = true,
-               CreateNoWindow = true,
-               WorkingDirectory = _workingCopyPath
-            }
-         };
-
-         p.Start();
-
-         var b = new StringBuilder();
-         while (!p.StandardOutput.EndOfStream)
-         {
-            b.AppendLine(p.StandardOutput.ReadLine());
-         }
-
-         p.WaitForExit();
-
-         return b.ToString();
+         return Exec("diff");
       }
 
       private WorkItem ToWorkItem(SvnLogEventArgs logEntry)
@@ -177,11 +159,6 @@ namespace IronBoard.Core.Application
          }
 
          return null;
-      }
-
-      public void Dispose()
-      {
-         
       }
    }
 }

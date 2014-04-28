@@ -1,33 +1,50 @@
 ﻿using System;
+using System.Linq;
 using IronBoard.Core.Model;
-using LibGit2Sharp;
 
 namespace IronBoard.Core.Application
 {
-   public class GitRepository : ICodeRepository
+   public class GitRepository : CommandLineRepository
    {
-      private readonly string _workingCopyPath;
-      private Repository _git;
-
-      public GitRepository(string workingCopyPath)
+      public GitRepository(string workingCopyPath) : base(workingCopyPath, "git")
       {
-         if (workingCopyPath == null) throw new ArgumentNullException("workingCopyPath");
-         _workingCopyPath = workingCopyPath;
-
-         _git = new Repository(workingCopyPath);
       }
 
-      public string Branch
+      public override string ClientVersion
+      {
+         get { return Exec("--version"); }
+      }
+
+      public override string Branch
       {
          get
          {
-            return null;
+            string branchInfo = Exec("branch");
+
+            return ExtractCurrentBranch(branchInfo);
          }
       }
 
-      public void Dispose()
+      public override string GetLocalDiff()
       {
-         _git.Dispose();  
+         return Exec("diff");
       }
+
+      public override void Dispose()
+      {
+      }
+
+      private string ExtractCurrentBranch(string branchInfo)
+      {
+         string current = Split(branchInfo).FirstOrDefault(b => b.StartsWith("* "));
+
+         return current == null ? null : current.Substring(2).Trim();
+      }
+
+      private string[] Split(string output)
+      {
+         return output.Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries);
+      }
+   
    }
 }

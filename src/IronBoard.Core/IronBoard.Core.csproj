@@ -40,9 +40,6 @@
     <Reference Include="Atlassian.Jira">
       <HintPath>..\..\lib\Atlassian.Jira.dll</HintPath>
     </Reference>
-    <Reference Include="LibGit2Sharp">
-      <HintPath>..\..\lib\LibGit2Sharp.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="SharpSvn">
@@ -64,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\CommandLineRepository.cs" />
     <Compile Include="Application\GitRepository.cs" />
     <Compile Include="Application\JiraIssueTracker.cs" />
     <Compile Include="Application\JqlBuilder.cs" />
