@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using IronBoard.Core.Model;
 
 namespace IronBoard.Core.Application
@@ -52,11 +54,71 @@ namespace IronBoard.Core.Application
 
       public override IEnumerable<WorkItem> GetHistory(int maxEntries)
       {
-         throw new NotImplementedException();
+         string log = Exec("git log -{0}", maxEntries);
+
+         return ParseLog(log);
       }
 
       public override void Dispose()
       {
+      }
+
+      private IEnumerable<WorkItem> ParseLog(string log)
+      {
+         var result = new List<WorkItem>();
+
+         string itemId = null;
+         string author = null;
+         string comment = null;
+         DateTime date = DateTime.UtcNow;
+
+         foreach (string line in log.Split('\n'))
+         {
+            if (line.StartsWith("commit "))
+            {
+               if (itemId != null)
+               {
+                  var item = new WorkItem(itemId, author, comment, date);
+                  result.Add(item);
+                  author = comment = null;
+                  date = DateTime.UtcNow;
+               }
+
+               itemId = line.Substring(7).Trim();
+            }
+            else if (line.StartsWith("author:", StringComparison.InvariantCultureIgnoreCase))
+            {
+               author = line.Substring(7).Trim();
+            }
+            else if (line.StartsWith("date:"))
+            {
+               string sd = line.Substring(5).Trim();
+               date = DateTime.Parse(sd);
+            }
+            else
+            {
+               string s = line.Trim();
+               if (!string.IsNullOrEmpty(s))
+               {
+                  if (comment == null)
+                  {
+                     comment = s;
+                  }
+                  else
+                  {
+                     comment += Environment.NewLine;
+                     comment += s;
+                  }
+               }
+            }
+         }
+
+         if (itemId != null)
+         {
+            result.Add(new WorkItem(itemId, author, comment, date));
+         }
+
+         return result;
       }
 
       private string ExtractCurrentBranch(string branchInfo)
