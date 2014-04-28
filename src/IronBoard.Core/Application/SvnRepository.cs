@@ -11,7 +11,7 @@ using SharpSvn;
 
 namespace IronBoard.Core.Application
 {
-   public class SvnRepository
+   public class SvnRepository : ICodeRepository
    {
       private readonly string _workingCopyPath;
       private SvnClient _svn;
@@ -177,6 +177,11 @@ namespace IronBoard.Core.Application
          }
 
          return null;
+      }
+
+      public void Dispose()
+      {
+         
       }
    }
 }

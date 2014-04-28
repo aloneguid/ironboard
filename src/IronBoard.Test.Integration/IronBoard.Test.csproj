@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Integration\GitRepositoryTest.cs" />
     <Compile Include="Integration\RbHttpClientTest.cs" />
     <Compile Include="Integration\SubversionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
