@@ -172,6 +172,9 @@
     <Compile Include="Wpf\ReviewerSelector.xaml.cs">
       <DependentUpon>ReviewerSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wpf\TicketUpdateDetails.xaml.cs">
+      <DependentUpon>TicketUpdateDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\WorkItemRangeSelector.xaml.cs">
       <DependentUpon>WorkItemRangeSelector.xaml</DependentUpon>
     </Compile>
@@ -234,6 +237,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Wpf\ReviewerSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wpf\TicketUpdateDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

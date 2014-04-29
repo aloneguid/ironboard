@@ -10,7 +10,6 @@ using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Presenters
 {
-
    public delegate string GetDiff();
 
    class ReviewDetailsPresenter

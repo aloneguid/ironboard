@@ -27,6 +27,8 @@ namespace IronBoard.Core
 
       public static string SolutionPath { get; private set; }
 
+      public static ScmProvider ScmProvider { get; private set; }
+
       public static void Initialise(string solutionPath, CoreSettings settings)
       {
          Initialise(solutionPath, settings,
@@ -42,8 +44,8 @@ namespace IronBoard.Core
          SolutionPath = solutionPath;
          Settings = settings;
 
-         ScmProvider provider = new ScmProviderDetector(solutionPath).DetectProvider();
-         switch (provider)
+         ScmProvider = new ScmProviderDetector(solutionPath).DetectProvider();
+         switch (ScmProvider)
          {
             case ScmProvider.None:
                throw new ApplicationException("not under source control");

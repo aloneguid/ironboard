@@ -26,8 +26,8 @@
              VerticalAlignment="Center"
              Foreground="Red"/>
       
-      <Image Height="60" HorizontalAlignment="Left" Margin="10,0,0,10" Visibility="Hidden"
+      <Image Height="60" HorizontalAlignment="Left" Margin="5,0,0,10" Visibility="Visible"
              x:Name="SourceProviderImage"
-             Stretch="Fill" VerticalAlignment="Bottom" Width="60" Source="/IronBoard;component/Resources/scm_svn.png" />
+             Stretch="Fill" VerticalAlignment="Bottom" Width="60" Source="/IronBoard;component/Resources/scm_git.png" />
    </Grid>
 </UserControl>
