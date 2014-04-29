@@ -54,7 +54,7 @@ namespace IronBoard.Core.Application
 
       public override IEnumerable<WorkItem> GetHistory(int maxEntries)
       {
-         string log = Exec("git log -{0}", maxEntries);
+         string log = Exec("log -{0}", maxEntries);
 
          return ParseLog(log);
       }
@@ -90,8 +90,9 @@ namespace IronBoard.Core.Application
             {
                author = line.Substring(7).Trim();
             }
-            else if (line.StartsWith("date:"))
+            else if (line.StartsWith("date:", StringComparison.InvariantCultureIgnoreCase))
             {
+               //date example: Mon Apr 28 11:55:45 2014 +0100
                string sd = line.Substring(5).Trim();
                date = DateTime.Parse(sd);
             }

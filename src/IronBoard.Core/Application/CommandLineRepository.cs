@@ -47,17 +47,21 @@ namespace IronBoard.Core.Application
          start.WorkingDirectory = WorkingCopyPath;
          start.UseShellExecute = false;
          start.RedirectStandardOutput = true;
+         start.RedirectStandardError = true;
 
          Process p = Process.Start(start);
          p.WaitForExit();
 
-         if(p.ExitCode != 0) throw new ApplicationException("cannot execute");
-
-         using (var s = p.StandardOutput)
+         if (p.ExitCode != 0)
          {
-            string result = s.ReadToEnd();
-            return result.Trim();
+            string error = p.StandardError.ReadToEnd();
+            throw new ApplicationException(
+               string.Format("cannot execute, exit code: {0}, message: [{1}]",
+                  p.ExitCode,
+                  error));
          }
+
+         return p.StandardOutput.ReadToEnd();
       }
    }
 }
