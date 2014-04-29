@@ -24,7 +24,7 @@ namespace IronBoard.Core.Model
 
       public string Author { get; private set; }
 
-      public string Comment { get; private set; }
+      public string Comment { get; set; }
 
       public DateTime Time { get; private set; }
 

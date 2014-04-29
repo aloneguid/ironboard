@@ -26,7 +26,7 @@ namespace IronBoard.Vsix.Windows
          WorkLog.SelectectionChanged += WorkLogSelectectionChanged;
       }
 
-      void WorkLogSelectectionChanged(IEnumerable<Core.Model.WorkItem> items, int rmin, int rmax)
+      void WorkLogSelectectionChanged(IEnumerable<WorkItem> items, int rmin, int rmax)
       {
          MyTickets.SetSelection(items, rmin, rmax);
       }

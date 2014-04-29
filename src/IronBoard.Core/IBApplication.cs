@@ -6,6 +6,7 @@ using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.Core.WinForms;
 using IronBoard.RBWebApi;
+using IronBoard.RBWebApi.Application;
 
 namespace IronBoard.Core
 {
@@ -29,6 +30,8 @@ namespace IronBoard.Core
 
       public static ScmProvider ScmProvider { get; private set; }
 
+      public static ReviewBoardRc Config { get; private set; }
+
       public static void Initialise(string solutionPath, CoreSettings settings)
       {
          Initialise(solutionPath, settings,
@@ -44,6 +47,7 @@ namespace IronBoard.Core
          SolutionPath = solutionPath;
          Settings = settings;
 
+         Config = new ReviewBoardRc(solutionPath);
          ScmProvider = new ScmProviderDetector(solutionPath).DetectProvider();
          switch (ScmProvider)
          {

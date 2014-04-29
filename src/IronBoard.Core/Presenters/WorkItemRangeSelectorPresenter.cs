@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
@@ -153,6 +154,30 @@ namespace IronBoard.Core.Presenters
          return result.ToArray();
       }
 
+      /// <summary>
+      /// Unfortunately Markdown (http://www.reviewboard.org/docs/manual/dev/users/markdown/) doesn't work with API
+      /// </summary>
+      /// <param name="lines"></param>
+      /// <param name="jiraPrefix"></param>
+      public void PutAbsoluteJiraLinks(IEnumerable<WorkItem> lines, string jiraPrefix)
+      {
+         if (lines == null || string.IsNullOrEmpty(jiraPrefix)) return;
+
+         foreach (WorkItem wi in lines)
+         {
+            if(wi == null || wi.Comment == null) continue;
+
+            foreach (Match m in JiraIssueRegex.Matches(wi.Comment).Cast<Match>().Reverse())
+            {
+               string ticketId = m.ToString();
+               string ticketMarkup = string.Format("[{0}]({1}/browse/{2})", ticketId, jiraPrefix, ticketId);
+
+               wi.Comment = wi.Comment.Remove(m.Index, m.Length);
+               wi.Comment = wi.Comment.Insert(m.Index, ticketMarkup);
+            }
+         }
+      }
+
       private string GenerateExcuseForNoTesting()
       {
          var rnd = new Random(DateTime.Now.Millisecond);
@@ -189,6 +214,7 @@ namespace IronBoard.Core.Presenters
          if (selectedItems != null)
          {
             List<WorkItem> itemsList = selectedItems.ToList();
+            //PutAbsoluteJiraLinks(itemsList, IbApplication.Config.JiraPrefix);
             var lines = new List<string>();
             foreach (WorkItem wi in itemsList)
             {
@@ -206,7 +232,7 @@ namespace IronBoard.Core.Presenters
                   .Trim(' ', '*', '-', '+', '=', '\t', '[', ']', '.')
                   .Replace("\r", "").Replace("\n", " ").Replace("  ", " ");
                review.Subject = review.Subject.Substring(0, 1).ToUpper() + review.Subject.Substring(1);
-               review.Description = String.Join(Environment.NewLine, lines);
+               review.Description = String.Join(Environment.NewLine, lines.Skip(1));   //skip line 1 as it's taken as a subject
             }
 
             review.BugsClosed = String.Join(", ", ExtractBugsClosed(itemsList));

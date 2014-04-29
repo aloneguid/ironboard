@@ -17,7 +17,7 @@ namespace IronBoard.Test.Unit.Presenters
       }
 
       [Test]
-      public void ExtractJiraBugsTest()
+      public void Jira_TicketNumbersInText_Extracts()
       {
          var items = new[]
             {
@@ -37,7 +37,26 @@ namespace IronBoard.Test.Unit.Presenters
       }
 
       [Test]
-      public void ExtractTestingTest()
+      public void Jira_TicketNumbersInText_ReplacesWithAbsoluteLinks()
+      {
+         var items = new[]
+            {
+               new WorkItem("1", "arsehole",
+                            "i have fixed ABCD-1234 which is a regression of TRD-12 which i have fixed before",
+                            DateTime.Now),
+               new WorkItem("1", "arsehole",
+                            "refixed FGT-777 because I'm a useless arsehole (ABCD-1234)",
+                            DateTime.Now)
+            };
+
+         _presenter.PutAbsoluteJiraLinks(items, "https://mimecast.jira.com");
+
+         Assert.AreEqual("i have fixed [ABCD-1234](https://mimecast.jira.com/browse/ABCD-1234) which is a regression of [TRD-12](https://mimecast.jira.com/browse/TRD-12) which i have fixed before",
+            items[0].Comment);
+      }
+
+      [Test]
+      public void UnitTesting_FilesWithTestSuffix_ExtractsClasses()
       {
          var wi = new WorkItem("1", "God", "fake", DateTime.Now);
          wi.ChangedFilePaths.Add("/dsfdsf/sdfdsf/SuperCode.cs");

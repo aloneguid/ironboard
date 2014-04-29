@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace IronBoard.RBWebApi.Application
 {
-   class ReviewBoardRc
+   public class ReviewBoardRc
    {
       private const string KeyReviewBoardUrl = "REVIEWBOARD_URL";
       private const string KeyRepository = "REPOSITORY";
+
+      private const string CustomKeyJiraPrefix = "IRONBOARD_JIRA_PREFIX";
 
       private readonly string _configPath;
 
@@ -42,6 +41,9 @@ namespace IronBoard.RBWebApi.Application
                      case KeyRepository:
                         Repository = val;
                         break;
+                     case CustomKeyJiraPrefix:
+                        JiraPrefix = val;
+                        break;
                   }
                }
             }
@@ -51,5 +53,7 @@ namespace IronBoard.RBWebApi.Application
       public Uri Uri { get; private set; }
 
       public string Repository { get; private set; } 
+
+      public string JiraPrefix { get; private set; }
    }
 }
