@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
@@ -16,7 +17,7 @@ namespace IronBoard.Core.Wpf
    /// </summary>
    public partial class WorkItemRangeSelector : UserControl, IWorkItemRangeSelectorView
    {
-      public event Action<IEnumerable<WorkItem>, int, int> SelectectionChanged;
+      public event Action<IEnumerable<WorkItem>, RevisionRange> SelectectionChanged;
 
       private readonly WorkItemRangeSelectorPresenter _presenter;
 
@@ -26,7 +27,6 @@ namespace IronBoard.Core.Wpf
 
          _presenter = new WorkItemRangeSelectorPresenter(this);
          Warning.Visibility = Visibility.Collapsed;
-         CommandLine.Content = null;
       }
 
       public void RefreshView()
@@ -73,12 +73,12 @@ namespace IronBoard.Core.Wpf
       {
          bool skipped;
          List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
-         Tuple<int, int> range = _presenter.GetRange(continuous);
+         RevisionRange range = GenericRepository.GetRange(continuous);
          var review = new Review();
          _presenter.ExtractBasicMetadata(continuous, review);
          var detailWindow = new ReviewDetails(_presenter.GetDetailsTitle(),
             review,
-            () => IbApplication.CodeRepository.GetDiff(range.Item1.ToString(), range.Item2.ToString()));
+            () => IbApplication.CodeRepository.GetDiff(range));
          detailWindow.ShowDialog();
          if(review.Id != 0) _presenter.OpenInBrowser(review);
       }
@@ -102,14 +102,11 @@ namespace IronBoard.Core.Wpf
          List<WorkItem> continuous = SelectCoutinuousSelectedItems(out skipped).ToList();
          Warning.Visibility = skipped ? Visibility.Visible : Visibility.Collapsed;
 
-         Tuple<int, int> range = _presenter.GetRange(continuous);
-         CommandLine.Content = _presenter.GetCommandLine(range);
+         RevisionRange range = GenericRepository.GetRange(continuous);
 
          if(SelectectionChanged != null)
          {
-            SelectectionChanged(continuous,
-               range == null ? 0 : range.Item1,
-               range == null ? 0 : range.Item2);
+            SelectectionChanged(continuous, range);
          }
       }
    }

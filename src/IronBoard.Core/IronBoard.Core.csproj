@@ -50,10 +50,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="WPFToolkit.Extended">
@@ -62,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\CommandLineRepository.cs" />
+    <Compile Include="Application\GenericRepository.cs" />
     <Compile Include="Application\GitRepository.cs" />
     <Compile Include="Application\JiraIssueTracker.cs" />
     <Compile Include="Application\JqlBuilder.cs" />
@@ -78,6 +76,7 @@
     <Compile Include="Model\IssueTracker\TrackerProject.cs" />
     <Compile Include="Model\LocalItemStatus.cs" />
     <Compile Include="Model\LocalWorkItem.cs" />
+    <Compile Include="Model\RevisionRange.cs" />
     <Compile Include="Model\ScmProvider.cs" />
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\MyTicketsPresenter.cs" />
@@ -105,41 +104,11 @@
     <Compile Include="WinForms\FakeInitForm.Designer.cs">
       <DependentUpon>FakeInitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WinForms\ReviewerSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ReviewerSelector.Designer.cs">
-      <DependentUpon>ReviewerSelector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\PeopleEntitySelectorListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForms\PeopleEntitySelectorListForm.Designer.cs">
-      <DependentUpon>PeopleEntitySelectorListForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\PostCommitReviewForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForms\PostCommitReviewForm.Designer.cs">
-      <DependentUpon>PostCommitReviewForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\ProgressForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForms\ProgressForm.Designer.cs">
-      <DependentUpon>ProgressForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="WinForms\RBAuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WinForms\RBAuthForm.Designer.cs">
       <DependentUpon>RBAuthForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\ReviewEntityControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\ReviewEntityControl.Designer.cs">
-      <DependentUpon>ReviewEntityControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForms\ReviewRequests.cs">
       <SubType>UserControl</SubType>
@@ -148,12 +117,6 @@
       <DependentUpon>ReviewRequests.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForms\UiScheduler.cs" />
-    <Compile Include="WinForms\WorkItemRangeSelector.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\WorkItemRangeSelector.Designer.cs">
-      <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
-    </Compile>
     <Compile Include="Wpf\Data\MyTicketData.cs" />
     <Compile Include="Wpf\Data\WorkItemData.cs" />
     <Compile Include="Wpf\DispatcherExtensions.cs" />
@@ -184,29 +147,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\ReviewerSelector.resx">
-      <DependentUpon>ReviewerSelector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\PeopleEntitySelectorListForm.resx">
-      <DependentUpon>PeopleEntitySelectorListForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\PostCommitReviewForm.resx">
-      <DependentUpon>PostCommitReviewForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\ProgressForm.resx">
-      <DependentUpon>ProgressForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\RBAuthForm.resx">
       <DependentUpon>RBAuthForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\ReviewEntityControl.resx">
-      <DependentUpon>ReviewEntityControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\ReviewRequests.resx">
       <DependentUpon>ReviewRequests.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\WorkItemRangeSelector.resx">
-      <DependentUpon>WorkItemRangeSelector.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

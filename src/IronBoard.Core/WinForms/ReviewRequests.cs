@@ -6,7 +6,6 @@ using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace IronBoard.Core.WinForms
 {

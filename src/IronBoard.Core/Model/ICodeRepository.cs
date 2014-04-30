@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace IronBoard.Core.Model
@@ -21,7 +20,7 @@ namespace IronBoard.Core.Model
 
       string GetLocalDiff();
 
-      string GetDiff(string from, string to);
+      string GetDiff(RevisionRange range);
 
       IEnumerable<WorkItem> GetHistory(int maxEntries);
    }

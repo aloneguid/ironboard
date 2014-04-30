@@ -73,8 +73,6 @@
          <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,-3,0,0">
             <Label x:Name="Warning" Content="[some revisions skipped]" Foreground="Red"
                 ToolTip="only continuous selection can be posted"/>
-            <Label x:Name="CommandLine" Content="command line"
-                ToolTip="command line for post-review tool to execute this selection"/>
          </StackPanel>
       </Grid>
    </xctk:BusyIndicator>

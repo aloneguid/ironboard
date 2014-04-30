@@ -8,7 +8,6 @@ using IronBoard.Core.Model;
 using IronBoard.Core.Presenters;
 using IronBoard.Core.Views;
 using IronBoard.Core.Wpf.Data;
-using IronBoard.RBWebApi.Model;
 
 namespace IronBoard.Core.Wpf
 {
@@ -19,12 +18,12 @@ namespace IronBoard.Core.Wpf
    {
       private readonly MyTicketsPresenter _presenter;
       private IEnumerable<WorkItem> _items;
-      private int _rmin, _rmax;
+      private RevisionRange _range;
 
       public MyTicketsView()
       {
          InitializeComponent();
-         UpdateMenus(0, 0);
+         UpdateMenus(null);
          LoadError.Visibility = Visibility.Collapsed;
          TopHint.Content = null;
          _presenter = new MyTicketsPresenter(this);
@@ -38,19 +37,18 @@ namespace IronBoard.Core.Wpf
          _presenter.ReloadData();   
       }
 
-      public void SetSelection(IEnumerable<WorkItem> items, int rmin, int rmax)
+      public void SetSelection(IEnumerable<WorkItem> items, RevisionRange range)
       {
          this._items = items;
-         this._rmin = rmin;
-         this._rmax = rmax;
+         _range = range;
 
-         UpdateMenus(rmin, rmax);
+         UpdateMenus(range);
       }
 
-      private void UpdateMenus(int rmin, int rmax)
+      private void UpdateMenus(RevisionRange range)
       {
-         bool selected = rmin != 0;
-         TopHint.Content = !selected ? null : string.Format(Strings.MyTickets_TopHint, rmin, rmax);
+         bool selected = range != null;
+         TopHint.Content = !selected ? null : string.Format(Strings.MyTickets_TopHint, range.From, range.To);
 
          MenuUpdateTicketMenu.IsEnabled = selected;
          if (!selected)
@@ -59,7 +57,7 @@ namespace IronBoard.Core.Wpf
          }
          else
          {
-            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, _rmin, _rmax);
+            string header = string.Format(Strings.MyTickets_UpdateTicketMenu, _range.From, _range.To);
             MenuUpdateTicketMenu.Header = header;
          }
       }
@@ -110,7 +108,7 @@ namespace IronBoard.Core.Wpf
          var r = Tickets.SelectedItem as MyTicketData;
          if (r != null)
          {
-            _presenter.UpdateTicket(r.R, _rmin, _rmax);
+            _presenter.UpdateTicket(r.R, _range);
          }
       }
 
@@ -119,7 +117,7 @@ namespace IronBoard.Core.Wpf
          var r = Tickets.SelectedItem as MyTicketData;
          if (r != null)
          {
-            UpdateMenus(_rmin, _rmax);
+            UpdateMenus(_range);
          }
       }
 

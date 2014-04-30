@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi;
@@ -60,40 +59,18 @@ namespace IronBoard.Core.Presenters
          return null;
       }
 
-      public Tuple<int, int> GetRange(IEnumerable<WorkItem> items)
+      public void PostReview(RevisionRange range, Review review)
       {
-         int min = int.MaxValue, max = 0;
-         if (items != null)
-         {
-            foreach (WorkItem wi in items)
-            {
-               int rev = int.Parse(wi.ItemId);
-               if (rev < min) min = rev;
-               if (rev > max) max = rev;
-            }
-         }
-         return min <= max ? new Tuple<int, int>(min - 1, max) : null;
-      }
-
-      public string GetCommandLine(Tuple<int, int> range)
-      {
-         return range == null
-                   ? string.Empty
-                   : string.Format("post-review --revision-range={0}:{1}", range.Item1, range.Item2);
-      }
-
-      public void PostReview(long fromRev, long toRev, Review review)
-      {
-         string diff = _scm.GetDiff(fromRev.ToString(), toRev.ToString());
+         string diff = _scm.GetDiff(range);
          string repositoryPath = _scm.RemoteRepositoryUri.AbsoluteUri.Replace(_scm.RelativeRoot, "");
          review.Repository = _rb.GetRepositories().First( x => string.Equals(x.Path, repositoryPath, StringComparison.InvariantCultureIgnoreCase));
          _rb.Post(review);
          _rb.AttachDiff(review, _scm.RelativeRoot, diff);
       }
 
-      public void SaveDiff(long fromRev, long toRev, string targetFileName)
+      public void SaveDiff(RevisionRange range, string targetFileName)
       {
-         string diff = _scm.GetDiff(fromRev.ToString(), toRev.ToString());
+         string diff = _scm.GetDiff(range);
          File.WriteAllText(targetFileName, diff, Encoding.UTF8);
       }
 

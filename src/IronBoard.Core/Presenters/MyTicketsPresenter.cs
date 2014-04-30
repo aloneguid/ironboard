@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.Core.Wpf.Data;
 using IronBoard.RBWebApi.Model;
@@ -47,7 +48,7 @@ namespace IronBoard.Core.Presenters
          IbApplication.RbClient.Delete(r.Id);
       }
 
-      public void UpdateTicket(Review r, long fromRev, long toRev)
+      public void UpdateTicket(Review r, RevisionRange range)
       {
          Task.Factory.StartNew(() =>
             {
@@ -55,7 +56,7 @@ namespace IronBoard.Core.Presenters
                try
                {
                   _view.UpdateBusyStatus(Strings.MyTickets_Update_GeneratingDiff);
-                  string diffText = IbApplication.CodeRepository.GetDiff(fromRev.ToString(), toRev.ToString());
+                  string diffText = IbApplication.CodeRepository.GetDiff(range);
 
                   _view.UpdateBusyStatus(Strings.MyTickets_Update_Diff);
                   IbApplication.RbClient.AttachDiff(r, IbApplication.CodeRepository.RelativeRoot, diffText);

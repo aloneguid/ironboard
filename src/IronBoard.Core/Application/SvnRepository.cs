@@ -89,10 +89,10 @@ namespace IronBoard.Core.Application
          _repositoryUri = args.Uri;
       }
 
-      public override string GetDiff(string from, string to)
+      public override string GetDiff(RevisionRange range)
       {
-         long fromRev = long.Parse(from);
-         long toRev = long.Parse(to);
+         long fromRev = long.Parse(range.From) - 1;   // -1 is enough to include From branch
+         long toRev = long.Parse(range.To);
 
          string diffText;
          using (var ms = new MemoryStream())

@@ -37,7 +37,7 @@ namespace IronBoard.Core.Application
 
       public abstract string GetLocalDiff();
 
-      public abstract string GetDiff(string @from, string to);
+      public abstract string GetDiff(RevisionRange range);
 
       public abstract IEnumerable<WorkItem> GetHistory(int maxEntries);
 
