@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IronBoard.Core.Application;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
 
@@ -24,19 +23,12 @@ namespace IronBoard.Core.Presenters
          _getDiff = getDiff;
       }
 
-      public string GenerateDiff()
+      public void GenerateDiff()
       {
          if (_lastDiff == null)
          {
              _lastDiff = _getDiff();
          }
-
-         return _lastDiff;
-      }
-
-      public string LastDiff
-      {
-         get { return _lastDiff; }
       }
 
       public void OpenLastDiff()
@@ -59,6 +51,28 @@ namespace IronBoard.Core.Presenters
          get { return _groups ?? (_groups = IbApplication.RbClient.GetGroups()); }
       }
 
+      private Repository Repository
+      {
+         get
+         {
+            string uriOrName = IbApplication.Config.Repository.Trim();
+
+            Repository repository = IbApplication.RbClient.GetRepositories()
+               .FirstOrDefault(
+                  r => (r.Name != null && r.Name.Equals(uriOrName, StringComparison.InvariantCultureIgnoreCase)) ||
+                       (r.Name != null && r.Path.Equals(uriOrName, StringComparison.InvariantCultureIgnoreCase)));
+
+            if (repository == null)
+            {
+               throw new ApplicationException(string.Format("could not find repository by name or path, .reviewboarc value: {0}, available repositories: [{1}]",
+                  uriOrName,
+                  string.Join("; ", IbApplication.RbClient.GetRepositories().Select(ir => ir.Path))));
+            }
+
+            return repository;
+         }
+      }
+
       public void PostReview(Review r)
       {
          Task.Factory.StartNew(() =>
@@ -67,23 +81,7 @@ namespace IronBoard.Core.Presenters
                try
                {
                   _view.UpdatePostStatus(Strings.PostProgress_DetectRepository);
-                  r.Repository = IbApplication.RbClient
-                     .GetRepositories()
-                     .FirstOrDefault(x => string.Equals(SvnRepository.TrimRepositoryUrl(x.Path),
-                        SvnRepository.TrimRepositoryUrl(IbApplication.CodeRepository.RelativeRepositoryUri),
-                        StringComparison.InvariantCultureIgnoreCase));
-
-                  if (r.Repository == null)
-                  {
-                     string allRepos = string.Join("; ", IbApplication.RbClient.GetRepositories().Select(ir => ir.Path));
-
-                     throw new ApplicationException(
-                        string.Format("cannot find a valid SVN repository, was looking for [{0}], relative root: [{1}], path: [{2}], your server has: [{3}]",
-                           IbApplication.CodeRepository.RemoteRepositoryUri.AbsoluteUri,
-                           IbApplication.CodeRepository.RelativeRoot,
-                           IbApplication.CodeRepository.RelativeRepositoryUri,
-                           allRepos));
-                  }
+                  r.Repository = Repository;
 
                   _view.UpdatePostStatus(Strings.PostProgress_MainTicket);
                   IbApplication.RbClient.Post(r);

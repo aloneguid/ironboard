@@ -51,6 +51,22 @@ namespace IronBoard.Core.Application
 
       public override string GetDiff(RevisionRange range)
       {
+         //get previous log entry
+         try
+         {
+            string log = Exec("log -n 1 \"{0}^1\"", range.From);
+            IEnumerable<WorkItem> entries = ParseLog(log);
+
+            WorkItem previous;
+            if (entries == null || (previous = entries.FirstOrDefault()) == null) throw new ApplicationException("coudl not get previous entry");
+
+            range.From = previous.ItemId;
+         }
+         catch (ApplicationException)
+         {
+            
+         }
+
          return Exec("diff {0} {1}", range.From, range.To);
       }
 

@@ -52,5 +52,26 @@ namespace IronBoard.Test.Integration
 
          Assert.Greater(history.Count, 0);
       }
+
+      [Test]
+      public void DiffRange_NotFirstCommit_GetsDiff()
+      {
+         string diff =
+            _git.GetDiff(new RevisionRange("698dfbe4b3565df2fb739447afeb379482291efd",
+               "698dfbe4b3565df2fb739447afeb379482291efd"));
+
+         Assert.NotNull(diff);
+      }
+
+      [Test]
+      public void DiffRange_FirstCommit_GetsDiff()
+      {
+         string diff =
+            _git.GetDiff(new RevisionRange("153aeba038888f2369616ee2efdcb164cef4dafb",
+               "153aeba038888f2369616ee2efdcb164cef4dafb"));
+
+         Assert.NotNull(diff);
+      }
+
    }
 }

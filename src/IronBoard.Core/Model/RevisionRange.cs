@@ -1,10 +1,19 @@
 ﻿namespace IronBoard.Core.Model
 {
+   /// <summary>
+   /// Represents revision range
+   /// </summary>
    public class RevisionRange
    {
-      public string From { get; private set; }
+      /// <summary>
+      /// Minimum revision (inclusive)
+      /// </summary>
+      public string From { get; set; }
 
-      public string To { get; private set; }
+      /// <summary>
+      /// Maximum revision (inclusive)
+      /// </summary>
+      public string To { get; set; }
 
       public RevisionRange(string from, string to)
       {

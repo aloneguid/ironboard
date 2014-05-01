@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using IronBoard.Core.Application;
 using IronBoard.Core.Model;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
@@ -49,12 +48,6 @@ namespace IronBoard.Core.Presenters
          });
       }
 
-      public string ToListString(WorkItem i)
-      {
-         return string.Format("{0}: {1}@{2}| {3}",
-                              i.ItemId, i.Author, i.Time, i.Comment);
-      }
-
       private IEnumerable<WorkItem> GetCurrentWorkItems(int maxItems)
       {
          IEnumerable<WorkItem> items = null;
@@ -64,12 +57,6 @@ namespace IronBoard.Core.Presenters
             if (items != null) items = items.OrderBy(i => -i.Time.Ticks); //order by revision number desc
          }
          return items;
-      }
-
-      public RevisionRange GetRange(IEnumerable allItems, IEnumerable selectedItems)
-      {
-         bool skipped;
-         return GenericRepository.GetRange(SelectContinuousItems(allItems, selectedItems, out skipped));
       }
 
       public IEnumerable<WorkItem> SelectContinuousItems(IEnumerable allItems, IEnumerable selectedItems, out bool skiped)
