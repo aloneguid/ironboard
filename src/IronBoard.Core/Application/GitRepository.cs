@@ -11,6 +11,8 @@ namespace IronBoard.Core.Application
 {
    public class GitRepository : CommandLineRepository
    {
+      private Lazy<Uri> _remoteRepositoryUri = new Lazy<Uri>(); 
+
       public GitRepository(string workingCopyPath) : base(workingCopyPath, "git")
       {
       }
@@ -30,7 +32,10 @@ namespace IronBoard.Core.Application
          }
       }
 
-      public override string RelativeRoot { get { throw new NotImplementedException(); } }
+      public override string RelativeRoot
+      {
+         get { return RemoteRepositoryUri.ToString(); }
+      }
 
       public override Uri RemoteRepositoryUri
       {
@@ -41,8 +46,6 @@ namespace IronBoard.Core.Application
             return new Uri(url);
          }
       }
-
-      public override string RelativeRepositoryUri { get { throw new NotImplementedException(); } }
 
       public override string GetLocalDiff()
       {

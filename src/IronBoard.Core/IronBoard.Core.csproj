@@ -81,7 +81,6 @@
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\MyTicketsPresenter.cs" />
     <Compile Include="Presenters\PendingChangesPresenter.cs" />
-    <Compile Include="Presenters\PostCommitReviewPresenter.cs" />
     <Compile Include="Presenters\ReviewDetailsPresenter.cs" />
     <Compile Include="Presenters\ReviewRequestsPresenter.cs" />
     <Compile Include="Presenters\WorkItemRangeSelectorPresenter.cs" />

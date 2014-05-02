@@ -10,13 +10,17 @@ namespace IronBoard.Core.Model
       string Branch { get; }
 
       /// <summary>
-      /// Relative root of this repository according to where code diff is generated from
+      /// Relative root of this repository according to where code diff is generated from.
+      /// <example>
+      /// Remote repository: https://ironboard.svn.codeplex.com/svn/trunk/
+      /// This value: /trunk/
+      /// Because https://ironboard.svn.codeplex.com/svn/ is a root for all projects (or in this case trunk and branches)
+      /// /trunk/ is a root the diff is generated from
+      /// </example>
       /// </summary>
       string RelativeRoot { get; }
 
       Uri RemoteRepositoryUri { get; }
-
-      string RelativeRepositoryUri { get; }
 
       string GetLocalDiff();
 

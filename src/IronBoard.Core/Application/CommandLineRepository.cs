@@ -33,8 +33,6 @@ namespace IronBoard.Core.Application
 
       public abstract Uri RemoteRepositoryUri { get;}
 
-      public abstract string RelativeRepositoryUri { get; }
-
       public abstract string GetLocalDiff();
 
       public abstract string GetDiff(RevisionRange range);

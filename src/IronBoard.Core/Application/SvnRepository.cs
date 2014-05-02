@@ -30,16 +30,6 @@ namespace IronBoard.Core.Application
 
       public override string RelativeRoot { get { return _relativeRoot; } }
 
-      public override string RelativeRepositoryUri
-      {
-         get
-         {
-            if (_relativeRoot == "/") return RemoteRepositoryUri.AbsoluteUri;
-
-            return RemoteRepositoryUri.AbsoluteUri.Replace(_relativeRoot, string.Empty);
-         }
-      }
-
       public override string ClientVersion
       {
          get { return Exec("--version"); }
