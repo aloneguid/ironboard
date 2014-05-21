@@ -70,6 +70,7 @@
     <Compile Include="Messages.cs" />
     <Compile Include="Model\CoreSettings.cs" />
     <Compile Include="Model\DisplayItem.cs" />
+    <Compile Include="Model\Exceptions\VersionControlException.cs" />
     <Compile Include="Model\ICodeRepository.cs" />
     <Compile Include="Model\IssueTracker\IIssueTracker.cs" />
     <Compile Include="Model\IssueTracker\TrackerIssue.cs" />
@@ -122,9 +123,6 @@
     <Compile Include="Wpf\MyTicketsView.xaml.cs">
       <DependentUpon>MyTicketsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Wpf\PendingChangesView.xaml.cs">
-      <DependentUpon>PendingChangesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Wpf\Progress.xaml.cs">
       <DependentUpon>Progress.xaml</DependentUpon>
     </Compile>
@@ -165,10 +163,6 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Wpf\MyTicketsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Wpf\PendingChangesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

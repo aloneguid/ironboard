@@ -7,7 +7,12 @@ namespace IronBoard.Core.Model
    {
       string ClientVersion { get; }
 
-      string Branch { get; }
+      string Branch { get; set; }
+
+      /// <summary>
+      /// symbolic name of a primary branch
+      /// </summary>
+      string MainBranchName { get; }
 
       /// <summary>
       /// Relative root of this repository according to where code diff is generated from.
@@ -19,10 +24,6 @@ namespace IronBoard.Core.Model
       /// </example>
       /// </summary>
       string RelativeRoot { get; }
-
-      Uri RemoteRepositoryUri { get; }
-
-      string GetLocalDiff();
 
       string GetDiff(RevisionRange range);
 

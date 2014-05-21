@@ -84,10 +84,7 @@ namespace IronBoard.Vsix.Windows
 
       private void Tabs_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
       {
-         if ((e.Source is TabControl) && PendingChangesTab.IsSelected)
-         {
-            PendingChanges.RefreshView();
-         }
+
       }
    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using IronBoard.Core.Model;
+using IronBoard.Core.Model.Exceptions;
 
 namespace IronBoard.Core.Application
 {
@@ -27,13 +28,11 @@ namespace IronBoard.Core.Application
 
       public abstract string ClientVersion { get; }
 
-      public abstract string Branch { get; }
+      public abstract string Branch { get; set; }
+
+      public abstract string MainBranchName { get; }
 
       public abstract string RelativeRoot { get; }
-
-      public abstract Uri RemoteRepositoryUri { get;}
-
-      public abstract string GetLocalDiff();
 
       public abstract string GetDiff(RevisionRange range);
 
@@ -41,7 +40,10 @@ namespace IronBoard.Core.Application
 
       protected string Exec(string command, params object[] parameters)
       {
-         var start = new ProcessStartInfo(_execName, string.Format(command, parameters));
+         if (command == null) return null;
+
+         string formattedCommand = string.Format(command, parameters);
+         var start = new ProcessStartInfo(_execName, formattedCommand);
          start.WorkingDirectory = WorkingCopyPath;
          start.UseShellExecute = false;
          start.RedirectStandardOutput = true;
@@ -53,10 +55,11 @@ namespace IronBoard.Core.Application
          if (p.ExitCode != 0)
          {
             string error = p.StandardError.ReadToEnd();
-            throw new ApplicationException(
-               string.Format("cannot execute, exit code: {0}, message: [{1}]",
-                  p.ExitCode,
-                  error));
+
+            if(error.IndexOf("argument", StringComparison.InvariantCultureIgnoreCase) != -1)
+               throw new ArgumentException(error);
+
+            throw new VersionControlException("{0} (code: {1}, command: {2})", error, p.ExitCode, formattedCommand);
          }
 
          return p.StandardOutput.ReadToEnd();

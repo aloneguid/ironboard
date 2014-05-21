@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using IronBoard.Core.Application;
-using IronBoard.Core.Model;
 using NUnit.Framework;
 
 namespace IronBoard.Test.Integration
@@ -16,15 +13,6 @@ namespace IronBoard.Test.Integration
       public void InitialiseRepository()
       {
          _svn = new SvnRepository(@"C:\dev\ironboard");
-      }
-
-      [Test]
-      public void GetPendingChangesTest()
-      {
-         IEnumerable<LocalWorkItem> pending = _svn.GetLocalChanges();
-         Assert.Greater(pending.Count(), 0);
-
-         string diff = _svn.GetLocalDiff();
       }
 
       [Test]

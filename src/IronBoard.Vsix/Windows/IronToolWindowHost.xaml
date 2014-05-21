@@ -17,9 +17,6 @@
          <TabItem x:Name="MyTicketsTab" Header="My Tickets">
             <core:MyTicketsView x:Name="MyTickets"/>
          </TabItem>
-         <TabItem x:Name="PendingChangesTab" Header="Pending">
-            <core:PendingChangesView x:Name="PendingChanges"/>
-         </TabItem>
       </TabControl>
       <Label x:Name="Error" Content="error"
              HorizontalAlignment="Center"

@@ -6,11 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using IronBoard.Core.Model;
+using IronBoard.Core.Model.Exceptions;
 using SharpSvn;
 
 namespace IronBoard.Core.Application
 {
-   public class SvnRepository : CommandLineRepository
+   public sealed class SvnRepository : CommandLineRepository
    {
       private readonly string _workingCopyPath;
       private SvnClient _svn;
@@ -26,7 +27,9 @@ namespace IronBoard.Core.Application
          Initialize();
       }
 
-      public override Uri RemoteRepositoryUri { get { return _repositoryUri; } }
+      public Uri RemoteRepositoryUri { get { return _repositoryUri; } }
+
+      public override string MainBranchName { get { return "trunk"; } }
 
       public override string RelativeRoot { get { return _relativeRoot; } }
 
@@ -55,6 +58,10 @@ namespace IronBoard.Core.Application
             }
 
             return "trunk";
+         }
+         set
+         {
+            throw new VersionControlException("switching branches not supported");
          }
       }
 
@@ -99,11 +106,6 @@ namespace IronBoard.Core.Application
          return diffText;
       }
 
-      public override string GetLocalDiff()
-      {
-         return Exec("diff");
-      }
-
       private WorkItem ToWorkItem(SvnLogEventArgs logEntry)
       {
          var item = new WorkItem(
@@ -131,23 +133,6 @@ namespace IronBoard.Core.Application
          if (entries != null && entries.Count > 0)
          {
             return entries.Select(ToWorkItem);
-         }
-
-         return null;
-      }
-
-      public IEnumerable<LocalWorkItem> GetLocalChanges()
-      {
-         var result = new List<LocalWorkItem>();
-
-         Collection<SvnStatusEventArgs> changes;
-         _svn.GetStatus(_workingCopyPath, out changes);
-         if (changes != null && changes.Count > 0)
-         {
-            result.AddRange(
-               changes.Select(change => new LocalWorkItem(change))
-                  .Where(change => change.Status != LocalItemStatus.Unknown));
-            return result.Count == 0 ? null : result;
          }
 
          return null;

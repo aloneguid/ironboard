@@ -11,6 +11,7 @@ namespace IronBoard.Test.Integration
    [TestFixture]
    public class GitRepositoryTest
    {
+      private const string TestBranchName = "myticket";
       private ICodeRepository _git;
 
       [SetUp]
@@ -19,6 +20,25 @@ namespace IronBoard.Test.Integration
          string path = Path.GetFullPath("../../../../test/git-repo");
 
          _git = new GitRepository(path);
+         _git.Branch = _git.MainBranchName;
+      }
+
+      [TearDown]
+      public void TearDown()
+      {
+         _git.Branch = _git.MainBranchName;
+      }
+
+      [Test]
+      public void BranchSwitching_ToTicketAndFromTicket_ReturnsToPrimary()
+      {
+         Assert.AreEqual(_git.MainBranchName, _git.Branch);
+
+         _git.Branch = TestBranchName;
+         Assert.AreEqual(TestBranchName, _git.Branch);
+
+         _git.Branch = _git.MainBranchName;
+         Assert.AreEqual(_git.MainBranchName, _git.Branch);
       }
 
       [Test]
@@ -38,14 +58,6 @@ namespace IronBoard.Test.Integration
       }
 
       [Test]
-      public void GetLocalDiff_CurrentState_NonNullDiff()
-      {
-         string diff = _git.GetLocalDiff();
-
-         Assert.IsNotNull(diff);
-      }
-
-      [Test]
       public void GetHistory_LocalRepo_ReturnsValidEntries()
       {
          List<WorkItem> history = _git.GetHistory(10).ToList();
@@ -54,24 +66,26 @@ namespace IronBoard.Test.Integration
       }
 
       [Test]
-      public void DiffRange_NotFirstCommit_GetsDiff()
+      public void DiffRange_FirstCommit_GetsDiff()
       {
+         List<WorkItem> history = _git.GetHistory(10).OrderBy(i => i.Time).ToList();
+         string youngestId = history[0].ItemId;
+
          string diff =
-            _git.GetDiff(new RevisionRange("698dfbe4b3565df2fb739447afeb379482291efd",
-               "698dfbe4b3565df2fb739447afeb379482291efd"));
+            _git.GetDiff(new RevisionRange(youngestId, youngestId));
 
          Assert.NotNull(diff);
       }
 
       [Test]
-      public void DiffRange_FirstCommit_GetsDiff()
+      public void DiffRange_NotFirstCommit_GetsDiff()
       {
+         List<WorkItem> history = _git.GetHistory(10).OrderBy(i => i.Time).ToList();
+
          string diff =
-            _git.GetDiff(new RevisionRange("153aeba038888f2369616ee2efdcb164cef4dafb",
-               "153aeba038888f2369616ee2efdcb164cef4dafb"));
+            _git.GetDiff(new RevisionRange(history[1].ItemId, history[history.Count - 1].ItemId));
 
          Assert.NotNull(diff);
       }
-
    }
 }

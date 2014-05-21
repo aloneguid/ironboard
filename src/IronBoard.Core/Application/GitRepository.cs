@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using IronBoard.Core.Model;
 
 namespace IronBoard.Core.Application
 {
-   public class GitRepository : CommandLineRepository
+   public sealed class GitRepository : CommandLineRepository
    {
       private Lazy<Uri> _remoteRepositoryUri = new Lazy<Uri>(); 
 
@@ -30,14 +28,20 @@ namespace IronBoard.Core.Application
 
             return ExtractCurrentBranch(branchInfo);
          }
+         set
+         {
+            Exec("checkout {0}", value);
+         }
       }
+
+      public override string MainBranchName { get { return "master"; } }
 
       public override string RelativeRoot
       {
          get { return RemoteRepositoryUri.ToString(); }
       }
 
-      public override Uri RemoteRepositoryUri
+      private Uri RemoteRepositoryUri
       {
          get
          {
@@ -47,13 +51,10 @@ namespace IronBoard.Core.Application
          }
       }
 
-      public override string GetLocalDiff()
-      {
-         return Exec("diff {0}", "origin/master");
-      }
-
       public override string GetDiff(RevisionRange range)
       {
+         range = (RevisionRange) range.Clone();
+
          //get previous log entry
          try
          {
@@ -61,16 +62,21 @@ namespace IronBoard.Core.Application
             IEnumerable<WorkItem> entries = ParseLog(log);
 
             WorkItem previous;
-            if (entries == null || (previous = entries.FirstOrDefault()) == null) throw new ApplicationException("coudl not get previous entry");
+            if (entries == null || (previous = entries.FirstOrDefault()) == null) throw new ApplicationException("could not get previous entry");
 
             range.From = previous.ItemId;
          }
-         catch (ApplicationException)
+         catch (ArgumentException)
          {
-            
+            //that only means that the first entry doesn't have a parent, so let's diff from the master
+            string diff = Exec("diff --full-index \"{0}\" master", range.To);
+            return diff;
          }
 
-         return Exec("diff {0} {1}", range.From, range.To);
+         //execute the real diff
+         return Exec("diff --full-index \"{0}\" \"{1}\"", range.From, range.To);
+
+         //git diff range.to master         
       }
 
       public override IEnumerable<WorkItem> GetHistory(int maxEntries)
@@ -164,7 +170,7 @@ namespace IronBoard.Core.Application
          return current == null ? null : current.Substring(2).Trim();
       }
 
-      public static DateTime ParseRfc2822Date(string date)
+      private static DateTime ParseRfc2822Date(string date)
       {
          date = date.Replace("bst", "+0100");
          date = date.Replace("gmt", "-0000");
@@ -188,7 +194,7 @@ namespace IronBoard.Core.Application
          {
             string dateTime = m.Groups["DateTime"].Value.TrimStart('0');
             parsedDateTime = DateTime.ParseExact(dateTime,
-               new string[] {"d MMM yyyy HH:mm", "d MMM yyyy HH:mm:ss", "d MMM yyyy hh:mm", "d MMM yyyy hh:mm:ss"},
+               new[] {"d MMM yyyy HH:mm", "d MMM yyyy HH:mm:ss", "d MMM yyyy hh:mm", "d MMM yyyy hh:mm:ss"},
                CultureInfo.InvariantCulture, DateTimeStyles.None);
 
             string timeZone = m.Groups["TimeZone"].Value;
@@ -203,7 +209,7 @@ namespace IronBoard.Core.Application
          return parsedDateTime;
       }
 
-      private string[] Split(string output)
+      private IEnumerable<string> Split(string output)
       {
          return output.Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries);
       }

@@ -1,9 +1,11 @@
-﻿namespace IronBoard.Core.Model
+﻿using System;
+
+namespace IronBoard.Core.Model
 {
    /// <summary>
    /// Represents revision range
    /// </summary>
-   public class RevisionRange
+   public class RevisionRange : ICloneable
    {
       /// <summary>
       /// Minimum revision (inclusive)
@@ -19,6 +21,11 @@
       {
          From = from;
          To = to;
+      }
+
+      public object Clone()
+      {
+         return new RevisionRange(From, To);
       }
    }
 }
