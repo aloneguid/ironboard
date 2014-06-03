@@ -48,6 +48,7 @@ namespace IronBoard.Core.Application
          start.UseShellExecute = false;
          start.RedirectStandardOutput = true;
          start.RedirectStandardError = true;
+         start.CreateNoWindow = true;
 
          Process p = Process.Start(start);
          p.WaitForExit();
@@ -63,6 +64,11 @@ namespace IronBoard.Core.Application
          }
 
          return p.StandardOutput.ReadToEnd();
+      }
+
+      protected string GetTempFilePath(string extension)
+      {
+         return Path.Combine(Path.GetTempPath(), string.Format("{0}{1}", Guid.NewGuid(), extension));
       }
    }
 }

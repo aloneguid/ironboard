@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using IronBoard.Core.Model;
@@ -56,9 +57,10 @@ namespace IronBoard.Core.Application
          range = (RevisionRange) range.Clone();
 
          //get previous log entry
+         string tempFile = GetTempFilePath(".diff");
          try
          {
-            string log = Exec("log -n 1 \"{0}^1\"", range.From);
+            string log = Exec("log -n 1 \"{0}^1\" > \"{1}\"", range.From, tempFile);
             IEnumerable<WorkItem> entries = ParseLog(log);
 
             WorkItem previous;
@@ -71,6 +73,13 @@ namespace IronBoard.Core.Application
             //that only means that the first entry doesn't have a parent, so let's diff from the master
             string diff = Exec("diff --full-index \"{0}\" master", range.To);
             return diff;
+         }
+         finally
+         {
+            if (File.Exists(tempFile))
+            {
+               File.Delete(tempFile);
+            }
          }
 
          //execute the real diff
