@@ -188,8 +188,12 @@
     <Resource Include="logo.BMP" />
     <Content Include="logo1.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="logo_fullres.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Resource Include="Resources\logo_fullres.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>

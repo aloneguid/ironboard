@@ -7,7 +7,7 @@
       <Description xml:space="preserve">ReviewBoard client for Visual Studio 2010, 2012 and 2013. Full instructions: http://ironboard.codeplex.com</Description>
       <Locale>1033</Locale>
       <License>license.rtf</License>
-      <Icon>logo1.ico</Icon>
+      <Icon>logo_fullres.png</Icon>
       <InstalledByMsi>false</InstalledByMsi>
       <SupportedProducts>
          <VisualStudio Version="10.0">
