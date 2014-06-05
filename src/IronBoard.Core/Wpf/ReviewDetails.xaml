@@ -71,7 +71,7 @@
 
          <!-- 6 -->
          <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1">
-            <core:Progress ProgressTitle="creating SVN diff" x:Name="DiffProgress"
+            <core:Progress ProgressTitle="creating diff" x:Name="DiffProgress"
                      HorizontalAlignment="Left"/>
             <Label Content="error" x:Name="DiffError"
                 Foreground="Red"/>

@@ -157,7 +157,7 @@
     <value>error generating diff: {0}</value>
   </data>
   <data name="ReviewDetails_GeneratingDiff" xml:space="preserve">
-    <value>generating subversion diff</value>
+    <value>generating diff</value>
   </data>
   <data name="ReviewDetails_NewTicket" xml:space="preserve">
     <value>New post-commit review ({0})</value>

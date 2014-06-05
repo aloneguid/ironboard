@@ -57,10 +57,9 @@ namespace IronBoard.Core.Application
          range = (RevisionRange) range.Clone();
 
          //get previous log entry
-         string tempFile = GetTempFilePath(".diff");
          try
          {
-            string log = Exec("log -n 1 \"{0}^1\" > \"{1}\"", range.From, tempFile);
+            string log = Exec("log -n 1 \"{0}^1\"", range.From);
             IEnumerable<WorkItem> entries = ParseLog(log);
 
             WorkItem previous;
@@ -73,13 +72,6 @@ namespace IronBoard.Core.Application
             //that only means that the first entry doesn't have a parent, so let's diff from the master
             string diff = Exec("diff --full-index \"{0}\" master", range.To);
             return diff;
-         }
-         finally
-         {
-            if (File.Exists(tempFile))
-            {
-               File.Delete(tempFile);
-            }
          }
 
          //execute the real diff
@@ -102,7 +94,7 @@ namespace IronBoard.Core.Application
           * --date=default shows timestamps in the original timezone (either committer’s or author’s).
           */
 
-         string log = Exec("log -n {0} --date={1}",
+         string log = Exec("log -n {0} --date={1} --stat",
             maxEntries,
             "rfc");  //need to enforce date format as it can vary
 
@@ -116,6 +108,7 @@ namespace IronBoard.Core.Application
       private IEnumerable<WorkItem> ParseLog(string log)
       {
          var result = new List<WorkItem>();
+         var files = new List<string>();
 
          string itemId = null;
          string author = null;
@@ -129,7 +122,9 @@ namespace IronBoard.Core.Application
                if (itemId != null)
                {
                   var item = new WorkItem(itemId, author, comment, date);
+                  foreach(string file in files) item.ChangedFilePaths.Add(file);
                   result.Add(item);
+                  files.Clear();
                   author = comment = null;
                   date = DateTime.UtcNow;
                }
@@ -151,14 +146,27 @@ namespace IronBoard.Core.Application
                string s = line.Trim();
                if (!string.IsNullOrEmpty(s))
                {
-                  if (comment == null)
+                  if (line.StartsWith("    "))  //comment lines have 4 preceding spaces
                   {
-                     comment = s;
+                     if (comment == null)
+                     {
+                        comment = s;
+                     }
+                     else
+                     {
+                        comment += Environment.NewLine;
+                        comment += s;
+                     }
                   }
-                  else
+                  else if (line.StartsWith(" "))  //file stats have 1 preceding space
                   {
-                     comment += Environment.NewLine;
-                     comment += s;
+                     if (!char.IsDigit(s[0]))   //final stat starts with space and number
+                     {
+                        int idx = s.IndexOf("|");
+                        if (idx != -1) s = s.Substring(0, idx).Trim();
+
+                        files.Add(s);
+                     }
                   }
                }
             }
@@ -166,7 +174,9 @@ namespace IronBoard.Core.Application
 
          if (itemId != null)
          {
-            result.Add(new WorkItem(itemId, author, comment, date));
+            var wi = new WorkItem(itemId, author, comment, date);
+            foreach (string file in files) wi.ChangedFilePaths.Add(file);
+            result.Add(wi);
          }
 
          return result;

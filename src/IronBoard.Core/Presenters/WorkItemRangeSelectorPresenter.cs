@@ -203,6 +203,12 @@ namespace IronBoard.Core.Presenters
                   .Replace("\r", "").Replace("\n", " ").Replace("  ", " ");
                review.Subject = review.Subject.Substring(0, 1).ToUpper() + review.Subject.Substring(1);
                review.Description = String.Join(Environment.NewLine, lines.Skip(1));   //skip line 1 as it's taken as a subject
+
+               if (review.Subject.Length > 80)
+               {
+                  review.Description = review.Subject + Environment.NewLine + review.Description;
+                  review.Subject = review.Subject.Substring(0, 75) + "...";
+               }
             }
 
             review.BugsClosed = String.Join(", ", ExtractBugsClosed(itemsList));

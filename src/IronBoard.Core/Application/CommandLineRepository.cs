@@ -42,33 +42,47 @@ namespace IronBoard.Core.Application
       {
          if (command == null) return null;
 
+         string tempFile = GetTempFilePath(".cmd");
+
          string formattedCommand = string.Format(command, parameters);
-         var start = new ProcessStartInfo(_execName, formattedCommand);
+         formattedCommand = string.Format("/C {0} {1} >\"{2}\"", _execName, formattedCommand, tempFile);
+         var start = new ProcessStartInfo("cmd", formattedCommand);
          start.WorkingDirectory = WorkingCopyPath;
          start.UseShellExecute = false;
-         start.RedirectStandardOutput = true;
+         start.RedirectStandardOutput = false;
          start.RedirectStandardError = true;
          start.CreateNoWindow = true;
 
-         Process p = Process.Start(start);
-         p.WaitForExit();
-
-         if (p.ExitCode != 0)
+         try
          {
-            string error = p.StandardError.ReadToEnd();
+            Process p = Process.Start(start);
+            p.WaitForExit();
 
-            if(error.IndexOf("argument", StringComparison.InvariantCultureIgnoreCase) != -1)
-               throw new ArgumentException(error);
+            if (p.ExitCode != 0)
+            {
+               string error = p.StandardError.ReadToEnd();
 
-            throw new VersionControlException("{0} (code: {1}, command: {2})", error, p.ExitCode, formattedCommand);
+               if (error.IndexOf("argument", StringComparison.InvariantCultureIgnoreCase) != -1) throw new ArgumentException(error);
+
+               throw new VersionControlException("{0} (code: {1}, command: {2})", error, p.ExitCode, formattedCommand);
+            }
+
+            if (!File.Exists(tempFile)) return null;
+
+            return File.ReadAllText(tempFile);
          }
-
-         return p.StandardOutput.ReadToEnd();
+         finally
+         {
+            if (File.Exists(tempFile))
+            {
+               File.Delete(tempFile);
+            }
+         }
       }
 
       protected string GetTempFilePath(string extension)
       {
-         return Path.Combine(Path.GetTempPath(), string.Format("{0}{1}", Guid.NewGuid(), extension));
+         return Path.Combine(Path.GetTempPath(), string.Format("irb-{0}{1}", Guid.NewGuid(), extension));
       }
    }
 }
