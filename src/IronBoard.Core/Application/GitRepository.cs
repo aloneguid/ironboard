@@ -54,6 +54,9 @@ namespace IronBoard.Core.Application
 
       public override string GetDiff(RevisionRange range)
       {
+         //these are taken from RBTools source code (https://github.com/reviewboard/rbtools/blob/master/rbtools/clients/git.py)
+         const string diffParams = "--no-color --full-index --ignore-submodules --no-ext-diff";
+
          range = (RevisionRange) range.Clone();
 
          //get previous log entry
@@ -70,12 +73,14 @@ namespace IronBoard.Core.Application
          catch (ArgumentException)
          {
             //that only means that the first entry doesn't have a parent, so let's diff from the master
-            string diff = Exec("diff --full-index \"{0}\" master", range.To);
+            string diff = Exec("diff {0} \"{1}\" master", diffParams, range.To);
             return diff;
          }
 
          //execute the real diff
-         return Exec("diff --full-index \"{0}\" \"{1}\"", range.From, range.To);
+         string diffText = Exec("diff {0} \"{1}\" \"{2}\"", diffParams, range.From, range.To);
+
+         return diffText;
 
          //git diff range.to master         
       }
