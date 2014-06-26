@@ -78,6 +78,7 @@
     <Compile Include="Model\LocalItemStatus.cs" />
     <Compile Include="Model\LocalWorkItem.cs" />
     <Compile Include="Model\RevisionRange.cs" />
+    <Compile Include="Model\ScmCapabilities.cs" />
     <Compile Include="Model\ScmProvider.cs" />
     <Compile Include="Model\WorkItem.cs" />
     <Compile Include="Presenters\MyTicketsPresenter.cs" />

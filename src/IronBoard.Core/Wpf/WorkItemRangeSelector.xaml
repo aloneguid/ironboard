@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="600">
+             d:DesignHeight="200" d:DesignWidth="600" IsVisibleChanged="UserControl_IsVisibleChanged">
    <UserControl.Resources>
       <Style x:Key="lvStyle" TargetType="{x:Type ListViewItem}">
          <Style.Triggers>

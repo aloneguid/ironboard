@@ -5,6 +5,8 @@ namespace IronBoard.Core.Model
 {
    public interface ICodeRepository : IDisposable
    {
+      ScmCapabilities Capabilities { get; }
+
       string ClientVersion { get; }
 
       string Branch { get; set; }

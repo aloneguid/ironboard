@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using IronBoard.Core.Model;
@@ -10,10 +9,9 @@ namespace IronBoard.Core.Application
 {
    public sealed class GitRepository : CommandLineRepository
    {
-      private Lazy<Uri> _remoteRepositoryUri = new Lazy<Uri>(); 
-
       public GitRepository(string workingCopyPath) : base(workingCopyPath, "git")
       {
+         Capabilities = new ScmCapabilities(false);
       }
 
       public override string ClientVersion

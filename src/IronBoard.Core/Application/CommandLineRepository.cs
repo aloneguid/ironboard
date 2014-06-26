@@ -21,6 +21,8 @@ namespace IronBoard.Core.Application
          WorkingCopyPath = workingCopyPath;
       }
 
+      public ScmCapabilities Capabilities { get; protected set; }
+
       public virtual void Dispose()
       {
          

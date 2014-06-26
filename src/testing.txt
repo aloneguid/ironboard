@@ -1,0 +1,1 @@
+" <Visual studio installation path> \Common7\IDE\devenv.exe" /RootSuffix Exp

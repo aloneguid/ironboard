@@ -76,6 +76,7 @@ namespace IronBoard.Core.Application
 
       private void Initialize()
       {
+         Capabilities = new ScmCapabilities(true);
          _svn = new SvnClient();
          SvnInfoEventArgs args;
          _svn.GetInfo(new SvnPathTarget(_workingCopyPath), out args);

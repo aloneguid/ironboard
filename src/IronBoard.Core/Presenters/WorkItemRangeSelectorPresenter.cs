@@ -111,17 +111,26 @@ namespace IronBoard.Core.Presenters
          {
             foreach (WorkItem wi in lines)
             {
-               if (wi != null && wi.Comment != null)
+               if (wi != null)
                {
-                  foreach (Match m in JiraIssueRegex.Matches(wi.Comment))
-                  {
-                     result.Add(m.ToString().ToUpper());
-                  }
+                  ExtractBugsClosed(wi.Comment, result);
                }
             }
          }
 
+         ExtractBugsClosed(IbApplication.CodeRepository.Branch, result);
+
          return result.ToArray();
+      }
+
+      private void ExtractBugsClosed(string line, ICollection<string> collector)
+      {
+         if (string.IsNullOrEmpty(line)) return;
+
+         foreach (Match m in JiraIssueRegex.Matches(line))
+         {
+            collector.Add(m.ToString().ToUpper());
+         }
       }
 
       /// <summary>

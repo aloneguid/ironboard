@@ -109,5 +109,13 @@ namespace IronBoard.Core.Wpf
             SelectectionChanged(continuous, range);
          }
       }
+
+      private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+      {
+         if (IbApplication.CodeRepository != null && !IbApplication.CodeRepository.Capabilities.SlowHistoryFetch)
+         {
+            RefreshView();
+         }
+      }
    }
 }
