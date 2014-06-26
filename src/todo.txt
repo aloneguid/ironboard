@@ -1,1 +1,0 @@
-- when bugs extracted remove them beginning and end of lines in summary and description
