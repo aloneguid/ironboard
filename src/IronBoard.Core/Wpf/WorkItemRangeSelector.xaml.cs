@@ -112,10 +112,11 @@ namespace IronBoard.Core.Wpf
 
       private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
       {
-         if (IbApplication.CodeRepository != null && !IbApplication.CodeRepository.Capabilities.SlowHistoryFetch)
+         //IsVisible changes unpredictably, disable this for now
+         /*if (IbApplication.CodeRepository != null && !IbApplication.CodeRepository.Capabilities.SlowHistoryFetch)
          {
             RefreshView();
-         }
+         }*/
       }
    }
 }
