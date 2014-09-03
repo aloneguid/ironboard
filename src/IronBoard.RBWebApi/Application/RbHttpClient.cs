@@ -18,6 +18,7 @@ namespace IronBoard.RBWebApi.Application
       private static Dictionary<string, User> _userNameToUser;
       private static Dictionary<string, UserGroup> _groupNameToGroup;
       private static string _myName;
+      private static readonly string HttpAuthHeader = HttpRequestHeader.Authorization.ToString();
 
       public event Action<NetworkCredential> AuthenticationRequired;
       public event Action<string> AuthCookieChanged;
@@ -242,7 +243,10 @@ namespace IronBoard.RBWebApi.Application
          if (creds == null || creds.UserName == null || creds.Password == null) throw new ArgumentNullException("creds");
          string auth = creds.UserName + ":" + creds.Password;
          auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(auth));
-         request.AddHeader(HttpRequestHeader.Authorization.ToString(), auth);
+         //due to the retry logic Authorisation header my be present already from the previous call,
+         //attempt to delete it before setting otherwise it results in multivalue header
+         request.Parameters.RemoveAll(p => p.Type == ParameterType.HttpHeader && p.Name == HttpAuthHeader);
+         request.AddHeader(HttpAuthHeader, auth);
       }
 
       private void PickUpCookie(IRestResponse response)

@@ -34,6 +34,10 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=103.4.0.0, Culture=neutral, PublicKeyToken=ac1bfd1c5b70df32, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +52,7 @@
     <Compile Include="Integration\SvnRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Presenters\WorkItemRangeSelectorPresenterTest.cs" />
+    <Compile Include="Unit\RestSharpWorkaroundsTest.cs" />
     <Compile Include="Unit\SvnRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
