@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IronBoard.Core.Application;
 using IronBoard.Core.Views;
 using IronBoard.RBWebApi.Model;
 
@@ -51,6 +53,27 @@ namespace IronBoard.Core.Presenters
          get { return _groups ?? (_groups = IbApplication.RbClient.GetGroups()); }
       }
 
+      public IEnumerable<User> SelectedUsers
+      {
+         get
+         {
+            if (Settings.Default.LastUsers == null)
+               return new User[0];
+
+            return Users.Where(u => Settings.Default.LastUsers.Contains(u.Id));
+         }
+      } 
+      public IEnumerable<UserGroup> SelectedGroups
+      {
+         get
+         {
+            if (Settings.Default.LastGroups == null)
+               return new UserGroup[0];
+
+            return Groups.Where(g => Settings.Default.LastGroups.Contains(g.Id));
+         }
+      }
+
       private Repository Repository
       {
          get
@@ -75,6 +98,8 @@ namespace IronBoard.Core.Presenters
 
       public void PostReview(Review r)
       {
+         SaveUserAndGroup(r);
+
          Task.Factory.StartNew(() =>
             {
                Exception ex = null;
@@ -96,6 +121,25 @@ namespace IronBoard.Core.Presenters
                }
                _view.UpdatePostFinish(ex);
             });
+      }
+
+      private void SaveUserAndGroup(Review r)
+      {
+         var users = new ArrayList();
+         foreach (var user in r.TargetUsers)
+         {
+            users.Add(user.Id);
+         }
+
+         var groups = new ArrayList();
+         foreach (var group in r.TargetGroups)
+         {
+            groups.Add(group.Id);
+         }
+
+         Settings.Default.LastUsers = users;
+         Settings.Default.LastGroups = groups;
+         Settings.Default.Save();
       }
    }
 }

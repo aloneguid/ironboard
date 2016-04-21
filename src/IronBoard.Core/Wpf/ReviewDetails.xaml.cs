@@ -31,6 +31,16 @@ namespace IronBoard.Core.Wpf
          Users.Reviewers = _presenter.Users;
          Groups.Reviewers = _presenter.Groups;
 
+         foreach (var user in _presenter.SelectedUsers)
+         {
+            Users.Combo.SelectedItems.Add(user);
+         }
+
+         foreach (var group in _presenter.SelectedGroups)
+         {
+            Groups.Combo.SelectedItems.Add(group);
+         }
+
          InitialiseData();
       }
 
@@ -39,7 +49,11 @@ namespace IronBoard.Core.Wpf
          if (!DesignerProperties.GetIsInDesignMode(this))
          {
             SummaryText.Text = _review.Subject;
+
             DescriptionText.Text = _review.Description;
+            if (string.IsNullOrEmpty(DescriptionText.Text))
+               DescriptionText.Text = SummaryText.Text;
+
             BugsText.Text = _review.BugsClosed;
             TestingText.Text = _review.TestingDone;
 
