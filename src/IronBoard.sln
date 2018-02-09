@@ -1,6 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7363C6B1-1C00-4F38-BEC6-2391661CC00E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A86566E-4BAA-438C-BABF-EBF98E66BB96}"
+	ProjectSection(SolutionItems) = preProject
+		testing.txt = testing.txt
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Core", "IronBoard.Core\IronBoard.Core.csproj", "{01AC8415-7201-40AF-B6CA-8DD1DBECB496}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.RBWebApi", "IronBoard.RBWebApi\IronBoard.RBWebApi.csproj", "{259CDD9D-ECF7-48C1-9C6C-0E403F9DEB9E}"
@@ -9,16 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Standalone", "Iro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Vsix", "IronBoard.Vsix\IronBoard.Vsix.csproj", "{18AB1FFD-B0A2-4CE5-BF1F-D3C095E10616}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7363C6B1-1C00-4F38-BEC6-2391661CC00E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Test", "IronBoard.Test.Integration\IronBoard.Test.csproj", "{9D7CBE43-03B7-4844-83BA-9B1A67B5340E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronBoard.Console", "IronBoard.Console\IronBoard.Console.csproj", "{24AF2DB7-2E04-48F5-A792-703069D8F57D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A86566E-4BAA-438C-BABF-EBF98E66BB96}"
-	ProjectSection(SolutionItems) = preProject
-		testing.txt = testing.txt
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,5 +98,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9D7CBE43-03B7-4844-83BA-9B1A67B5340E} = {7363C6B1-1C00-4F38-BEC6-2391661CC00E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9FBB697-53AF-4019-9B05-B00D3DD0B3B1}
 	EndGlobalSection
 EndGlobal
