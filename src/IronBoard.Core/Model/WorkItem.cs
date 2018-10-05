@@ -10,27 +10,20 @@ namespace IronBoard.Core.Model
 
       public WorkItem(string itemId, string author, string comment, DateTime time)
       {
-         if (itemId == null) throw new ArgumentNullException("itemId");
-         if (author == null) throw new ArgumentNullException("author");
-         if (comment == null) throw new ArgumentNullException("comment");
-
-         ItemId = itemId;
-         Author = author;
-         Comment = comment;
+         ItemId = itemId ?? throw new ArgumentNullException(nameof(itemId));
+         Author = author ?? throw new ArgumentNullException(nameof(author));
+         Comment = comment ?? "--No comment--";
          Time = time;
       }
 
-      public string ItemId { get; private set; }
+      public string ItemId { get; }
 
-      public string Author { get; private set; }
+      public string Author { get; }
 
       public string Comment { get; set; }
 
-      public DateTime Time { get; private set; }
+      public DateTime Time { get; }
 
-      public ICollection<string> ChangedFilePaths
-      {
-         get { return _changedFilePaths; }
-      } 
+      public ICollection<string> ChangedFilePaths => _changedFilePaths;
    }
 }

@@ -15,13 +15,13 @@
         defining some of the constants that we will use inside the file. -->
 
    <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
-   <Extern href="stdidcmd.h"/>
+   <Extern href="stdidcmd.h" />
 
    <!--This header contains the command ids for the menus provided by the shell. -->
-   <Extern href="vsshlids.h"/>
+   <Extern href="vsshlids.h" />
 
    <!--Definition of some VSCT specific constants. In this sample we use it for the IDs inside the guidOfficeIcon group. -->
-   <Extern href="msobtnid.h"/>
+   <!--<Extern href="msobtnid.h" xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" />-->
 
 
 
@@ -45,7 +45,7 @@
       <Groups>
 
          <Group guid="guidIronBoard_VsixCmdSet" id="MyMenuGroup" priority="0x0600">
-            <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
          </Group>
 
 
@@ -74,7 +74,7 @@
       </Button>-->
 
          <Button guid="guidIronBoard_VsixCmdSet" id="cmdidIronToolWindow" priority="0x0100" type="Button">
-            <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
+            <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
             <Icon guid="guidImages" id="bmpPic1" />
             <Strings>
                <CommandName>cmdidIronToolWindow</CommandName>
@@ -91,8 +91,8 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used 
             inside a button definition. An important aspect of this declaration is that the element id 
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-         <Bitmap guid="guidImages" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
-         <Bitmap guid="guidRBIcon" href="Resources\Package.ico" usedList="icoRB"/>
+         <Bitmap guid="guidImages" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows" />
+         <Bitmap guid="guidRBIcon" href="Resources\Package.ico" usedList="icoRB" />
 
       </Bitmaps>
 
@@ -109,10 +109,10 @@
 
          <IDSymbol name="MyMenuGroup" value="0x1020" />
          <IDSymbol name="cmdidReviewBoard" value="0x0100" />
-         <IDSymbol name="cmdidIronToolWindow" value="0x0101"/>
+         <IDSymbol name="cmdidIronToolWindow" value="0x0101" />
       </GuidSymbol>
 
-      <GuidSymbol name="guidImages" value="{51e770b9-7746-4d6d-b723-2ed1a8a4bbc5}" >
+      <GuidSymbol name="guidImages" value="{51e770b9-7746-4d6d-b723-2ed1a8a4bbc5}">
          <IDSymbol name="bmpPic1" value="1" />
          <IDSymbol name="bmpPic2" value="2" />
          <IDSymbol name="bmpPicSearch" value="3" />
@@ -121,10 +121,10 @@
       </GuidSymbol>
 
       <GuidSymbol name="guidRBIcon" value="{D2DEC474-02FE-44B9-BAB9-A85A926583F5}">
-         <IDSymbol name="icoRB" value="1"/>
+         <IDSymbol name="icoRB" value="1" />
       </GuidSymbol>
 
-      <GuidSymbol name="GuidToolWindow" value="{757397F1-BA52-4BC7-8910-5EC1BEFED713}"/>
+      <GuidSymbol name="GuidToolWindow" value="{757397F1-BA52-4BC7-8910-5EC1BEFED713}" />
    </Symbols>
 
 </CommandTable>

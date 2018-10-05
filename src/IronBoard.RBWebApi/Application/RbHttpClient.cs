@@ -132,7 +132,7 @@ namespace IronBoard.RBWebApi.Application
       public IEnumerable<Repository> GetRepositories()
       {
          var result = new List<Repository>();
-         var request = CreateRequest("repositories/", Method.GET);
+         var request = CreateRequest("repositories/?max-results=200", Method.GET);
          RestResponse response = Execute(request, 200);
          if(response != null)
          {
